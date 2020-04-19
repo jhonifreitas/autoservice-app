@@ -1,0 +1,7 @@
+{
+  "name": "autoservice",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
