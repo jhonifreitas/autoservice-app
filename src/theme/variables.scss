@@ -77,10 +77,6 @@
 }
 
 body {
-  --ion-background-color: var(--ion-color-light);
-  --ion-background-color-rgb: var(--ion-color-light-rgb);
-
-  --ion-item-background: #ffffff;
-
-  --ion-toolbar-background: linear-gradient(to bottom, var(--ion-color-danger), var(--ion-color-dark-tint));
+  --ion-toolbar-background: var(--ion-color-dark-tint);
+  --ion-toolbar-color: #ffffff;
 }

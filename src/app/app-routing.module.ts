@@ -6,8 +6,25 @@ import { AuthGuard } from './guards/auth/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'service', pathMatch: 'full' },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule) },
-  { path: 'register/profile', loadChildren: () => import('./pages/register/profile/profile.module').then( m => m.ProfileRegisterPageModule) },
-  { path: 'service', loadChildren: () => import('./pages/service/service.module').then( m => m.ServicePageModule), canActivate: [AuthGuard] },
+  { path: 'register', children: [
+    { path: 'profile', loadChildren: () => import('./pages/register/profile/profile.module').then( m => m.ProfileRegisterPageModule) },
+    { path: 'autonomous', loadChildren: () => import('./pages/register/autonomous/autonomous.module').then( m => m.AutonomousRegisterPageModule) },
+  ]},
+  { path: 'profile', canActivate: [AuthGuard], children: [
+    { path: '', loadChildren: () => import('./pages/profile/form/form.module').then( m => m.ProfileFormPageModule) },
+    { path: 'autonomous', loadChildren: () => import('./pages/autonomous/form/form.module').then( m => m.AutonomousFormPageModule) },
+  ]},
+  { path: 'my-services', canActivate: [AuthGuard], children: [
+    { path: '', loadChildren: () => import('./pages/autonomous/service/list/list.module').then( m => m.AutonomousServicePageModule) },
+    { path: 'form', loadChildren: () => import('./pages/autonomous/service/form/form.module').then( m => m.AutonomousServiceFormPageModule) },
+  ]},
+  { path: 'service', canActivate: [AuthGuard], children: [
+    { path: '', loadChildren: () => import('./pages/service/service.module').then( m => m.ServicePageModule) },
+    { path: ':service_id/autonomous', children: [
+      { path: '', loadChildren: () => import('./pages/autonomous/list/list.module').then( m => m.AutonomousPageModule) },
+      { path: ':id', loadChildren: () => import('./pages/autonomous/detail/detail.module').then( m => m.AutonomousDetailPageModule) },
+    ]}
+  ]},
 ];
 
 @NgModule({

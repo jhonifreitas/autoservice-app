@@ -4,6 +4,7 @@ import { Platform, IonRouterOutlet, NavController } from '@ionic/angular';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { FunctionsService } from './services/functions/functions.service';
+import { StorageService } from './services/storage/storage.service';
 
 @Component({
   selector: 'app-root',
@@ -17,10 +18,13 @@ export class AppComponent {
   private lastTimeBackPress: number = 0;
   private timePeriodToExit: number = 2000;
 
+  selectedIndex = 0;
+
   constructor(
     private platform: Platform,
     private statusBar: StatusBar,
     private navCtrl: NavController,
+    public storage: StorageService,
     private splashScreen: SplashScreen,
     private functions: FunctionsService,
   ) {
@@ -52,6 +56,14 @@ export class AppComponent {
         });
       }
     });
+  }
+
+  itemHasSelected(url){
+    const path = window.location.pathname.split('/').filter(name => name != '');
+    if (path.length) {
+      const name = '/'+path.join('/');
+      return url.toLowerCase() === name;
+    }
   }
 
   logout(){

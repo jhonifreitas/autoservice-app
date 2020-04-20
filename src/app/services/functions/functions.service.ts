@@ -93,7 +93,7 @@ export class FunctionsService {
     return parseFloat(value.replace('.', '').replace(',', '.'));
   }
 
-  formatDate(value: string, format: string): string {
+  formatDate(value: any, format: string): string {
     return this.date.transform(value, format);
   }
 

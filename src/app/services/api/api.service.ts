@@ -148,14 +148,22 @@ export class ApiService {
             const ext = item.value.type.split('/')[1];
             formData.append(item.key, item.value, 'file.'+ext);
           }else{
-            formData.append(item.key, item.value);
+            if(item.value){
+              formData.append(item.key, item.value);
+            }else{
+              formData.append(item.key, "");
+            }
           }
         }
       }else if(value instanceof Blob){
         const ext = value.type.split('/')[1];
         formData.append(key, value, 'file.'+ext);
       }else{
-        formData.append(key, value);
+        if(value){
+          formData.append(key, value);
+        }else{
+          formData.append(key, "");
+        }
       }
     }
     return formData;

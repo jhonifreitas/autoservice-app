@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -12,45 +11,44 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-profile-register',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  selector: 'app-profile-form',
+  templateUrl: './form.page.html',
+  styleUrls: ['./form.page.scss'],
 })
-export class ProfileRegisterPage implements OnInit {
+export class ProfileFormPage implements OnInit {
 
   photo: string;
   form: FormGroup;
   states: State[] = [];
   cities: City[] = [];
+  profile = this.storage.getUser().profile;
 
   constructor(
     private camera: Camera,
     private api: ApiService,
     private webview: WebView,
-    private navCtrl: NavController,
     private storage: StorageService,
     private formBuilder: FormBuilder,
-    private menuCtrl: MenuController,
     private functions: FunctionsService
-  ) { 
-    this.menuCtrl.enable(false);
+  ) {
     this.form = this.formBuilder.group({
       photo: [''],
       name: ['', Validators.required],
-      email: ['', Validators.required],
       phone: ['', Validators.required],
       state: ['', Validators.required],
-      city: ['', Validators.required],
-      password: ['', Validators.required],
-      confirmPass: ['', Validators.required],
-    }, {validator: this.checkPasswords });
+      city: ['', Validators.required]
+    });
   }
 
   async ngOnInit(){
     const loader = await this.functions.loading();
     await this.api.get('state').then(res => {
       this.states = res;
+      setTimeout(() => {
+        this.form.get('state').setValue(this.profile.city.state.id);
+      });
     }).catch(_ => {});
+    this.setValues();
     loader.dismiss();
   }
 
@@ -59,6 +57,9 @@ export class ProfileRegisterPage implements OnInit {
     const state_id = this.form.get('state').value;
     await this.api.get('city/'+state_id).then(res => {
       this.cities = res;
+      setTimeout(() => {
+        this.form.get('city').setValue(this.profile.city.id);
+      });
     }).catch(_ => {});
     loader.dismiss();
   }
@@ -84,19 +85,21 @@ export class ProfileRegisterPage implements OnInit {
     loader.dismiss();
   }
 
-  checkPasswords(group: FormGroup) {
-    let password = group.get('password').value;
-    let confirmPass = group.get('confirmPass').value;
-    return password === confirmPass ? null : { notSame: true }     
+  setValues(){
+    this.photo = this.profile.photo;
+    this.form.get('name').setValue(this.profile.name);
+    this.form.get('phone').setValue(this.profile.phone);
   }
 
   async save(){
     if(this.form.valid){
-      const loader = await this.functions.loading('Registrando-se...');
+      const loader = await this.functions.loading('Salvando...');
       const data = this.form.value;
-      await this.api.post('register/profile', data).then((res: any) => {
-        this.storage.setUser(res);
-        this.navCtrl.navigateRoot('/service');
+      await this.api.put('profile/'+this.profile.id, data).then((res: any) => {
+        const user = this.storage.getUser();
+        user.profile = res;
+        this.storage.setUser(user);
+        this.functions.message('Perfil salvo!');
       }).catch(() => {})
       loader.dismiss();
     }else{

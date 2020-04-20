@@ -12,11 +12,11 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-profile-register',
-  templateUrl: './profile.page.html',
-  styleUrls: ['./profile.page.scss'],
+  selector: 'app-autonomous-register',
+  templateUrl: './autonomous.page.html',
+  styleUrls: ['./autonomous.page.scss'],
 })
-export class ProfileRegisterPage implements OnInit {
+export class AutonomousRegisterPage implements OnInit {
 
   photo: string;
   form: FormGroup;
@@ -41,6 +41,8 @@ export class ProfileRegisterPage implements OnInit {
       phone: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required],
+      birthday: ['', Validators.required],
+      about: ['', Validators.required],
       password: ['', Validators.required],
       confirmPass: ['', Validators.required],
     }, {validator: this.checkPasswords });
@@ -94,7 +96,7 @@ export class ProfileRegisterPage implements OnInit {
     if(this.form.valid){
       const loader = await this.functions.loading('Registrando-se...');
       const data = this.form.value;
-      await this.api.post('register/profile', data).then((res: any) => {
+      await this.api.post('register/autonomous', data).then((res: any) => {
         this.storage.setUser(res);
         this.navCtrl.navigateRoot('/service');
       }).catch(() => {})

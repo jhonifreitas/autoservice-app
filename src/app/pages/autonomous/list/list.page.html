@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Autônomos</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-refresher slot="fixed" (ionRefresh)="ionViewDidEnter($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      pullingText="Puxe para atualizar"
+      refreshingSpinner="circular"
+      refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div id="empty-list" *ngIf="!object_list.length && !loading">
+    <div class="ion-text-center">
+      <ion-icon name="construct"></ion-icon>
+      <h2>Nenhum registro encontrado!</h2>
+    </div>
+  </div>
+
+  <ion-list *ngIf="!loading">
+    <ion-item *ngFor="let obj of object_list" routerDirection="forward" routerLink="{{ obj.id }}">
+      <ion-avatar slot="start">
+        <ion-img [src]="obj.photo ? obj.photo : 'assets/user.png'" alt=""></ion-img>
+      </ion-avatar>
+      <ion-label>{{ obj.name }}</ion-label>
+      <ion-note slot="end">
+        <ion-icon *ngFor="let item of getStars(obj.rating)" name="star" color="warning"></ion-icon>
+        <ion-icon *ngIf="is_star_half(obj.rating)" name="star-half" color="warning"></ion-icon>
+      </ion-note>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="loading">
+    <ion-item *ngFor="let index of [0,1,2,3,4,5,6,7]">
+      <ion-avatar slot="start">
+        <ion-skeleton-text animated class="ion-no-margin"></ion-skeleton-text>
+      </ion-avatar>
+      <ion-label>
+        <ion-skeleton-text animated class="ion-no-margin"></ion-skeleton-text>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

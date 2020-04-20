@@ -1,3 +1,41 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-split-pane contentId="main-content">
+    <ion-menu contentId="main-content" type="overlay">
+      <ion-header *ngIf="storage.getUser()">
+        <ion-toolbar>
+          <small>Bem-vindo,</small>
+          <ion-title class="ion-no-padding">{{ storage.getUser().autonomous ? storage.getUser().autonomous.name : storage.getUser().profile.name }}</ion-title>
+        </ion-toolbar>
+      </ion-header>
+      <ion-content>
+        <ion-list class="ion-no-padding" lines="none">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" routerLink="/service" detail="false" [class.selected]="itemHasSelected('/service')">
+              <ion-icon slot="start" name="home"></ion-icon>
+              <ion-label>Início</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser()">
+            <ion-item routerDirection="root" [routerLink]="storage.getUser().profile ? '/profile' : '/profile/autonomous'" detail="false" [class.selected]="itemHasSelected(storage.getUser().profile ? '/profile' : '/profile/autonomous')">
+              <ion-icon slot="start" name="person"></ion-icon>
+              <ion-label>Perfil</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser() && storage.getUser().autonomous">
+            <ion-item routerDirection="root" routerLink="/my-services" detail="false" [class.selected]="itemHasSelected('/my-services')">
+              <ion-icon slot="start" name="construct"></ion-icon>
+              <ion-label>Meus Serviços</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item lines="none" detail="false" (click)="logout()">
+              <ion-icon slot="start" name="log-out"></ion-icon>
+              <ion-label>Sair</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+  </ion-split-pane>
 </ion-app>
