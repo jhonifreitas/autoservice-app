@@ -35,3 +35,13 @@
     }
 }
 ion-alert .text-danger.alert-button{color: var(--ion-color-danger);}
+
+.ion-page ion-modal{
+    --max-width: 90%;
+    --max-height: 90%;
+    &.modal-avaliation{
+        --max-width: 80%;
+        --max-height: 19rem;
+        --border-radius: 5px;
+    }
+}

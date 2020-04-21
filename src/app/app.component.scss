@@ -4,10 +4,6 @@ ion-menu {
       --padding-bottom: 2rem;
       --padding-start: 2rem;
       --padding-end: 2rem;
-      ion-img{
-        max-width: 50%;
-        margin: 0 auto .5rem auto;
-      }
     }
   
     ion-item {
@@ -17,9 +13,9 @@ ion-menu {
       --padding-bottom: 10px;
       --color: rgba(var(--ion-text-color-rgb,0,0,0),0.54);
       &.selected {
-        --color: var(--ion-color-secondary);
-        --background: rgba(var(--ion-color-secondary-rgb), 0.14);
-        ion-icon{color: var(--ion-color-secondary);}
+        --color: var(--ion-color-dark);
+        --background: rgba(var(--ion-color-dark-rgb), 0.14);
+        ion-icon{color: var(--ion-color-dark);}
       }
       ion-label{font-weight: 500;}
     }

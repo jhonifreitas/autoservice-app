@@ -1,0 +1,30 @@
+<ion-content class="ion-padding">
+
+  <div class="ion-text-center">
+    <h4 class="ion-no-margin">Avaliar {{ autonomous.name }}?</h4>
+    <p>Toque uma estrela para avaliar {{ autonomous.name }}.</p>
+
+    <ion-button fill="clear" color="warning" size="small" *ngFor="let star of stars" (click)="selectStar(star.value)">
+      <ion-icon slot="icon-only" [name]="star.icon"></ion-icon>
+    </ion-button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="ion-margin-top">
+    <ion-item>
+      <ion-label position="floating">Comentário</ion-label>
+      <ion-textarea formControlName="text"></ion-textarea>
+    </ion-item>
+
+    <ion-grid class="ion-no-padding ion-margin-top">
+      <ion-row>
+        <ion-col size="6">
+          <ion-button expand="block" fill="clear" (click)="close()">Cancelar</ion-button>
+        </ion-col>
+        <ion-col size="6">
+          <ion-button type="submit" expand="block" fill="clear" [disabled]="form.invalid">Confirmar</ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+
+</ion-content>

@@ -1,16 +1,18 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { IonicModule } from '@ionic/angular';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AutonomousDetailPage } from './detail.page';
+import { AvaliationPage } from '../avaliation/avaliation.page';
 
 @NgModule({
   imports: [
-    CommonModule,
     FormsModule,
     IonicModule,
+    CommonModule,
+    ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',
@@ -18,6 +20,7 @@ import { AutonomousDetailPage } from './detail.page';
       }
     ])
   ],
-  declarations: [AutonomousDetailPage]
+  entryComponents: [AvaliationPage],
+  declarations: [AutonomousDetailPage, AvaliationPage]
 })
 export class AutonomousDetailPageModule {}

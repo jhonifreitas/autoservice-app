@@ -3,7 +3,13 @@
     <ion-menu contentId="main-content" type="overlay">
       <ion-header *ngIf="storage.getUser()">
         <ion-toolbar>
-          <small>Bem-vindo,</small>
+          <ion-avatar *ngIf="storage.getUser().profile">
+            <ion-img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'"></ion-img>
+          </ion-avatar>
+          <ion-avatar *ngIf="storage.getUser().autonomous">
+            <ion-img [src]="storage.getUser().autonomous.photo ? storage.getUser().autonomous.photo : 'assets/user.png'"></ion-img>
+          </ion-avatar>
+          <p class="ion-no-margin"><small>Bem-vindo,</small></p>
           <ion-title class="ion-no-padding">{{ storage.getUser().autonomous ? storage.getUser().autonomous.name : storage.getUser().profile.name }}</ion-title>
         </ion-toolbar>
       </ion-header>

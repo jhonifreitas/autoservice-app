@@ -11,6 +11,7 @@ import { Camera } from '@ionic-native/camera/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -34,6 +35,7 @@ registerLocaleData(localePt);
     StatusBar,
     SplashScreen,
     CurrencyPipe,
+    SocialSharing,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],
