@@ -33,6 +33,12 @@
               <ion-label>Meus Serviços</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser() && storage.getUser().autonomous">
+            <ion-item routerDirection="root" routerLink="/jobs-done" detail="false" [class.selected]="itemHasSelected('/jobs-done')">
+              <ion-icon slot="start" name="images"></ion-icon>
+              <ion-label>Trabalhos realizados</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false">
             <ion-item lines="none" detail="false" (click)="logout()">
               <ion-icon slot="start" name="log-out"></ion-icon>

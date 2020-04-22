@@ -26,16 +26,16 @@
   </div>
 
   <ion-list *ngIf="!loading">
-    <ion-item-sliding *ngFor="let obj of object_list"> 
-      <ion-item routerDirection="forward" routerLink="form/{{ obj.id }}">
+    <ion-item-sliding *ngFor="let object of object_list"> 
+      <ion-item routerDirection="forward" routerLink="form/{{ object.id }}">
         <ion-avatar slot="start">
-          <ion-img [src]="obj.service.icon" alt=""></ion-img>
+          <ion-img [src]="object.service.icon" alt=""></ion-img>
         </ion-avatar>
-        <ion-label>{{ obj.service.name }}</ion-label>
+        <ion-label>{{ object.service.name }}</ion-label>
       </ion-item>
 
-      <ion-item-options side="end" (ionSwipe)="delete(obj.id)">
-        <ion-item-option color="danger" (click)="delete(obj.id)" expandable>
+      <ion-item-options side="end" (ionSwipe)="delete(object.id)">
+        <ion-item-option color="danger" (click)="delete(object.id)" expandable>
           <ion-icon slot="icon-only" name="trash"></ion-icon>
         </ion-item-option>
       </ion-item-options>

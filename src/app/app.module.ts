@@ -10,6 +10,7 @@ import { File } from '@ionic-native/file/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
@@ -33,6 +34,7 @@ registerLocaleData(localePt);
     WebView,
     DatePipe,
     StatusBar,
+    PhotoViewer,
     SplashScreen,
     CurrencyPipe,
     SocialSharing,

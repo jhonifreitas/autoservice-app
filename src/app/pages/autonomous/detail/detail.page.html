@@ -69,10 +69,24 @@
       </ion-label>
     </ion-item>
 
+    <ion-item *ngIf="object.jobs_done.length">
+      <ion-label>
+        <h2>Trabalhos realizados:</h2>
+        <ion-slides [options]="{slidesPerView: 4}">
+          <ion-slide *ngFor="let job of object.jobs_done">
+            <ion-avatar button (click)="showImage(job.image)">
+              <ion-img [src]="job.image"></ion-img>
+            </ion-avatar>
+          </ion-slide>
+        </ion-slides>
+      </ion-label>
+    </ion-item>
+
 
     <h6 class="ion-padding-start ion-padding-top">Comentários</h6>
     <ion-item *ngIf="!object.reviews.length" lines="none">
-      <ion-label class="ion-text-center">Seja o primeiro a avaliar!</ion-label>
+      <ion-label class="ion-text-center" *ngIf="canAddAvaliation()">Seja o primeiro a avaliar!</ion-label>
+      <ion-label class="ion-text-center" *ngIf="!canAddAvaliation()">Nenhum comentário encontrado!</ion-label>
     </ion-item>
     <ion-item-sliding *ngFor="let commentary of object.reviews; let i = index">
       <ion-item button (click)="openAvaliation(commentary)" [color]="i % 2 == 0 ? 'light' : ''">

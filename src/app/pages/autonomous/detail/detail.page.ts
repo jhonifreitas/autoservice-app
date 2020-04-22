@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ModalController, Platform } from '@ionic/angular';
 
+import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
+import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+
 import { ApiService } from 'src/app/services/api/api.service';
 import { AvaliationPage } from '../avaliation/avaliation.page';
-import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { AutonomousService } from 'src/app/interfaces/autonomous';
 import { Autonomous, Review } from 'src/app/interfaces/autonomous';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -29,6 +31,7 @@ export class AutonomousDetailPage {
     private platform: Platform,
     private router: ActivatedRoute,
     private storage: StorageService,
+    private photoViewer: PhotoViewer,
     private modalCtrl: ModalController,
     private functions: FunctionsService,
     private socialSharing: SocialSharing,
@@ -111,6 +114,10 @@ export class AutonomousDetailPage {
     }else{
       this.socialSharing.shareViaWhatsAppToReceiver('+55'+this.object.phone, msgWhatsapp);
     }
+  }
+
+  showImage(image: string){
+    this.photoViewer.show(image);
   }
 
   async delete(id: number){

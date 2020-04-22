@@ -18,6 +18,10 @@ const routes: Routes = [
     { path: '', loadChildren: () => import('./pages/autonomous/service/list/list.module').then( m => m.AutonomousServicePageModule) },
     { path: 'form', loadChildren: () => import('./pages/autonomous/service/form/form.module').then( m => m.AutonomousServiceFormPageModule) },
   ]},
+  { path: 'jobs-done', canActivate: [AuthGuard], children: [
+    { path: '', loadChildren: () => import('./pages/autonomous/job_done/list/list.module').then( m => m.JobDonePageModule) },
+    { path: 'form', loadChildren: () => import('./pages/autonomous/job_done/form/form.module').then( m => m.JobDoneFormPageModule) },
+  ]},
   { path: 'service', canActivate: [AuthGuard], children: [
     { path: '', loadChildren: () => import('./pages/service/service.module').then( m => m.ServicePageModule) },
     { path: ':service_id/autonomous', children: [

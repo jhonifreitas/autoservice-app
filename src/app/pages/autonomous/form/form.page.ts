@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -83,7 +82,7 @@ export class AutonomousFormPage implements OnInit {
       this.form.get('photo').reset();
       this.photo = this.webview.convertFileSrc(path);
       const image:any = await this.functions.fileToBlob(path, 'image/png');
-      this.form.get('file').setValue(image.file);
+      this.form.get('photo').setValue(image.file);
     }).catch(_ => loader.dismiss());
     loader.dismiss();
   }

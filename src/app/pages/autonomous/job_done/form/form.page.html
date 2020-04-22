@@ -1,0 +1,40 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Formulário de serviço</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
+    <div class="camera ion-padding-vertical">
+      <ion-fab-button color="dark" (click)="takePhoto()">
+        <ion-icon name="camera"></ion-icon>
+      </ion-fab-button>
+    </div>
+
+    <ion-card *ngIf="image">
+      <ion-button (click)="removeFile()" fill="clear" color="danger" size="large">
+        <ion-icon size="large" name="close-circle"></ion-icon>
+      </ion-button>
+      <img [src]="image" />
+    </ion-card>
+
+    <ion-item>
+      <ion-label position="floating">Serviço</ion-label>
+      <ion-select formControlName="service">
+        <ion-select-option *ngFor="let service of services" [value]="service.id">{{ service.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+  </form>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button (click)="save()" color="dark" [disabled]="form.invalid">
+      <ion-icon name="save"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

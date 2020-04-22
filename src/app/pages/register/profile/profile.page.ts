@@ -79,7 +79,7 @@ export class ProfileRegisterPage implements OnInit {
       this.form.get('photo').reset();
       this.photo = this.webview.convertFileSrc(path);
       const image:any = await this.functions.fileToBlob(path, 'image/png');
-      this.form.get('file').setValue(image.file);
+      this.form.get('photo').setValue(image.file);
     }).catch(_ => loader.dismiss());
     loader.dismiss();
   }

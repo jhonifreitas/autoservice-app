@@ -6,7 +6,6 @@ import { Week } from 'src/app/interfaces/week';
 import { ActivatedRoute } from '@angular/router';
 import { Service } from 'src/app/interfaces/service';
 import { ApiService } from 'src/app/services/api/api.service';
-import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
@@ -27,7 +26,6 @@ export class AutonomousServiceFormPage implements OnInit {
     private api: ApiService,
     private router: ActivatedRoute,
     private navCtrl: NavController,
-    private storage: StorageService,
     private formBuilder: FormBuilder,
     private functions: FunctionsService
   ) {

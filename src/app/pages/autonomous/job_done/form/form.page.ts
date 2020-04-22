@@ -1,65 +1,48 @@
+import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
-import { City } from 'src/app/interfaces/city';
-import { State } from 'src/app/interfaces/state';
+import { ActivatedRoute } from '@angular/router';
+import { Service } from 'src/app/interfaces/service';
 import { ApiService } from 'src/app/services/api/api.service';
-import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-profile-form',
+  selector: 'app-job-done-form',
   templateUrl: './form.page.html',
   styleUrls: ['./form.page.scss'],
 })
-export class ProfileFormPage implements OnInit {
+export class JobDoneFormPage implements OnInit {
 
-  photo: string;
+  private id: number;
+
+  image: string;
   form: FormGroup;
-  states: State[] = [];
-  cities: City[] = [];
-  profile = this.storage.getUser().profile;
+  services: Service[] = [];
 
   constructor(
     private camera: Camera,
     private api: ApiService,
     private webview: WebView,
-    private storage: StorageService,
+    private router: ActivatedRoute,
+    private navCtrl: NavController,
     private formBuilder: FormBuilder,
     private functions: FunctionsService
   ) {
+    this.id = parseInt(this.router.snapshot.paramMap.get('id'));
     this.form = this.formBuilder.group({
-      photo: [''],
-      name: ['', Validators.required],
-      phone: ['', Validators.required],
-      state: ['', Validators.required],
-      city: ['', Validators.required]
+      image: ['', Validators.required],
+      service: ['', Validators.required],
     });
   }
 
   async ngOnInit(){
     const loader = await this.functions.loading();
-    await this.api.get('state').then(res => {
-      this.states = res;
-      setTimeout(() => {
-        this.form.get('state').setValue(this.profile.city.state.id);
-      });
-    }).catch(_ => {});
-    this.setValues();
-    loader.dismiss();
-  }
-
-  async getCities(){
-    const loader = await this.functions.loading();
-    const state_id = this.form.get('state').value;
-    await this.api.get('city/'+state_id).then(res => {
-      this.cities = res;
-      setTimeout(() => {
-        this.form.get('city').setValue(this.profile.city.id);
-      });
+    await this.api.get('service').then(res => {
+      this.services = res;
     }).catch(_ => {});
     loader.dismiss();
   }
@@ -76,30 +59,26 @@ export class ProfileFormPage implements OnInit {
     }
 
     await this.camera.getPicture(options).then(async (path) => {
-      this.photo = null;
-      this.form.get('photo').reset();
-      this.photo = this.webview.convertFileSrc(path);
+      this.removeFile()
+      this.image = this.webview.convertFileSrc(path);
       const image:any = await this.functions.fileToBlob(path, 'image/png');
-      this.form.get('photo').setValue(image.file);
+      this.form.get('image').setValue(image.file);
     }).catch(_ => loader.dismiss());
     loader.dismiss();
   }
 
-  setValues(){
-    this.photo = this.profile.photo;
-    this.form.get('name').setValue(this.profile.name);
-    this.form.get('phone').setValue(this.profile.phone);
+  removeFile(){
+    this.image = null;
+    this.form.get('image').reset();
   }
 
   async save(){
     if(this.form.valid){
       const loader = await this.functions.loading('Salvando...');
       const data = this.form.value;
-      await this.api.put('profile/'+this.profile.id, data).then((res: any) => {
-        const user = this.storage.getUser();
-        user.profile = res;
-        this.storage.setUser(user);
-        this.functions.message('Perfil salvo!');
+      await this.api.post('job-done', data).then(_ => {
+        this.navCtrl.back();
+        this.functions.message('Trabalho salvo!');
       }).catch(() => {})
       loader.dismiss();
     }else{
