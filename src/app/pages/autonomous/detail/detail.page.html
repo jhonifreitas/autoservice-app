@@ -43,9 +43,9 @@
       <ion-label>Tipo de pagamento:</ion-label>
       <ion-note slot="end">{{ service.type_pay.name }}</ion-note>
     </ion-item>
-    <ion-item *ngIf="object.price">
+    <ion-item *ngIf="service.price">
       <ion-label>Preço:</ion-label>
-      <ion-note slot="end">{{ object.price }}</ion-note>
+      <ion-note slot="end">{{ service.price }}</ion-note>
     </ion-item>
     <ion-item>
       <ion-label class="ion-text-wrap">

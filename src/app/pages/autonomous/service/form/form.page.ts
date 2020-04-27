@@ -15,8 +15,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
 })
 export class AutonomousServiceFormPage implements OnInit {
 
-  private id: number;
-
+  id: number;
   form: FormGroup;
   weeks: Week[] = [];
   types_pay: Week[] = [];

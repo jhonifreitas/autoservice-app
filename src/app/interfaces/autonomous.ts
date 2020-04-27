@@ -9,13 +9,24 @@ export interface Review {
     text: string;
 }
 
+export interface JobDone {
+    id: number;
+    image: string;
+    service: Service;
+}
+
+export interface TypePay {
+    id: number;
+    name: string;
+}
+
 export interface AutonomousService {
     id: number;
     service: Service;
     week: number[];
     start_hour: string;
     end_hour: string;
-    type_pay: string;
+    type_pay: TypePay;
     price: number;
 }
 
@@ -31,4 +42,5 @@ export interface Autonomous {
     about: string;
     services: AutonomousService[];
     reviews: Review[];
+    jobs_done: JobDone[];
 }

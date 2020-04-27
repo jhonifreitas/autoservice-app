@@ -14,10 +14,9 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
 export class AvaliationPage implements OnInit {
 
   private object: Review;
-  private autonomous: Autonomous;
-
-  name: string;
+  
   form: FormGroup;
+  autonomous: Autonomous;
   stars = [
     {'value': 1, 'icon': 'star-outline'},
     {'value': 2, 'icon': 'star-outline'},
