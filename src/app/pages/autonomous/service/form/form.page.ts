@@ -57,7 +57,7 @@ export class AutonomousServiceFormPage implements OnInit {
   }
 
   async setValues(){
-    await this.api.get('autonomous/service/'+this.id).then(res => {
+    await this.api.get('profile/service/'+this.id).then(res => {
       const now = this.functions.formatDate(new Date(), 'yyyy-MM-ddT');
       this.form.get('price').setValue(res.price);
       this.form.get('week').setValue(res.week);
@@ -73,13 +73,13 @@ export class AutonomousServiceFormPage implements OnInit {
       const loader = await this.functions.loading('Salvando...');
       const data = this.form.value;
       if(this.id){
-        await this.api.put('autonomous/service/'+this.id, data).then(_ => {
+        await this.api.put('profile/service/'+this.id, data).then(_ => {
           this.navCtrl.back();
           this.functions.message('Serviço salvo!');
         }).catch(() => {})
         loader.dismiss();
       }else{
-        await this.api.post('autonomous/service', data).then(_ => {
+        await this.api.post('profile/service', data).then(_ => {
           this.navCtrl.back();
           this.functions.message('Serviço salvo!');
         }).catch(() => {})
@@ -93,7 +93,7 @@ export class AutonomousServiceFormPage implements OnInit {
   async delete(){
     await this.functions.alertDelete().then(async _ => {
       const loader = await this.functions.loading('Removendo...');
-      await this.api.delete('autonomous/service/'+this.id).then(_ => {
+      await this.api.delete('profile/service/'+this.id).then(_ => {
         this.navCtrl.back();
         this.functions.message('Serviço removido!')
       }).catch(_ => {});

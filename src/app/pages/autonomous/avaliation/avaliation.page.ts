@@ -3,7 +3,7 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { ApiService } from 'src/app/services/api/api.service';
-import { Autonomous, Review } from 'src/app/interfaces/autonomous';
+import { Profile, Review } from 'src/app/interfaces/profile';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class AvaliationPage implements OnInit {
   private object: Review;
   
   form: FormGroup;
-  autonomous: Autonomous;
+  autonomous: Profile;
   stars = [
     {'value': 1, 'icon': 'star-outline'},
     {'value': 2, 'icon': 'star-outline'},
@@ -50,7 +50,7 @@ export class AvaliationPage implements OnInit {
   async save(){
     const loader = await this.functions.loading('Salvando...');
     const data = this.form.value;
-    data.to_autonomous = this.autonomous.id;
+    data.to_profile = this.autonomous.id;
     if(this.object){
       await this.api.put('review/'+this.object.id, data).then(res => {
         this.functions.message('Obrigado por avaliar!');

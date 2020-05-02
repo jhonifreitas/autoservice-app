@@ -4,24 +4,21 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { BrMaskerModule } from 'br-mask';
-
-import { ProfileRegisterPage } from './profile.page';
+import { PaymentPage } from './payment.page';
 
 @NgModule({
   imports: [
     FormsModule,
     IonicModule,
     CommonModule,
-    BrMaskerModule,
     ReactiveFormsModule,
     RouterModule.forChild([
       {
         path: '',
-        component: ProfileRegisterPage
+        component: PaymentPage
       }
     ])
   ],
-  declarations: [ProfileRegisterPage]
+  declarations: [PaymentPage]
 })
-export class ProfileRegisterPageModule {}
+export class PaymentPageModule {}

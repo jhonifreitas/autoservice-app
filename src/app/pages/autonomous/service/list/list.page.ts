@@ -5,11 +5,11 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-autonomous-service',
+  selector: 'app-profile-service',
   templateUrl: 'list.page.html',
   styleUrls: ['list.page.scss'],
 })
-export class AutonomousServicePage {
+export class ProfileServicePage {
 
   loading: boolean = true;
   object_list: Service[] = [];
@@ -21,7 +21,7 @@ export class AutonomousServicePage {
 
   async ionViewDidEnter(event=null){
     this.loading = true;
-    await this.api.get('autonomous/service').then(data => {
+    await this.api.get('profile/service').then(data => {
       this.object_list = data;
     }).catch(_ => {})
     if(event){ event.target.complete();}
@@ -31,7 +31,7 @@ export class AutonomousServicePage {
   async delete(id: number){
     await this.functions.alertDelete().then(async _ => {
       const loader = await this.functions.loading('Removendo...');
-      await this.api.delete('autonomous/service/'+id).then(_ => {
+      await this.api.delete('profile/service/'+id).then(_ => {
         this.ionViewDidEnter();
         this.functions.message('Serviço removido!')
       }).catch(_ => {});

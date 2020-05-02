@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Autonomous } from 'src/app/interfaces/autonomous';
+import { Profile } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
@@ -14,7 +14,7 @@ export class AutonomousPage {
   private service_id: number;
 
   loading: boolean = true;
-  object_list: Autonomous[] = [];
+  object_list: Profile[] = [];
 
   constructor(
     private api: ApiService,

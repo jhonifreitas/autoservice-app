@@ -6,16 +6,11 @@ import { AuthGuard } from './guards/auth/auth.guard';
 const routes: Routes = [
   { path: '', redirectTo: 'service', pathMatch: 'full' },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule) },
-  { path: 'register', children: [
-    { path: 'profile', loadChildren: () => import('./pages/register/profile/profile.module').then( m => m.ProfileRegisterPageModule) },
-    { path: 'autonomous', loadChildren: () => import('./pages/register/autonomous/autonomous.module').then( m => m.AutonomousRegisterPageModule) },
-  ]},
-  { path: 'profile', canActivate: [AuthGuard], children: [
-    { path: '', loadChildren: () => import('./pages/profile/form/form.module').then( m => m.ProfileFormPageModule) },
-    { path: 'autonomous', loadChildren: () => import('./pages/autonomous/form/form.module').then( m => m.AutonomousFormPageModule) },
-  ]},
+  { path: 'register', loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule) },
+  { path: 'profile', loadChildren: () => import('./pages/profile/form/form.module').then( m => m.ProfileFormPageModule), canActivate: [AuthGuard] },
+  { path: 'payment', loadChildren: () => import('./pages/payment/payment.module').then( m => m.PaymentPageModule), canActivate: [AuthGuard] },
   { path: 'my-services', canActivate: [AuthGuard], children: [
-    { path: '', loadChildren: () => import('./pages/autonomous/service/list/list.module').then( m => m.AutonomousServicePageModule) },
+    { path: '', loadChildren: () => import('./pages/autonomous/service/list/list.module').then( m => m.ProfileServicePageModule) },
     { path: 'form', loadChildren: () => import('./pages/autonomous/service/form/form.module').then( m => m.AutonomousServiceFormPageModule) },
   ]},
   { path: 'jobs-done', canActivate: [AuthGuard], children: [

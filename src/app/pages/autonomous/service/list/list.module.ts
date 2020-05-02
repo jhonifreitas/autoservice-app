@@ -4,7 +4,7 @@ import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { AutonomousServicePage } from './list.page';
+import { ProfileServicePage } from './list.page';
 
 @NgModule({
   imports: [
@@ -14,10 +14,10 @@ import { AutonomousServicePage } from './list.page';
     RouterModule.forChild([
       {
         path: '',
-        component: AutonomousServicePage
+        component: ProfileServicePage
       }
     ])
   ],
-  declarations: [AutonomousServicePage]
+  declarations: [ProfileServicePage]
 })
-export class AutonomousServicePageModule {}
+export class ProfileServicePageModule {}

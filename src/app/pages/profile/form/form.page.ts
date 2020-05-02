@@ -33,11 +33,18 @@ export class ProfileFormPage implements OnInit {
   ) {
     this.form = this.formBuilder.group({
       photo: [''],
+      about: [''],
+      birthday: [''],
       name: ['', Validators.required],
       phone: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required]
     });
+
+    if(this.isAutonomous()){
+      this.form.get('about').setValidators([Validators.required]);
+      this.form.get('birthday').setValidators([Validators.required]);
+    }
   }
 
   async ngOnInit(){
@@ -89,6 +96,8 @@ export class ProfileFormPage implements OnInit {
     this.photo = this.profile.photo;
     this.form.get('name').setValue(this.profile.name);
     this.form.get('phone').setValue(this.profile.phone);
+    this.form.get('birthday').setValue(this.profile.birthday);
+    this.form.get('about').setValue(this.profile.about);
   }
 
   async save(){
@@ -107,4 +116,7 @@ export class ProfileFormPage implements OnInit {
     }
   }
 
+  isAutonomous(){
+    return this.storage.getUser().profile.types == 'autonomous';
+  }
 }

@@ -7,8 +7,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { ApiService } from 'src/app/services/api/api.service';
 import { AvaliationPage } from '../avaliation/avaliation.page';
-import { AutonomousService } from 'src/app/interfaces/autonomous';
-import { Autonomous, Review } from 'src/app/interfaces/autonomous';
+import { Profile, ProfileService, Review } from 'src/app/interfaces/profile';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
@@ -23,8 +22,8 @@ export class AutonomousDetailPage {
   private service_id: number;
 
   loading: boolean = true;
-  object: Autonomous;
-  service: AutonomousService;
+  object: Profile;
+  service: ProfileService;
 
   constructor(
     private api: ApiService,
@@ -83,7 +82,7 @@ export class AutonomousDetailPage {
 
   canAddAvaliation(){
     const user = this.storage.getUser();
-    if(user.autonomous){
+    if(this.isAutonomous()){
       return false;
     }else if(this.object.reviews.filter(review => review.from_profile.id == user.profile.id).length){
       return false;
@@ -93,7 +92,7 @@ export class AutonomousDetailPage {
 
   async openAvaliation(review: Review = null){
     const user = this.storage.getUser();
-    if(user.autonomous){
+    if(this.isAutonomous()){
       return;
     }
     const modal = await this.modalCtrl.create({
@@ -129,5 +128,9 @@ export class AutonomousDetailPage {
       }).catch(_ => {});
       loader.dismiss();
     }).catch(_ => {})
+  }
+
+  isAutonomous(){
+    return this.storage.getUser().profile.types == 'autonomous';
   }
 }

@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Profile } from 'src/app/interfaces/profile';
-import { Autonomous } from 'src/app/interfaces/autonomous';
 
 export interface User {
   token: string;
   profile: Profile;
-  autonomous: Autonomous;
 }
 
 @Injectable({
