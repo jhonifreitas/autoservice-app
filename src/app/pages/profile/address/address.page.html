@@ -1,0 +1,42 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button *ngIf="payment"></ion-back-button>
+      <ion-menu-button *ngIf="!payment"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Endereço</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
+    <ion-item>
+      <ion-label position="floating">CEP</ion-label>
+      <ion-input type="tel" formControlName="zipcode" maxlength="9" [brmasker]="{mask:'00000-000', len:9, type:'num'}" (ionBlur)="getZipCode()"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Endereço</ion-label>
+      <ion-input type="text" formControlName="address"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Número</ion-label>
+      <ion-input type="text" formControlName="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Bairro</ion-label>
+      <ion-input type="text" formControlName="district"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Complemento</ion-label>
+      <ion-input type="text" formControlName="complement"></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" expand="block" color="dark" class="ion-margin-top" [disabled]="form.invalid">Salvar</ion-button>
+  </form>
+
+</ion-content>

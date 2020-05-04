@@ -24,6 +24,12 @@
               <ion-label>Perfil</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" routerLink="/profile/address" detail="false" [class.selected]="itemHasSelected('/profile/address')">
+              <ion-icon slot="start" name="map"></ion-icon>
+              <ion-label>Endereço</ion-label>
+            </ion-item>
+          </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'autonomous'">
             <ion-item routerDirection="root" routerLink="/my-services" detail="false" [class.selected]="itemHasSelected('/my-services')">
               <ion-icon slot="start" name="construct"></ion-icon>
@@ -37,7 +43,7 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
-            <ion-item routerDirection="root" routerLink="/payment" detail="false" [class.selected]="itemHasSelected('/payment')">
+            <ion-item routerDirection="root" routerLink="/payment/info" detail="false" [class.selected]="itemHasSelected('/payment/info')">
               <ion-icon slot="start" name="ribbon"></ion-icon>
               <ion-label>Seja autônomo</ion-label>
             </ion-item>

@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { PaymentPage } from './payment.page';
+import { PaymentConfirmPage } from './confirm.page';
 
 @NgModule({
   imports: [
@@ -15,10 +15,10 @@ import { PaymentPage } from './payment.page';
     RouterModule.forChild([
       {
         path: '',
-        component: PaymentPage
+        component: PaymentConfirmPage
       }
     ])
   ],
-  declarations: [PaymentPage]
+  declarations: [PaymentConfirmPage]
 })
-export class PaymentPageModule {}
+export class PaymentConfirmPageModule {}

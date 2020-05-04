@@ -96,6 +96,7 @@ export class RegisterPage implements OnInit {
       const data = this.form.value;
       await this.api.post('register/profile', data).then((res: any) => {
         this.storage.setUser(res);
+        this.menuCtrl.enable(true);
         this.navCtrl.navigateRoot('/service');
       }).catch(() => {})
       loader.dismiss();

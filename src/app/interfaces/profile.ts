@@ -33,9 +33,15 @@ export interface Profile {
     id: number;
     name: string;
     types: string;
+    cpf: string;
     email: string;
     phone: string;
+    zipcode: string;
+    address: string;
+    number: string;
+    district: string;
     city: City;
+    complement: string;
     birthday: string;
     rating: string;
     photo: string;

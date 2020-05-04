@@ -9,11 +9,11 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-autonomous-service-form',
+  selector: 'app-profile-service-form',
   templateUrl: './form.page.html',
   styleUrls: ['./form.page.scss'],
 })
-export class AutonomousServiceFormPage implements OnInit {
+export class ProfileServiceFormPage implements OnInit {
 
   id: number;
   form: FormGroup;

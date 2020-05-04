@@ -26,7 +26,12 @@
 
     <ion-item>
       <ion-label position="floating">Telefone</ion-label>
-      <ion-input type="text" formControlName="phone" [brmasker]="{phone: true}" maxlength="15"></ion-input>
+      <ion-input type="tel" formControlName="phone" [brmasker]="{phone: true}" maxlength="15"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">CPF</ion-label>
+      <ion-input type="tel" formControlName="cpf" [brmasker]="{mask: '000.000.000-00'}" maxlength="14"></ion-input>
     </ion-item>
 
     <ion-item>

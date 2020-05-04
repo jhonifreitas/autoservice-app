@@ -32,6 +32,7 @@ export class ProfileFormPage implements OnInit {
     private functions: FunctionsService
   ) {
     this.form = this.formBuilder.group({
+      cpf: [''],
       photo: [''],
       about: [''],
       birthday: [''],
@@ -96,6 +97,7 @@ export class ProfileFormPage implements OnInit {
     this.photo = this.profile.photo;
     this.form.get('name').setValue(this.profile.name);
     this.form.get('phone').setValue(this.profile.phone);
+    this.form.get('cpf').setValue(this.profile.cpf);
     this.form.get('birthday').setValue(this.profile.birthday);
     this.form.get('about').setValue(this.profile.about);
   }
@@ -104,7 +106,7 @@ export class ProfileFormPage implements OnInit {
     if(this.form.valid){
       const loader = await this.functions.loading('Salvando...');
       const data = this.form.value;
-      await this.api.put('profile/'+this.profile.id, data).then((res: any) => {
+      await this.api.patch('profile', data).then((res: any) => {
         const user = this.storage.getUser();
         user.profile = res;
         this.storage.setUser(user);

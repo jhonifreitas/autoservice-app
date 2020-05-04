@@ -6,6 +6,12 @@ export interface User {
   profile: Profile;
 }
 
+export interface Config {
+  value: string;
+  avaliation_days: number;
+  no_interest_installment: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -26,5 +32,27 @@ export class StorageService {
   isAuthenticated(){
     if (this.getUser()) { return true }
     return false;
+  }
+
+  // PAYMENT METHOD
+  setPayMethod(data: string){
+    localStorage.setItem('pay-method', JSON.stringify(data));
+  }
+  getPayMethod(): string {
+    return JSON.parse(localStorage.getItem('pay-method'));
+  }
+  removePayMethod(){
+    localStorage.removeItem('pay-method');
+  }
+
+  // CONFIG
+  setConfig(data: Config){
+    localStorage.setItem('config', JSON.stringify(data));
+  }
+  getConfig(): Config {
+    return JSON.parse(localStorage.getItem('config'));
+  }
+  removeConfig(){
+    localStorage.removeItem('config');
   }
 }
