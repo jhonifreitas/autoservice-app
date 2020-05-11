@@ -1,15 +1,10 @@
 import { Injectable } from '@angular/core';
+import { Config } from 'src/app/interfaces/config';
 import { Profile } from 'src/app/interfaces/profile';
 
 export interface User {
   token: string;
   profile: Profile;
-}
-
-export interface Config {
-  value: string;
-  avaliation_days: number;
-  no_interest_installment: number;
 }
 
 @Injectable({
@@ -32,17 +27,6 @@ export class StorageService {
   isAuthenticated(){
     if (this.getUser()) { return true }
     return false;
-  }
-
-  // PAYMENT METHOD
-  setPayMethod(data: string){
-    localStorage.setItem('pay-method', JSON.stringify(data));
-  }
-  getPayMethod(): string {
-    return JSON.parse(localStorage.getItem('pay-method'));
-  }
-  removePayMethod(){
-    localStorage.removeItem('pay-method');
   }
 
   // CONFIG

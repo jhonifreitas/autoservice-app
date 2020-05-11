@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { Global } from 'src/app/services/global';
 import { Profile } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api/api.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -22,6 +23,7 @@ export class AddressPage implements OnInit {
   payment: boolean = false;
 
   constructor(
+    private global: Global,
     private api: ApiService,
     private navCtrl: NavController,
     private router: ActivatedRoute,
@@ -78,9 +80,9 @@ export class AddressPage implements OnInit {
         user.profile = res;
         this.storage.setUser(user);
         this.functions.message('Endereço salvo!');
-        if(this.payment){
+        if(this.payment && this.global.payment){
           let page = '/payment/confirm';
-          if(this.storage.getPayMethod() == 'credit_card'){
+          if(this.global.payment.method == 'credit_card'){
             page = '/payment/card';
           }
           this.navCtrl.navigateForward(page);

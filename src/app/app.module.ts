@@ -15,6 +15,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { AppComponent } from './app.component';
+import { Global } from 'src/app/services/global';
 import { AppRoutingModule } from './app-routing.module';
 
 registerLocaleData(localePt);
@@ -30,6 +31,7 @@ registerLocaleData(localePt);
   ],
   providers: [
     File,
+    Global,
     Camera,
     WebView,
     DatePipe,

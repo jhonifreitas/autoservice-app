@@ -12,11 +12,10 @@
   <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
     <ion-item>
       <ion-label position="floating">Número do Cartão</ion-label>
-      <ion-input type="tel" maxlength="19" formControlName="number" [brmasker]="{mask:'0000 0000 0000 0000', len:19, type:'num'}" (ionBlur)="getCardBrand()">
-        <ion-note *ngIf="cardBrand && cardBrand.image">
-          <img [src]="cardBrand.image" alt="">
-        </ion-note>
-      </ion-input>
+      <ion-input type="tel" maxlength="19" formControlName="number" [brmasker]="{mask:'0000 0000 0000 0000', len:19, type:'num'}" (ionBlur)="getCardBrand()"></ion-input>
+      <ion-note slot="end" *ngIf="cardBrand && cardBrand.image">
+        <img [src]="cardBrand.image" alt="">
+      </ion-note>
     </ion-item>
 
     <ion-item>
@@ -51,13 +50,6 @@
     <ion-item>
       <ion-label position="floating">CVV</ion-label>
       <ion-input type="tel" [maxlength]="cardBrand ? cardBrand.cvvSize : 6" formControlName="cvv"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Parcelas</ion-label>
-      <ion-select formControlName="installment" cancelText="cancelar">
-        <ion-select-option *ngFor="let item of installments" value="{{ item.quantity }}">{{ item.quantity }} x {{ item.installmentAmount | currency:'BRL' }}</ion-select-option>
-      </ion-select>
     </ion-item>
 
     <ion-button type="submit" expand="block" color="dark" class="ion-margin-top" [disabled]="form.invalid">Assinar</ion-button>

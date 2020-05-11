@@ -1,11 +1,10 @@
 import { NavController } from '@ionic/angular';
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { Global } from 'src/app/services/global';
 import { Profile } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api/api.service';
-import { StorageService } from 'src/app/services/storage/storage.service';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
@@ -26,9 +25,9 @@ export class CardPage implements OnInit {
   installments: any[] = [];
 
   constructor(
+    private global: Global,
     private api: ApiService,
     private navCtrl: NavController,
-    private storage: StorageService,
     private formBuilder: FormBuilder,
     private payment: PaymentService,
     private functions: FunctionsService
@@ -39,14 +38,17 @@ export class CardPage implements OnInit {
       cpf: ['', Validators.required],
       month: ['01', Validators.required],
       year: [this.now.getFullYear().toString(), Validators.required],
-      cvv: ['', [Validators.required, Validators.minLength(3)]],
-      installment: ['', Validators.required],
+      cvv: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
   ngOnInit(){
-    this.initMonths();
-    this.initYears();
+    if(!this.global.pagseguro || !this.global.payment || this.global.payment.method != 'credit_card'){
+      this.navCtrl.back();
+    }else{
+      this.initMonths();
+      this.initYears();
+    }
   }
 
   initMonths(){
@@ -74,34 +76,32 @@ export class CardPage implements OnInit {
     this.payment.getCardBrand(number).then((result: any) => {
       this.cardBrand = result.brand;
 
-      const payments = this.storage.getPaymentMethods();
-      const path = payments.CREDIT_CARD.options[this.cardBrand.name.toUpperCase()].images.SMALL.path;
+      const path = this.global.pagseguro.cards[this.cardBrand.name.toUpperCase()].images.SMALL.path;
       this.cardBrand.image = this.payment.host + path;
-      
-      this.initInstallments();
     }).catch(err => {
       console.log(err)
       this.form.get('number').setErrors({'invalid': true});
     });
   }
 
-  initInstallments(){
-    if (this.cardBrand) {
-      this.payment.getInstallments(this.cardBrand.name).then((result: any) => {
-        this.installments = result;
-        this.form.get('installment').setValue(this.installments[0].quantity.toString());
-      }).catch(error => {
-        console.error('error getting installments', error);
-        this.form.setErrors({'installment': true});
-      });
-    }
-  }
-
   async save(){
     if(this.form.valid){
       const loader = await this.functions.loading('Salvando...');
       const data = this.form.value;
-      
+      await this.payment.getCardToken(data, this.cardBrand.name).then(token => {
+        this.global.payment.card = {
+          card_token: token,
+          card_number: data.number,
+          card_name: data.name,
+          card_cpf: data.cpf,
+          card_month: data.month,
+          card_year: data.year,
+          card_cvv: data.cvv
+        };
+        this.navCtrl.navigateForward('/payment/confirm');
+      }).catch(err => {
+        this.functions.message('Dados inválidos!');
+      });
       loader.dismiss();
     }else{
       this.functions.message('Verifique os dados antes de prosseguir!');

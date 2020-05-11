@@ -6,6 +6,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 import { City } from 'src/app/interfaces/city';
 import { State } from 'src/app/interfaces/state';
+import { Profile } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api/api.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
@@ -106,7 +107,7 @@ export class ProfileFormPage implements OnInit {
     if(this.form.valid){
       const loader = await this.functions.loading('Salvando...');
       const data = this.form.value;
-      await this.api.patch('profile', data).then((res: any) => {
+      await this.api.patch('profile', data).then((res: Profile) => {
         const user = this.storage.getUser();
         user.profile = res;
         this.storage.setUser(user);

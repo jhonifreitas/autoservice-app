@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from '../api/api.service';
 import { environment } from 'src/environments/environment';
+import { StorageService } from '../storage/storage.service';
 
 export interface Payment {
   
@@ -19,6 +20,7 @@ export class PaymentService {
 
   constructor(
     private api: ApiService,
+    private storage: StorageService,
   ) { }
 
   loadScript(){
@@ -74,18 +76,17 @@ export class PaymentService {
 
   getInstallments(brand: any){
     return new Promise((resolve, reject) => {
-      this.api.get('default/ad').then(data => {
-        PagSeguroDirectPayment.getInstallments({
-          amount: data.value,
-          brand: brand,
-          maxInstallmentNoInterest: data.no_interest_installment,
-          success: (response) => {
-            resolve(response.installments[brand]);
-          }, error: (response) => {
-            reject(response);
-          }
-        });
-      }).catch(err => {})
+      const config = this.storage.getConfig();
+      PagSeguroDirectPayment.getInstallments({
+        amount: config.value,
+        brand: brand,
+        maxInstallmentNoInterest: config.no_interest_installment,
+        success: (response) => {
+          resolve(response.installments[brand]);
+        }, error: (response) => {
+          reject(response);
+        }
+      });
     });
   }
 

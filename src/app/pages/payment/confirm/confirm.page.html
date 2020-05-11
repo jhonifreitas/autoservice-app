@@ -10,7 +10,7 @@
 <ion-content class="ion-padding">
 
   <div class="ion-text-center">
-    <ion-icon name="barcode" color="dark" style="font-size: 10rem;"></ion-icon>
+    <ion-icon [name]="isTicket() ? 'barcode' : 'card'" color="dark" style="font-size: 10rem;"></ion-icon>
   </div>
 
   <ion-item>
@@ -24,6 +24,10 @@
   <ion-item>
     <ion-label class="ion-text-wrap">Apartir de {{ first_pay|date:'dd' }} de {{ first_pay|date:'MMM.' }} de {{ first_pay|date:'yyyy' }}</ion-label>
     <ion-note slot="end">{{ config.value|currency:'BRL' }}/mês</ion-note>
+  </ion-item>
+  <ion-item *ngIf="isTicket()">
+    <ion-label>Taxa de boleto</ion-label>
+    <ion-note slot="end">R$ 1,00</ion-note>
   </ion-item>
 
   <ion-item *ngIf="isTicket()">
@@ -47,7 +51,7 @@
     <small *ngIf="isTicket()">
       O boleto será enviado no dia {{ first_pay|date:'dd' }} de {{ first_pay|date:'MMM.' }} de {{ first_pay|date:'yyyy' }},
       com vencimento após 5 dias. O cancelamento é efetuado caso o boleto não seja pago até data do vencimento.
-      Você receberá o boleto automático de {{ config.value|currency:'BRL' }} a cada mês até que cancele a assinatura.
+      Você receberá o boleto automático de {{ config.value|currency:'BRL' }} (mas a taxa do boleto de R$ 1,00), a cada mês até que cancele a assinatura.
     </small>
   </div>
 

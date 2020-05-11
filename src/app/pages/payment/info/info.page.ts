@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, ActionSheetController } from '@ionic/angular';
 
+import { Global } from 'src/app/services/global';
 import { ApiService } from 'src/app/services/api/api.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { PaymentService } from 'src/app/services/payment/payment.service';
@@ -14,6 +15,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
 export class PaymentInfoPage implements OnInit {
 
   constructor(
+    private global: Global,
     private api: ApiService,
     private navCtrl: NavController,
     private storage: StorageService,
@@ -54,6 +56,7 @@ export class PaymentInfoPage implements OnInit {
             role: 'destructive',
             icon: 'card',
             handler: () => {
+              this.global.pagseguro = {cards: res.CREDIT_CARD.options};
               this.goToNext('credit_card')
             }
           }
@@ -73,8 +76,8 @@ export class PaymentInfoPage implements OnInit {
     loader.dismiss();
   }
 
-  goToNext(type: string){
-    this.storage.setPayMethod(type);
+  goToNext(method: 'credit_card' | 'ticket'){
+    this.global.payment = {method: method};
     const profile = this.storage.getUser().profile;
     let page:any[] = ['/payment/confirm'];
     if(!profile.cpf){
@@ -83,7 +86,7 @@ export class PaymentInfoPage implements OnInit {
     }else if(!profile.zipcode || !profile.address || !profile.number || !profile.district){
       page = ['/profile/address', {payment: true}];
     }else{
-      if(type == 'credit_card'){
+      if(method == 'credit_card'){
         page = ['/payment/card'];
       }
     }

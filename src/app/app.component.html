@@ -31,13 +31,13 @@
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'autonomous'">
-            <ion-item routerDirection="root" routerLink="/my-services" detail="false" [class.selected]="itemHasSelected('/my-services')">
+            <ion-item routerDirection="root" routerLink="/profile/my-services" detail="false" [class.selected]="itemHasSelected('/profile/my-services')">
               <ion-icon slot="start" name="construct"></ion-icon>
               <ion-label>Meus Serviços</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'autonomous'">
-            <ion-item routerDirection="root" routerLink="/jobs-done" detail="false" [class.selected]="itemHasSelected('/jobs-done')">
+            <ion-item routerDirection="root" routerLink="/profile/jobs-done" detail="false" [class.selected]="itemHasSelected('/profile/jobs-done')">
               <ion-icon slot="start" name="images"></ion-icon>
               <ion-label>Trabalhos realizados</ion-label>
             </ion-item>

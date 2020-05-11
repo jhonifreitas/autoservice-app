@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { NavController } from '@ionic/angular';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 
+import { objectToFormData } from 'object-to-formdata/src';
+
 import { environment } from 'src/environments/environment';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
@@ -138,55 +140,7 @@ export class ApiService {
   }
 
   convertToFormData(data: Object): FormData {
-    const formData = new FormData();
-    for (let key in data) {
-      let value = data[key];
-      if(value instanceof Array){
-        const list = this.convertList(key, value);
-        for(let item of list){
-          if(item.value instanceof Blob){
-            const ext = item.value.type.split('/')[1];
-            formData.append(item.key, item.value, 'file.'+ext);
-          }else{
-            if(item.value){
-              formData.append(item.key, item.value);
-            }else{
-              formData.append(item.key, "");
-            }
-          }
-        }
-      }else if(value instanceof Blob){
-        const ext = value.type.split('/')[1];
-        formData.append(key, value, 'file.'+ext);
-      }else{
-        if(value){
-          formData.append(key, value);
-        }else{
-          formData.append(key, "");
-        }
-      }
-    }
-    return formData;
-  }
-
-  convertList(defaultKey, value){
-    let num = 0;
-    const data = [];
-    for(let item of value){
-      if(item instanceof Blob){
-        data.push({key: defaultKey+'['+num+']', value: item})
-      }else{
-        if(item instanceof Array){
-          for (let key in item) {
-            data.push({key: defaultKey+'['+num+']'+key, value: item[key]});
-          }
-        }else{
-          data.push({key: defaultKey, value: item});
-        }
-      }
-      num ++;
-    }
-    return data;
+    return objectToFormData(data, {indices: true});
   }
 
   getHeaders(){
