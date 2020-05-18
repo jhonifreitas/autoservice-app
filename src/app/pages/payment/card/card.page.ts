@@ -35,6 +35,7 @@ export class CardPage implements OnInit {
     this.form = this.formBuilder.group({
       number: ['', Validators.required],
       name: ['', Validators.required],
+      birthdate: ['', Validators.required],
       cpf: ['', Validators.required],
       month: ['01', Validators.required],
       year: [this.now.getFullYear().toString(), Validators.required],
@@ -91,6 +92,7 @@ export class CardPage implements OnInit {
       await this.payment.getCardToken(data, this.cardBrand.name).then(token => {
         this.global.payment.card = {
           card_token: token,
+          card_birthdate: data.birthdate,
           card_number: data.number,
           card_name: data.name,
           card_cpf: data.cpf,
