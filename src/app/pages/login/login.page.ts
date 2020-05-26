@@ -14,6 +14,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
 export class LoginPage {
 
   form: FormGroup;
+  togglePass: boolean = false;
 
   constructor(
     private api: ApiService,

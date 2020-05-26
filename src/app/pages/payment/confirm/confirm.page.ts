@@ -24,7 +24,7 @@ export class PaymentConfirmPage {
     private storage: StorageService,
     private functions: FunctionsService
   ) {
-    this.first_pay.setDate(this.first_pay.getDate() + this.config.avaliation_days);
+    this.first_pay.setDate(this.first_pay.getDate() + this.config.trial_period);
     if(!this.global.payment || !this.global.payment.method){
       this.navCtrl.back();
     }

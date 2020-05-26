@@ -1,13 +1,51 @@
 ion-content{
-  --background: var(--ion-toolbar-background);
-  #logo{
-    padding: 5rem;
-  }
-  ion-item{
-    --background: transparent;
-    --color: var(--ion-color-light);
-    &.item-has-focus ion-label{
-      color: var(--ion-color-light);
+  --background: var(--ion-color-secondary);
+  .vertical-align{
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    ion-card{
+      overflow: visible;
+      margin-top: 3rem;
+      ion-card-content{
+        padding: 2rem;
+        .header{
+          padding: 0 2rem;
+          margin-top: -5rem;
+        }
+        .text{
+          padding: 0 2rem;
+          .title{
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px;
+            line-height: 35px;
+            margin-bottom: .5rem;
+          }
+          p{
+            font-size: 13px;
+            line-height: 25px;
+            letter-spacing: 0.65px;
+          }
+        }
+        ion-item{
+          --ion-color-primary: var(--ion-color-tertiary);
+          --padding-start: 0;
+          --inner-padding-end: 0;
+          ion-label{
+            opacity: 0.5;
+          }
+        }
+        ion-button{
+          height: 40px;
+          text-transform: none;
+        }
+        .forgot-password ion-button{
+          font-size: 12px;
+          --padding-end: 0;
+          --padding-start: 0;
+          --border-radius: 0;
+        }
+      }
     }
   }
 }

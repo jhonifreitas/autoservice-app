@@ -16,8 +16,13 @@ export class AuthGuard implements CanActivate {
   ){ }
 
   canActivate(): Observable<boolean> | Promise<boolean> | boolean {
+    const intro = this.storage.getIntro();
     const isAuth = this.storage.isAuthenticated();
-    if (!isAuth) {this.navCtrl.navigateRoot(['/login'])}
+    if (intro) {
+      if (!isAuth) {this.navCtrl.navigateRoot('/login')}
+    }else{
+      this.navCtrl.navigateRoot('/intro');
+    }
     return isAuth
   }
 }

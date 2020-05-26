@@ -80,7 +80,7 @@ export class PaymentService {
       PagSeguroDirectPayment.getInstallments({
         amount: config.value,
         brand: brand,
-        maxInstallmentNoInterest: config.no_interest_installment,
+        maxInstallmentNoInterest: 1,
         success: (response) => {
           resolve(response.installments[brand]);
         }, error: (response) => {

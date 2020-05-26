@@ -1,22 +1,68 @@
 ion-content{
-  --background: var(--ion-toolbar-background);
-  ion-item{
-    --background: transparent;
-    --color: var(--ion-color-light);
-    &.item-has-focus ion-label{
-      color: var(--ion-color-light);
-    }
+  --background: var(--ion-color-secondary);
+  ion-toolbar{
+    position: absolute;
   }
   ion-avatar{
     position: relative;
     width: 7rem;
     height: 7rem;
-    margin: 1rem auto 0 auto;
+    margin: 0 auto;
+    padding: .5rem;
+    background: var(--ion-color-secondary);
     ion-fab-button{
       position: absolute;
-      bottom: 0;
+      top: 0;
       right: 0;
       margin: 0;
+    }
+  }
+  .vertical-align{
+    min-height: 100%;
+    display: flex;
+    align-items: center;
+    ion-card{
+      overflow: visible;
+      margin-top: 4.5rem;
+      ion-card-content{
+        padding: 2rem;
+        .header{
+          padding: 0 2rem;
+          margin-top: -6.5rem;
+        }
+        .text{
+          padding: 1.5rem 1rem 0 1rem;
+          .title{
+            font-family: 'Poppins', sans-serif;
+            font-size: 30px;
+            line-height: 35px;
+            margin-bottom: .5rem;
+          }
+          p{
+            font-size: 13px;
+            line-height: 25px;
+            letter-spacing: 0.65px;
+          }
+        }
+        ion-item{
+          --ion-color-primary: var(--ion-color-tertiary);
+          --padding-start: 0;
+          --inner-padding-end: 0;
+          ion-label{
+            opacity: 0.5;
+          }
+        }
+        ion-button{
+          height: 40px;
+          text-transform: none;
+        }
+        .forgot-password ion-button{
+          font-size: 12px;
+          --padding-end: 0;
+          --padding-start: 0;
+          --border-radius: 0;
+        }
+      }
     }
   }
 }

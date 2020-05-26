@@ -1,26 +1,40 @@
-<ion-content>
+<ion-content class="ion-padding">
 
-  <div id="logo" class="ion-text-center">
-    <!-- <ion-img src="assets/icon/favicon.png"></ion-img> -->
-    <ion-icon name="construct" color="light" style="font-size: 10rem;"></ion-icon>
-  </div>
+  <div class="vertical-align">
+    <ion-card>
+      <ion-card-content>
+        <div class="header ion-text-center">
+          <img src="assets/login.png" alt="">
+        </div>
+        <div class="text ion-text-center">
+          <ion-text color="tertiary"><h2 class="title">Bem-vindo</h2></ion-text>
+          <p>Faça o login abaixo para acessar a sua conta</p>
+        </div>
+        <form [formGroup]="form" (ngSubmit)="auth()">
+          <ion-item>
+            <ion-label position="floating" color="dark">Email</ion-label>
+            <ion-input type="email" formControlName="username" class="font-weight-bold"></ion-input>
+            <ion-icon slot="end" name="mail" class="ion-align-self-end"></ion-icon>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="floating" color="dark">Senha</ion-label>
+            <ion-input [type]="togglePass ? 'text' : 'password'" formControlName="password" class="font-weight-bold"></ion-input>
+            <ion-icon button slot="end" [name]="togglePass ? 'eye' : 'eye-off'" class="ion-align-self-end" (click)="togglePass = !togglePass"></ion-icon>
+          </ion-item>
 
-  <form [formGroup]="form" (ngSubmit)="auth()" class="ion-padding">
-    <ion-item>
-      <ion-label position="floating">Usuário</ion-label>
-      <ion-input type="email" formControlName="username"></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label position="floating">Senha</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
-
-    <ion-button type="submit" expand="block" color="light" class="ion-margin-top" [disabled]="form.invalid">Entrar</ion-button>
-  </form>
-
-  <div class="ion-padding-horizontal">
-    <ion-button expand="block" fill="clear" color="light" routerDirection="forward" routerLink="/register">Registre-se</ion-button>
+          <div class="ion-text-right forgot-password">
+            <ion-button fill="clear" color="tertiary" routerDirection="forward" routerLink="/forgot-password">Esqueceu sua senha?</ion-button>
+          </div>
+      
+          <div class="ion-padding-horizontal ion-text-center">
+            <ion-button type="submit" expand="block" color="tertiary" class="ion-margin-top" [disabled]="form.invalid">Entrar</ion-button>
+            <p class="font-weight-bold ion-padding-vertical">ou se você é novo,</p>
+            <ion-button expand="block" color="dark" routerDirection="forward" routerLink="/register">Cadastre-se</ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
   </div>
 
 </ion-content>

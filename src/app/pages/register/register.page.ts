@@ -105,4 +105,8 @@ export class RegisterPage implements OnInit {
     }
   }
 
+  goToBack(){
+    this.navCtrl.back();
+  }
+
 }

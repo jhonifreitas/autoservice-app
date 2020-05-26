@@ -39,4 +39,15 @@ export class StorageService {
   removeConfig(){
     localStorage.removeItem('config');
   }
+
+  // INTRO
+  setIntro(data: boolean){
+    localStorage.setItem('intro', JSON.stringify(data));
+  }
+  getIntro(): boolean {
+    return JSON.parse(localStorage.getItem('intro'));
+  }
+  removeIntro(){
+    localStorage.removeItem('intro');
+  }
 }

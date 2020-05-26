@@ -1,58 +1,77 @@
-<ion-content>
+<ion-content class="ion-padding">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="start" name="arrow-back"></ion-icon>
+        Voltar
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="vertical-align">
+    <ion-card>
+      <ion-card-content>
+        <div class="header ion-text-center">
+          <ion-avatar>
+            <ion-img [src]="photo ? photo : 'assets/user.png'" alt=""></ion-img>
+            <ion-fab-button color="tertiary" size="small" (click)="takePhoto()">
+              <ion-icon name="camera"></ion-icon>
+            </ion-fab-button>
+          </ion-avatar>
+        </div>
+        <div class="text ion-text-center">
+          <ion-text color="tertiary"><h2 class="title">Crie seu perfil</h2></ion-text>
+          <p>Complete os campos abaixo com suas informações</p>
+        </div>
 
-  <ion-item lines="none">
-    <ion-avatar>
-      <ion-img [src]="photo ? photo : 'assets/user.png'" alt=""></ion-img>
-      <ion-fab-button color="light" size="small" (click)="takePhoto()">
-        <ion-icon name="camera"></ion-icon>
-      </ion-fab-button>
-    </ion-avatar>
-  </ion-item>
+        <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
+          <ion-item>
+            <ion-label position="floating" color="dark">Nome</ion-label>
+            <ion-input type="text" formControlName="name" class="font-weight-bold"></ion-input>
+          </ion-item>
 
-  <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
-    <ion-item>
-      <ion-label position="floating">Nome</ion-label>
-      <ion-input type="text" formControlName="name"></ion-input>
-    </ion-item>
+          <ion-item>
+            <ion-label position="floating" color="dark">Email</ion-label>
+            <ion-input type="email" formControlName="email" class="font-weight-bold"></ion-input>
+          </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">E-mail</ion-label>
-      <ion-input type="email" formControlName="email"></ion-input>
-    </ion-item>
+          <ion-item>
+            <ion-label position="floating" color="dark">Telefone</ion-label>
+            <ion-input type="text" formControlName="phone" class="font-weight-bold" [brmasker]="{phone: true}" maxlength="15"></ion-input>
+          </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Telefone</ion-label>
-      <ion-input type="text" formControlName="phone" [brmasker]="{phone: true}" maxlength="15"></ion-input>
-    </ion-item>
+          <ion-item>
+            <ion-label position="floating" color="dark">Estado</ion-label>
+            <ion-select formControlName="state" class="font-weight-bold" (ionChange)="getCities()">
+              <ion-select-option *ngFor="let state of states" [value]="state.id">{{ state.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Estado</ion-label>
-      <ion-select formControlName="state" (ionChange)="getCities()">
-        <ion-select-option *ngFor="let state of states" [value]="state.id">{{ state.name }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+          <ion-item *ngIf="form.get('state').value">
+            <ion-label position="floating" color="dark">Cidade</ion-label>
+            <ion-select formControlName="city" class="font-weight-bold">
+              <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
 
-    <ion-item *ngIf="form.get('state').value">
-      <ion-label position="floating">Cidade</ion-label>
-      <ion-select formControlName="city">
-        <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
-      </ion-select>
-    </ion-item>
+          <ion-item>
+            <ion-label position="floating" color="dark">Crie sua senha</ion-label>
+            <ion-input type="password" formControlName="password" class="font-weight-bold"></ion-input>
+          </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Senha</ion-label>
-      <ion-input type="password" formControlName="password"></ion-input>
-    </ion-item>
+          <ion-item>
+            <ion-label position="floating" color="dark">Confirmar sua senha</ion-label>
+            <ion-input type="password" formControlName="confirmPass" class="font-weight-bold"></ion-input>
+          </ion-item>
+          <ion-item lines="none" *ngIf="form.get('password').value && form.get('confirmPass').value && form.hasError('notSame')">
+            <ion-label color="danger">As senhas não coincidem!</ion-label>
+          </ion-item>
 
-    <ion-item>
-      <ion-label position="floating">Confirmar senha</ion-label>
-      <ion-input type="password" formControlName="confirmPass"></ion-input>
-    </ion-item>
-    <ion-item lines="none" *ngIf="form.get('password').value && form.get('confirmPass').value && form.hasError('notSame')">
-      <ion-label color="danger">As senhas não coincidem!</ion-label>
-    </ion-item>
-
-    <ion-button type="submit" expand="block" color="light" class="ion-margin-top" [disabled]="form.invalid">Registrar-se</ion-button>
-  </form>
+          <div class="ion-padding-horizontal">
+            <ion-button type="submit" expand="block" color="dark" class="ion-margin-top" [disabled]="form.invalid">Cadastre-se</ion-button>
+          </div>
+        </form>
+      </ion-card-content>
+    </ion-card>
+  </div>
 
 </ion-content>
