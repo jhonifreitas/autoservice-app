@@ -1,0 +1,29 @@
+<ion-content>
+
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-avatar slot="start">
+        <ion-img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'"></ion-img>
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <h2 class="ion-no-margin font-weight-bold">Olá {{ storage.getUser().profile.name }},</h2>
+        <p>o que você precisa hoje?</p>
+      </ion-label>
+    </ion-item>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+
+  <ion-item id="search" lines="none">
+    <ion-searchbar searchIcon="search-outline" placeholder="busque por serviço ou profissional"></ion-searchbar>
+    <ion-button slot="end" color="tertiary">ir</ion-button>
+  </ion-item>
+
+  <div class="ion-padding-horizontal">
+    <div class="section">
+      <h4>Serviços solicitados</h4>
+    </div>
+  </div>
+
+</ion-content>

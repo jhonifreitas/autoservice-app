@@ -2,19 +2,21 @@ import { Component } from '@angular/core';
 
 import { Service } from 'src/app/interfaces/service';
 import { ApiService } from 'src/app/services/api/api.service';
+import { StorageService } from 'src/app/services/storage/storage.service';
 
 @Component({
-  selector: 'app-service',
-  templateUrl: 'service.page.html',
-  styleUrls: ['service.page.scss'],
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss'],
 })
-export class ServicePage {
+export class HomePage {
 
   loading: boolean = true;
   object_list: Service[] = [];
 
   constructor(
-    private api: ApiService
+    private api: ApiService,
+    public storage: StorageService
   ) {}
 
   async ionViewDidEnter(event=null){

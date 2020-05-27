@@ -23,8 +23,8 @@ export class AppComponent {
   constructor(
     private platform: Platform,
     private statusBar: StatusBar,
-    private navCtrl: NavController,
     public storage: StorageService,
+    private navCtrl: NavController,
     private splashScreen: SplashScreen,
     private functions: FunctionsService,
   ) {
@@ -34,7 +34,7 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       if(this.platform.is('cordova')){
-        this.statusBar.backgroundColorByHexString('#222428');
+        this.statusBar.backgroundColorByHexString('#E8EFFD');
         this.statusBar.styleLightContent();
         this.splashScreen.hide();
 
@@ -58,16 +58,9 @@ export class AppComponent {
     });
   }
 
-  itemHasSelected(url){
-    const path = window.location.pathname.split('/').filter(name => name != '');
-    if (path.length) {
-      const name = '/'+path.join('/');
-      return url.toLowerCase() === name;
-    }
-  }
-
   logout(){
-    localStorage.clear();
+    this.storage.removeUser();
+    this.storage.removeConfig();
     this.navCtrl.navigateRoot('/login');
   }
 }
