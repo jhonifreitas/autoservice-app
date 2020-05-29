@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Profile } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api/api.service';
+import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
   selector: 'app-professional',
@@ -21,6 +22,7 @@ export class ProfessionalPage {
     private api: ApiService,
     private navCtrl: NavController,
     private router: ActivatedRoute,
+    private functions: FunctionsService
   ) {
     this.category_id = parseInt(this.router.snapshot.paramMap.get('category_id'));
   }
@@ -34,12 +36,8 @@ export class ProfessionalPage {
     this.loading = false;
   }
 
-  getStars(rating: string){
-    return new Array(parseInt(rating))
-  }
-
-  is_star_half(rating: number){
-    return rating % 1 != 0;
+  checkStar(star: number, rating: number){
+    return this.functions.nameStar(star, rating);
   }
 
   goToBack(){

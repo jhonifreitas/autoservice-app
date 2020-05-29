@@ -17,13 +17,13 @@
       <ion-content>
         <div class="vertical-align">
           <ion-list class="ion-no-padding">
-            <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'autonomous'">
-              <ion-item routerDirection="root" routerLink="/profile/my-services" detail="false">
+            <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
+              <ion-item routerDirection="root" routerLink="/home" detail="false">
                 <ion-label>serviços solicitados</ion-label>
               </ion-item>
             </ion-menu-toggle>
-            <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'autonomous'">
-              <ion-item routerDirection="root" routerLink="/profile/jobs-done" detail="false">
+            <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
+              <ion-item routerDirection="root" routerLink="/home" detail="false">
                 <ion-label>histórico de serviços</ion-label>
               </ion-item>
             </ion-menu-toggle>

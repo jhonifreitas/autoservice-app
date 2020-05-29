@@ -110,6 +110,18 @@ export class FunctionsService {
     return this.EXTENSIONS.indexOf(ext) !== -1
   }
 
+  nameStar(star: number, rating: number){
+    let name = 'star';
+    if(star > rating){
+      if(rating % 1 != 0){
+        name += '-half';
+      }else{
+        name += '-outline';
+      }
+    }
+    return name;
+  }
+
   fileToBlob(_path: string, type: string) {
     return new Promise((resolve, reject) => {
       this.file

@@ -1,23 +1,23 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
+import { IonicModule } from '@ionic/angular';
+import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { JobDonePage } from './list.page';
+import { ServiceFormPage } from './form.page';
 
 @NgModule({
   imports: [
-    CommonModule,
     FormsModule,
     IonicModule,
+    CommonModule,
     RouterModule.forChild([
       {
         path: '',
-        component: JobDonePage
+        component: ServiceFormPage
       }
     ])
   ],
-  declarations: [JobDonePage]
+  declarations: [ServiceFormPage]
 })
-export class JobDonePageModule {}
+export class ServiceFormPageModule {}

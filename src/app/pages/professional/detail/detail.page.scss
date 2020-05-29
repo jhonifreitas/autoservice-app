@@ -1,8 +1,133 @@
-#profile{
+ion-header{
+    background: var(--ion-color-tertiary);
+    ion-buttons[slot="start"],
+    ion-buttons[slot="end"]{
+        width: 25%;
+    }
+    ion-buttons[slot="end"]{align-self: flex-end;}
+    ion-buttons[slot="start"]{align-self: flex-start;}
     ion-avatar{
         margin: auto;
-        width: 50%;
-        height: 50%;
+        width: 100px;
+        height: 100px;
+        position: relative;
+        margin-bottom: 7px;
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    }
+    #whatsapp{
+        height: auto;
+        font-size: 10px;
+        --border-radius: 20px;
+    }
+    #profile{
+        background: var(--ion-color-tertiary);
+        color: var(--ion-color-tertiary-contrast);
+        .name{
+            font-size: 18px;
+            font-family: 'Poppins', sans-serif;
+        }
+        .services{
+            margin: 5px 0 8px;
+            span{
+                font-size: 10px;
+                margin: 0 2px;
+            }
+        }
+        .rating{
+            display: flex;
+            justify-content: center;
+            ion-icon{margin-right: 2px;}
+            ion-badge{
+                font-size: 10px;
+                margin-left: 5px;
+                --padding-top: 2px;
+                --padding-end: 6px;
+                --padding-start: 6px;
+                --padding-bottom: 3px;
+                --background: transparent;
+                border: 1px solid var(--ion-color-tertiary-contrast);
+            }
+        }
+    }
+    ion-segment{
+        padding-top: .5rem;
+        ion-segment-button{
+            text-transform: none;
+            --indicator-height: 0;
+            color: var(--ion-color-tertiary-contrast) !important;
+            ion-label::after{
+                content: '';
+                display: block;
+                width: 0;
+                height: 1px;
+                margin: auto;
+                margin-top: 3px;
+                transition: all .2s;
+                background: var(--ion-color-tertiary-contrast);
+            }
+            &.segment-button-checked ion-label::after{
+                width: 100%;
+            }
+        }
     }
 }
-ion-badge{margin-right: 5px;}
+ion-content{
+    --background: #FFF;
+    #avaliations{
+        padding: 1.5rem .7rem;
+        ion-icon{font-size: 1rem;}
+        ion-item{
+            --background: var(--ion-color-secondary);
+            border-radius: 20px;
+            margin-bottom: 1rem;
+            &.empty{
+                ion-icon{margin-right: 10px;}
+                ion-label{
+                    opacity: .5;
+                    font-size: 12px;
+                }
+            }
+            &.featured{
+                border: 2px solid var(--ion-color-tertiary);
+            }
+            ion-label{
+                display: flex;
+                line-height: 1;
+                align-items: center;
+                justify-content: space-between;
+                .name{
+                    width: 25%;
+                    align-self: start;
+                }
+                .content{width: 50%;}
+                .icon{width: 25%;}
+                ion-text{
+                    font-size: 12px;
+                }
+            }
+        }
+    }
+    #gallery{
+        .empty{
+            box-shadow: none;
+            background: var(--ion-color-secondary);
+        }
+    }
+}
+
+ion-footer{
+    background: var(--ion-color-tertiary);
+    padding: 1.5rem 0;
+    box-shadow: 0px -3px 6px rgba(0, 0, 0, 0.16);
+    &::before{display: none;}
+    ion-button{
+        --border-width: 1px;
+        --padding-start: 3rem;
+        --padding-end: 3rem;
+        --padding-top: .8rem;
+        --padding-bottom: .8rem;
+        height: auto;
+        text-transform: none;
+        font-size: 13px;
+    }
+}

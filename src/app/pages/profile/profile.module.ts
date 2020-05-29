@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrMaskerModule } from 'br-mask';
 
-import { ProfileFormPage } from './form.page';
+import { ProfilePage } from './profile.page';
 
 @NgModule({
   imports: [
@@ -18,10 +18,10 @@ import { ProfileFormPage } from './form.page';
     RouterModule.forChild([
       {
         path: '',
-        component: ProfileFormPage
+        component: ProfilePage
       }
     ])
   ],
-  declarations: [ProfileFormPage]
+  declarations: [ProfilePage]
 })
-export class ProfileFormPageModule {}
+export class ProfilePageModule {}

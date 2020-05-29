@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ModalController, Platform } from '@ionic/angular';
+import { ModalController, Platform, NavController } from '@ionic/angular';
 
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
 import { ApiService } from 'src/app/services/api/api.service';
 import { AvaliationPage } from '../avaliation/avaliation.page';
-import { Profile, ProfileService, Review } from 'src/app/interfaces/profile';
 import { StorageService } from 'src/app/services/storage/storage.service';
+import { Profile, ProfileService, Review } from 'src/app/interfaces/profile';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
@@ -21,14 +21,16 @@ export class ProfessionalDetailPage {
   private id: number;
   private category_id: number;
 
-  loading: boolean = true;
+  segment: string = 'avaliations';
   object: Profile;
+  loading: boolean = true;
   service: ProfileService;
 
   constructor(
     private api: ApiService,
     private platform: Platform,
     private router: ActivatedRoute,
+    private navCtrl: NavController,
     private storage: StorageService,
     private photoViewer: PhotoViewer,
     private modalCtrl: ModalController,
@@ -49,35 +51,8 @@ export class ProfessionalDetailPage {
     this.loading = false;
   }
 
-  getAge(){
-    var timeDiff = Math.abs(Date.now() - new Date(this.object.birthday).getTime());
-    return Math.floor((timeDiff / (1000 * 3600 * 24))/365);
-  }
-
-  getStars(rating: string){
-    return new Array(parseInt(rating))
-  }
-
-  is_star_half(rating: string){
-    return parseFloat(rating) % 1 != 0;
-  }
-
-  formatDate(hour: string){
-    const now = this.functions.formatDate(new Date(), 'yyyy-MM-ddT');
-    return this.functions.formatDate(now+hour, 'HH:mm');
-  }
-
-  getDate(date: string){
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate()-1);
-
-    if(this.functions.formatDate(date, 'd/MM/y') == this.functions.formatDate(new Date(), 'd/MM/y')){
-      return 'hoje';
-    }else if(this.functions.formatDate(date, 'd/MM/y') == this.functions.formatDate(yesterday, 'd/MM/y')){
-      return 'ontem';
-    }else{
-      return this.functions.formatDate(date, 'd/MM/y');
-    }
+  checkStar(star: number, rating: number){
+    return this.functions.nameStar(star, rating);
   }
 
   canAddAvaliation(){
@@ -91,7 +66,6 @@ export class ProfessionalDetailPage {
   }
 
   async openAvaliation(review: Review = null){
-    const user = this.storage.getUser();
     if(this.isAutonomous()){
       return;
     }
@@ -119,18 +93,11 @@ export class ProfessionalDetailPage {
     this.photoViewer.show(image);
   }
 
-  async delete(id: number){
-    await this.functions.alertDelete().then(async _ => {
-      const loader = await this.functions.loading('Removendo...');
-      await this.api.delete('review/'+id).then(_ => {
-        this.ionViewDidEnter();
-        this.functions.message('Avaliação removida!')
-      }).catch(_ => {});
-      loader.dismiss();
-    }).catch(_ => {})
-  }
-
   isAutonomous(){
     return this.storage.getUser().profile.types == 'autonomous';
+  }
+
+  goToBack(){
+    this.navCtrl.back();
   }
 }

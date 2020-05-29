@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { NavController, ActionSheetController } from '@ionic/angular';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -12,32 +13,42 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-profile-form',
-  templateUrl: './form.page.html',
-  styleUrls: ['./form.page.scss'],
+  selector: 'app-profile',
+  templateUrl: './profile.page.html',
+  styleUrls: ['./profile.page.scss'],
 })
-export class ProfileFormPage implements OnInit {
+export class ProfilePage implements OnInit {
 
   photo: string;
   form: FormGroup;
   states: State[] = [];
   cities: City[] = [];
+  segment: string = 'info';
   profile = this.storage.getUser().profile;
+
+  private camOptions: CameraOptions = {
+    quality: 90,
+    destinationType: this.camera.DestinationType.FILE_URI,
+    encodingType: this.camera.EncodingType.JPEG,
+    mediaType: this.camera.MediaType.PICTURE,
+    correctOrientation: true
+  }
 
   constructor(
     private camera: Camera,
     private api: ApiService,
     private webview: WebView,
+    private navCtrl: NavController,
     private storage: StorageService,
     private formBuilder: FormBuilder,
-    private functions: FunctionsService
+    private functions: FunctionsService,
+    private actionSheetController: ActionSheetController
   ) {
     this.form = this.formBuilder.group({
       cpf: [''],
       photo: [''],
-      about: [''],
-      birthday: [''],
       name: ['', Validators.required],
+      email: ['', Validators.required],
       phone: ['', Validators.required],
       state: ['', Validators.required],
       city: ['', Validators.required]
@@ -73,34 +84,73 @@ export class ProfileFormPage implements OnInit {
     loader.dismiss();
   }
 
-  async takePhoto(){
-    const loader = await this.functions.loading();
-    const options: CameraOptions = {
-      quality: 90,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      correctOrientation: true,
-      sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
-    }
+  async choiceMedia(){
+    return new Promise((resolve, reject) => {
+      this.actionSheetController.create({
+        header: 'Escolha uma da opções',
+        buttons: [
+          {
+            text: 'Galeria',
+            role: 'destructive',
+            icon: 'images',
+            handler: () => {
+              this.camOptions.sourceType = this.camera.PictureSourceType.PHOTOLIBRARY;
+              resolve();
+            }
+          }, {
+            text: 'Câmera',
+            role: 'destructive',
+            icon: 'camera',
+            handler: () => {
+              this.camOptions.sourceType = this.camera.PictureSourceType.CAMERA;
+              resolve();
+            }
+          }
+        ]
+      }).then(action => action.present());
+    });
+  }
 
-    await this.camera.getPicture(options).then(async (path) => {
-      this.photo = null;
-      this.form.get('photo').reset();
-      this.photo = this.webview.convertFileSrc(path);
-      const image:any = await this.functions.fileToBlob(path, 'image/png');
-      this.form.get('photo').setValue(image.file);
-    }).catch(_ => loader.dismiss());
-    loader.dismiss();
+  takePhoto(){
+    this.choiceMedia().then(async _ => {
+      const loader = await this.functions.loading();
+      await this.camera.getPicture(this.camOptions).then(async (path) => {
+        this.photo = null;
+        this.form.get('photo').reset();
+        this.photo = this.webview.convertFileSrc(path);
+        const image:any = await this.functions.fileToBlob(path, 'image/png');
+        this.form.get('photo').setValue(image.file);
+      }).catch(_ => {});
+      loader.dismiss();
+    });
+  }
+
+  addGallery(){
+    this.choiceMedia().then(async _ => {
+      const loader = await this.functions.loading();
+      await this.camera.getPicture(this.camOptions).then(async (path) => {
+        const image:any = await this.functions.fileToBlob(path, 'image/png');
+        const data = {
+          image: image.file
+        };
+        this.api.post('gallery', data).then(res => {
+          this.functions.message('Foto registrada!');
+        }).catch(_ => {});
+      }).catch(_ => {});
+      loader.dismiss();
+    });
   }
 
   setValues(){
     this.photo = this.profile.photo;
     this.form.get('name').setValue(this.profile.name);
+    this.form.get('email').setValue(this.profile.email);
     this.form.get('phone').setValue(this.profile.phone);
     this.form.get('cpf').setValue(this.profile.cpf);
-    this.form.get('birthday').setValue(this.profile.birthday);
-    this.form.get('about').setValue(this.profile.about);
+  }
+
+  checkStar(star: number, rating: number){
+    return this.functions.nameStar(star, rating);
   }
 
   async save(){
@@ -120,6 +170,10 @@ export class ProfileFormPage implements OnInit {
   }
 
   isAutonomous(){
-    return this.storage.getUser().profile.types == 'autonomous';
+    return this.profile.types == 'autonomous';
+  }
+
+  goToBack(){
+    this.navCtrl.back();
   }
 }

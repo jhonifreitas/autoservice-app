@@ -1,0 +1,172 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding">Meu perfil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="save()">
+        <ion-icon slot="icon-only" name="create-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+
+  <ion-item id="header" lines="none">
+    <ion-avatar slot="start" class="ion-activatable ripple-parent" (click)="takePhoto()">
+      <img [src]="photo ? photo : 'assets/user.png'" alt="">
+      <ion-ripple-effect></ion-ripple-effect>
+    </ion-avatar>
+    <ion-label>
+      <p class="welcome ion-no-margin">bem-vindo</p>
+      <ion-text color="tertiary" *ngIf="profile"><h2 class="ion-no-margin font-weight-bold">{{ profile.name }}</h2></ion-text>
+      <ion-skeleton-text animated *ngIf="!profile"></ion-skeleton-text>
+    </ion-label>
+  </ion-item>
+
+  <div id="rating" class="ion-text-center" *ngIf="isAutonomous()">
+    <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, profile.rating)" color="tertiary"></ion-icon>
+  </div>
+
+  <ion-segment color="light" mode="md" *ngIf="isAutonomous()" [(ngModel)]="segment">
+    <ion-segment-button value="info">
+      <ion-label>Info</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="avaliations">
+      <ion-label>Avaliações</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="gallery">
+      <ion-label>Galeria</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <section id="info" *ngIf="segment == 'info'">
+    <h5 class="title">Minhas informações</h5>
+  
+    <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
+      <ion-item lines="none">
+        <ion-label>Nome</ion-label>
+        <ion-input type="text" formControlName="name" class="font-weight-bold"></ion-input>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label>Email</ion-label>
+        <ion-input type="email" formControlName="email" class="font-weight-bold"></ion-input>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label>Telefone</ion-label>
+        <ion-input type="tel" formControlName="phone" [brmasker]="{phone: true}" maxlength="15" class="font-weight-bold"></ion-input>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label>CPF</ion-label>
+        <ion-input type="tel" formControlName="cpf" [brmasker]="{mask: '000.000.000-00'}" maxlength="14" class="font-weight-bold"></ion-input>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label>Estado</ion-label>
+        <ion-select formControlName="state" (ionChange)="getCities()" cancelText="Cancelar" class="font-weight-bold">
+          <ion-select-option *ngFor="let state of states" [value]="state.id">{{ state.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+  
+      <ion-item lines="none" *ngIf="form.get('state').value">
+        <ion-label>Cidade</ion-label>
+        <ion-select formControlName="city" cancelText="Cancelar" class="font-weight-bold">
+          <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </form>
+  </section>
+
+  <section id="avaliations" *ngIf="segment == 'avaliations'" class="ion-padding-horizontal">
+    <h5 class="title">Minhas avaliações</h5>
+
+    <ion-list lines="none" *ngIf="!loading">
+      <ion-item class="empty" *ngIf="!profile.reviews.length">
+        <ion-icon name="sad-outline" slot="start" size="large"></ion-icon>
+        <ion-label color="dark">Nenhum avaliação encontrada!</ion-label>
+      </ion-item>
+      <ion-item *ngFor="let commentary of profile.reviews" [ngClass]="{'featured': commentary.note == 5}">
+        <ion-avatar slot="start">
+          <ion-img [src]="commentary.from_profile.photo ? commentary.from_profile.photo : 'assets/user.png'" alt=""></ion-img>
+        </ion-avatar>
+        <ion-label class="ion-text-wrap">
+          <div class="name">
+            <ion-text color="tertiary" class="font-weight-bold">{{ commentary.from_profile.name }}</ion-text>
+          </div>
+          <div class="content">
+            <p *ngIf="commentary.text" class="ion-no-margin">{{ commentary.text }}</p>
+          </div>
+          <div class="icon ion-text-center">
+            <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, commentary.note)" [color]="commentary.note == 5 ? 'tertiary' :'dark'"></ion-icon>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="loading" lines="none">
+      <ion-item *ngFor="let item of [1,2,3,4,5,6]">
+        <ion-avatar slot="start">
+          <ion-skeleton-text animated class="ion-no-margin"></ion-skeleton-text>
+        </ion-avatar>
+        <ion-label class="ion-text-wrap">
+          <div class="content">
+            <ion-skeleton-text animated class="ion-no-margin" style="width: 70%;"></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated class="ion-no-margin" style="width: 40%;"></ion-skeleton-text>
+          </div>
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </section>
+
+  <section id="gallery" *ngIf="segment == 'gallery'">
+    <h5 class="title">Minha galeria</h5>
+  
+    <ion-grid *ngIf="!loading">
+      <ion-row>
+        <ion-col size="4" class="ion-no-padding" *ngFor="let gallery of profile.gallery">
+          <ion-card>
+            <img src="{{ gallery.image }}" alt="">
+          </ion-card>
+        </ion-col>
+        <ion-col class="add" size="4">
+          <ion-button fill="outline" color="light" class="font-weight-bold" (click)="addGallery()">
+            <div>
+              <ion-icon name="camera" size="large"></ion-icon>
+              <p class="ion-no-margin">adicionar<br>fotos</p>
+            </div>
+          </ion-button>
+        </ion-col>
+        <ion-col size="6" *ngIf="!object.gallery.length">
+          <ion-card class="empty">
+            <ion-card-content class="ion-text-center">
+              <ion-icon name="sad-outline" size="large"></ion-icon>
+              <p>Nenhuma<br>foto<br>registrada!</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+    <ion-grid *ngIf="loading">
+      <ion-row>
+        <ion-col size="4" class="ion-no-padding" *ngFor="let item of [1,2,3,4,5,6]">
+          <ion-card>
+            <ion-skeleton-text animated class="ion-no-margin" style="height: 6rem;"></ion-skeleton-text>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+</ion-content>
+
+<ion-footer class="ion-text-center" *ngIf="!isAutonomous()">
+  <ion-button color="tertiary" class="font-weight-bold" routerDirection="forward" routerLink="/payment/info">Tornar-se um profissional</ion-button>
+</ion-footer>
