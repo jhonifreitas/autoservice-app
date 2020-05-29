@@ -1,10 +1,16 @@
 <ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+      <ion-button (click)="goToBack()">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
     </ion-buttons>
-    <ion-title>Autônomos</ion-title>
+    <ion-title color="dark" class="font-weight-bold ion-no-padding">Busca por profissional</ion-title>
   </ion-toolbar>
+  <ion-item id="search" lines="none">
+    <ion-searchbar searchIcon="search-outline" placeholder="busque por serviço ou profissional"></ion-searchbar>
+    <ion-button slot="end" color="tertiary">ir</ion-button>
+  </ion-item>
 </ion-header>
 
 <ion-content>
@@ -24,7 +30,7 @@
     </div>
   </div>
 
-  <ion-list *ngIf="!loading">
+  <ion-list *ngIf="!loading" lines="none">
     <ion-item *ngFor="let object of object_list" routerDirection="forward" routerLink="{{ object.id }}">
       <ion-avatar slot="start">
         <ion-img [src]="object.photo ? object.photo : 'assets/user.png'" alt=""></ion-img>

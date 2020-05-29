@@ -1,5 +1,4 @@
-<ion-content>
-
+<ion-header>
   <ion-toolbar>
     <ion-item lines="none">
       <ion-avatar slot="start">
@@ -14,16 +13,69 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
+</ion-header>
+
+<ion-content>
 
   <ion-item id="search" lines="none">
     <ion-searchbar searchIcon="search-outline" placeholder="busque por serviço ou profissional"></ion-searchbar>
     <ion-button slot="end" color="tertiary">ir</ion-button>
   </ion-item>
 
-  <div class="ion-padding-horizontal">
-    <div class="section">
-      <h4>Serviços solicitados</h4>
-    </div>
-  </div>
+  <section id="categories">
+    <h4 class="title font-weight-bold ion-margin-bottom">Escolha a categoria</h4>
+    <ion-slides [options]="slideOption">
+      <ion-slide *ngFor="let object of categories">
+        <ion-card button class="ion-no-margin" routerDirection="forward" routerLink="/category/{{ object.id }}">
+          <ion-card-content>
+            <img src="{{ object.icon }}" alt="">
+            <p class="font-weight-bold">{{ object.name }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </section>
+
+  <section id="requested-services">
+    <h4 class="title font-weight-bold ion-margin-bottom">Serviços solicitados</h4>
+    <ion-slides [options]="slideOption">
+      <ion-slide *ngFor="let object of services">
+        <ion-card button class="ion-no-margin">
+          <img src="https://picsum.photos/200/200" alt="">
+          <ion-card-content>
+            <h4 class="font-weight-bold">Ver serviço</h4>
+            <p>acompanhe os dados<br>da sua solicitação</p>
+          </ion-card-content>
+        </ion-card>
+        <div class="status">
+          <p class="font-weight-bold">aguardando aprovação</p>
+        </div>
+      </ion-slide>
+      <ion-slide class="empty ion-justify-content-start" *ngIf="services.length <= 0">
+        <ion-card class="ion-no-margin">
+          <ion-card-content>
+            <ion-icon name="sad-outline" size="large"></ion-icon>
+            <p>Nenhum<br>serviço<br>solicitado</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </section>
+
+  <section id="history-services">
+    <h4 class="title font-weight-bold ion-margin-bottom">Histórico de serviços</h4>
+    <ion-slides [options]="slideOption">
+      <ion-slide class="empty ion-justify-content-start" *ngIf="services.length <= 0">
+        <ion-card class="ion-no-margin">
+          <ion-card-content>
+            <ion-item lines="none">
+              <ion-icon slot="start" name="sad-outline" size="large"></ion-icon>
+              <ion-label color="dark">Nenhum serviço realizado</ion-label>
+            </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </section>
 
 </ion-content>

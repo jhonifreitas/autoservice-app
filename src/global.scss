@@ -78,23 +78,50 @@ ion-card{
 ion-button{
     --border-radius: 20px;
 }
-ion-toolbar{
-    --ion-toolbar-background: transparent;
-    ion-button{
-        font-family: 'Poppins', sans-serif;
-        text-transform: none;
+ion-header{
+    &::after{display: none;}
+    ion-toolbar{
+        --ion-toolbar-background: transparent;
+        ion-button{
+            font-family: 'Poppins', sans-serif;
+            text-transform: none;
+        }
     }
 }
-#search ion-searchbar {
-    ion-icon{
-        top: 14px;
+ion-content{
+    --background: var(--ion-color-secondary);
+}
+#search{
+    --padding-start: 1rem;
+    --inner-padding-end: 1rem;
+    ion-button{
+        --padding-end: 12px;
+        --padding-start: 12px;
+        --border-radius: 13px;
+        margin-inline-start: 5px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        height: calc(100% - 18px);
+        font-weight: bold;
+        text-transform: none;
+        font-size: 18px;
+        --box-shadow: none;
     }
-    input{
-        font-size: 12px;
-        border-radius: 13px;
-        padding-inline-end: 15px;
-        padding-top: 10px;
-        padding-bottom: 10px;
+    ion-searchbar{
+        padding-left: 0;
+        --box-shadow: none;
+        --background: var(--ion-color-light);
+        --color: var(--ion-color-dark);
+        ion-icon{
+            top: 14px;
+        }
+        input{
+            font-size: 12px;
+            border-radius: 13px;
+            padding-inline-end: 15px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+        }
     }
 }
 

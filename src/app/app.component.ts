@@ -1,10 +1,10 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import { Platform, IonRouterOutlet, NavController } from '@ionic/angular';
+import { Platform, IonRouterOutlet, NavController, MenuController } from '@ionic/angular';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
-import { FunctionsService } from './services/functions/functions.service';
 import { StorageService } from './services/storage/storage.service';
+import { FunctionsService } from './services/functions/functions.service';
 
 @Component({
   selector: 'app-root',
@@ -25,6 +25,7 @@ export class AppComponent {
     private statusBar: StatusBar,
     public storage: StorageService,
     private navCtrl: NavController,
+    private menuCtrl: MenuController,
     private splashScreen: SplashScreen,
     private functions: FunctionsService,
   ) {
@@ -59,8 +60,10 @@ export class AppComponent {
   }
 
   logout(){
-    this.storage.removeUser();
-    this.storage.removeConfig();
-    this.navCtrl.navigateRoot('/login');
+    this.menuCtrl.close().finally(() => {
+      this.storage.removeUser();
+      this.storage.removeConfig();
+      this.navCtrl.navigateRoot('/login');
+    });
   }
 }

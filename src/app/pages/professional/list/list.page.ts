@@ -1,31 +1,33 @@
 import { Component } from '@angular/core';
+import { NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 import { Profile } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
-  selector: 'app-autonomous',
+  selector: 'app-professional',
   templateUrl: 'list.page.html',
   styleUrls: ['list.page.scss'],
 })
-export class AutonomousPage {
+export class ProfessionalPage {
 
-  private service_id: number;
+  private category_id: number;
 
   loading: boolean = true;
   object_list: Profile[] = [];
 
   constructor(
     private api: ApiService,
+    private navCtrl: NavController,
     private router: ActivatedRoute,
   ) {
-    this.service_id = parseInt(this.router.snapshot.paramMap.get('service_id'));
+    this.category_id = parseInt(this.router.snapshot.paramMap.get('category_id'));
   }
 
   async ionViewDidEnter(event=null){
     this.loading = true;
-    await this.api.get('service/'+this.service_id+'/autonomous').then(data => {
+    await this.api.get('service/'+this.category_id+'/autonomous').then(data => {
       this.object_list = data;
     }).catch(() => {})
     if(event){ event.target.complete();}
@@ -38,6 +40,10 @@ export class AutonomousPage {
 
   is_star_half(rating: number){
     return rating % 1 != 0;
+  }
+
+  goToBack(){
+    this.navCtrl.back();
   }
 
 }

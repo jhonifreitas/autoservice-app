@@ -12,14 +12,14 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-autonomous-detail',
+  selector: 'app-professional-detail',
   templateUrl: 'detail.page.html',
   styleUrls: ['detail.page.scss'],
 })
-export class AutonomousDetailPage {
+export class ProfessionalDetailPage {
 
   private id: number;
-  private service_id: number;
+  private category_id: number;
 
   loading: boolean = true;
   object: Profile;
@@ -36,7 +36,7 @@ export class AutonomousDetailPage {
     private socialSharing: SocialSharing,
   ) {
     this.id = parseInt(this.router.snapshot.paramMap.get('id'));
-    this.service_id = parseInt(this.router.snapshot.paramMap.get('service_id'));
+    this.category_id = parseInt(this.router.snapshot.paramMap.get('category_id'));
   }
 
   async ionViewDidEnter(event=null){
@@ -44,7 +44,7 @@ export class AutonomousDetailPage {
     await this.api.get('autonomous/'+this.id+'/detail').then(data => {
       this.object = data;
     }).catch(() => {})
-    this.service = this.object.services.filter(item => item.service.id == this.service_id)[0];
+    this.service = this.object.services.filter(item => item.service.id == this.category_id)[0];
     if(event){ event.target.complete();}
     this.loading = false;
   }

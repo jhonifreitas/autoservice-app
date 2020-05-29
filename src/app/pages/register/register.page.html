@@ -1,4 +1,4 @@
-<ion-content class="ion-padding">
+<ion-header>
   <ion-toolbar>
     <ion-buttons slot="start">
       <ion-button (click)="goToBack()">
@@ -7,6 +7,8 @@
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
   <div class="vertical-align">
     <ion-card>
       <ion-card-content>
@@ -23,7 +25,7 @@
           <p>Complete os campos abaixo com suas informações</p>
         </div>
 
-        <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
+        <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding-horizontal ion-padding-top">
           <ion-item>
             <ion-label position="floating" color="dark">Nome</ion-label>
             <ion-input type="text" formControlName="name" class="font-weight-bold"></ion-input>

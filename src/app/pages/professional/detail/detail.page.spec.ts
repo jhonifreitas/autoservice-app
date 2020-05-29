@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { AutonomousPage } from './list.page';
+import { ProfessionalDetailPage } from './detail.page';
 
-describe('AutonomousPage', () => {
-  let component: AutonomousPage;
-  let fixture: ComponentFixture<AutonomousPage>;
+describe('ProfessionalDetailPage', () => {
+  let component: ProfessionalDetailPage;
+  let fixture: ComponentFixture<ProfessionalDetailPage>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AutonomousPage ],
+      declarations: [ ProfessionalDetailPage ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(AutonomousPage);
+    fixture = TestBed.createComponent(ProfessionalDetailPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

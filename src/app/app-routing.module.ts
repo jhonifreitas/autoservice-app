@@ -8,12 +8,11 @@ const routes: Routes = [
   { path: 'intro', loadChildren: () => import('./pages/intro/intro.module').then( m => m.IntroPageModule) },
   { path: 'login', loadChildren: () => import('./pages/login/login.module').then( m => m.LoginPageModule) },
   { path: 'register', loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterPageModule) },
-  { path: 'home', canActivate: [AuthGuard], children: [
-    { path: '', loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule) },
-    { path: ':service_id/autonomous', children: [
-      { path: '', loadChildren: () => import('./pages/autonomous/list/list.module').then( m => m.AutonomousPageModule) },
-      { path: ':id', loadChildren: () => import('./pages/autonomous/detail/detail.module').then( m => m.AutonomousDetailPageModule) },
-    ]}
+  { path: 'forgot-password', loadChildren: () => import('./pages/forgot/forgot.module').then( m => m.ForgotPageModule) },
+  { path: 'home', loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule), canActivate: [AuthGuard]},
+  { path: 'category/:category_id', canActivate: [AuthGuard] , children: [
+    { path: '', loadChildren: () => import('./pages/professional/list/list.module').then( m => m.ProfessionalPageModule) },
+    { path: 'professional/:id', loadChildren: () => import('./pages/professional/detail/detail.module').then( m => m.ProfessionalDetailPageModule)}
   ]},
   { path: 'payment', canActivate: [AuthGuard] , children: [
     { path: 'info', loadChildren: () => import('./pages/payment/info/info.module').then( m => m.PaymentInfoPageModule) },

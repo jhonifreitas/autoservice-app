@@ -38,7 +38,7 @@ export class LoginPage {
       await this.api.post('login', data).then((res: any) => {
         this.storage.setUser(res);
         this.menuCtrl.enable(true);
-        this.navCtrl.navigateRoot('/service');
+        this.navCtrl.navigateRoot('/home');
       }).catch(() => {})
       loader.dismiss();
     }else{

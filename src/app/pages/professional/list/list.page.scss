@@ -1,0 +1,14 @@
+ion-item{
+    --background: transparent;
+    background: var(--background);
+}
+ion-title{
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+ion-content{
+    --background: #FFF;
+    ion-list {
+        ion-icon{font-size: 1.2rem;}
+    }
+}

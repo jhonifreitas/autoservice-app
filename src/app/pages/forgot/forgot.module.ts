@@ -4,8 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AutonomousDetailPage } from './detail.page';
-import { AvaliationPage } from '../avaliation/avaliation.page';
+import { ForgotPage } from './forgot.page';
 
 @NgModule({
   imports: [
@@ -16,11 +15,10 @@ import { AvaliationPage } from '../avaliation/avaliation.page';
     RouterModule.forChild([
       {
         path: '',
-        component: AutonomousDetailPage
+        component: ForgotPage
       }
     ])
   ],
-  entryComponents: [AvaliationPage],
-  declarations: [AutonomousDetailPage, AvaliationPage]
+  declarations: [ForgotPage]
 })
-export class AutonomousDetailPageModule {}
+export class ForgotPageModule {}
