@@ -1,5 +1,5 @@
-import { City } from './city';
 import { Service } from './service';
+import { Address } from './address';
 
 export interface Review {
     id: number;
@@ -8,10 +8,8 @@ export interface Review {
     text: string;
 }
 
-export interface JobDone {
-    id: number;
+export interface Gallery {
     image: string;
-    service: Service;
 }
 
 export interface TypePay {
@@ -19,12 +17,9 @@ export interface TypePay {
     name: string;
 }
 
-export interface ProfileService {
+export interface Category {
     id: number;
     service: Service;
-    week: number[];
-    start_hour: string;
-    end_hour: string;
     type_pay: TypePay;
     price: number;
 }
@@ -36,17 +31,10 @@ export interface Profile {
     cpf: string;
     email: string;
     phone: string;
-    zipcode: string;
-    address: string;
-    number: string;
-    district: string;
-    city: City;
-    complement: string;
-    birthday: string;
+    address: Address;
     rating: string;
     photo: string;
-    about: string;
-    services: ProfileService[];
+    categories: Category[];
     reviews: Review[];
-    jobs_done: JobDone[];
+    gallery: Gallery[];
 }

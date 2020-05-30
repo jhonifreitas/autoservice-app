@@ -18,6 +18,11 @@
         <div class="vertical-align">
           <ion-list class="ion-no-padding">
             <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
+              <ion-item routerDirection="root" routerLink="/service/form" detail="false">
+                <ion-label>Solicitar serviço</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
               <ion-item routerDirection="root" routerLink="/home" detail="false">
                 <ion-label>serviços solicitados</ion-label>
               </ion-item>

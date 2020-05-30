@@ -1,52 +1,121 @@
-<ion-content>
-
-  <ion-slides>
-    <ion-slide>
-      <div class="ion-text-center">
-        <div class="header">
-          <ion-text color="tertiary"><h1 class="title font-weight-bold ion-margin-bottom">Crie solicitações de tarefas</h1></ion-text>
-          <ion-text color="dark"><p class="font-weight-light ion-padding-horizontal">Você pode criar solicitações de tarefas em um amplo banco de dados com mais de 300 prestadores de serviços cadastrados.</p></ion-text>
-        </div>
-        <div class="image">
-          <img src="assets/intro-1.png" alt="">
-        </div>
-        <div class="footer">
-          <ion-button fill="clear" color="dark" (click)="goToLogin()" class="ion-text-capitalize font-weight-medium">
-            Pular
-            <ion-icon name="chevron-forward"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
-    </ion-slide>
-    <ion-slide>
-      <div class="ion-text-center">
-        <div class="header">
-          <ion-text color="tertiary"><h1 class="title font-weight-bold ion-margin-bottom">Serviço de qualidade</h1></ion-text>
-          <ion-text color="dark"><p class="font-weight-light ion-padding-horizontal">Foram selecionados os melhores profissionais e os mais capacitados para lhe entregar um ótimo serviço.</p></ion-text>
-        </div>
-        <div class="image">
-          <img src="assets/intro-2.png" alt="">
-        </div>
-        <div class="footer">
-          <ion-button fill="clear" color="dark" (click)="goToLogin()" class="ion-text-capitalize font-weight-medium">
-            Pular
-            <ion-icon name="chevron-forward"></ion-icon>
-          </ion-button>
-        </div>
-      </div>
-    </ion-slide>
-    <ion-slide>
-      <div class="ion-text-center">
-        <div class="header">
-          <ion-text color="tertiary"><h1 class="title font-weight-bold ion-margin-bottom">Quem é você?</h1></ion-text>
-          <ion-text color="dark"><p class="font-weight-light ion-padding-horizontal">Essa etapa aparecerá apenas na sua primeira entrada no aplicativo. Escolha a opção abaixo e aproveite os nossos serviços.</p></ion-text>
-        </div>
-        <div class="image ion-activatable ripple-parent" (click)="goToLogin()">
-          <img src="assets/intro-3.png" alt="">
-          <ion-ripple-effect></ion-ripple-effect>
-        </div>
-      </div>
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()" color="light">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding" color="light">Solicitar serviço</ion-title>
+  </ion-toolbar>
+  <ion-slides [options]="slideOption">
+    <ion-slide *ngFor="let object of categories">
+      <ion-card button class="ion-no-margin" color="light" routerDirection="forward" routerLink="/category/{{ object.id }}">
+        <ion-card-content>
+          <img src="{{ object.icon }}" alt="">
+          <p class="font-weight-bold">{{ object.name }}</p>
+        </ion-card-content>
+      </ion-card>
     </ion-slide>
   </ion-slides>
+</ion-header>
+
+<ion-content>
+
+  <section id="professional">
+    <ion-card button class="ion-no-margin">
+      <ion-card-content class="ion-no-padding">
+        <ion-item detail lines="none">
+          <ion-note slot="start" class="ion-no-margin">
+            <img src="assets/icon/add-user.png" alt="">
+          </ion-note>
+          <ion-label>
+            <ion-text color="dark"><h5 class="title">Profissional</h5></ion-text>
+            <p class="text">adicione o profissional para o seu trabalho</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+  <section id="address">
+    <ion-card button class="ion-no-margin">
+      <ion-card-content class="ion-no-padding">
+        <ion-item detail lines="none">
+          <ion-note slot="start" class="ion-no-margin">
+            <img src="assets/icon/map-marker.png" alt="">
+          </ion-note>
+          <ion-label>
+            <ion-text color="dark"><h5 class="title font-weight-bold">Endereço</h5></ion-text>
+            <p *ngIf="address" class="text">{{ address.address }}, {{ address.number }} | {{ address.complement }} | {{ address.district }} | {{ address.city.name }}</p>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+    <ion-radio-group value="current">
+      <ion-item lines="none">
+        <ion-radio slot="start" color="tertiary" value="current"></ion-radio>
+        <ion-label class="ion-text-wrap">usar esse endereço</ion-label>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-radio slot="start" color="tertiary" value="other"></ion-radio>
+        <ion-label class="ion-text-wrap">serviço para outro endereço</ion-label>
+      </ion-item>
+    </ion-radio-group>
+  </section>
+
+  <section id="calendar">
+    <ion-card button class="ion-no-margin">
+      <ion-card-content class="ion-no-padding">
+        <ion-item detail lines="none">
+          <ion-note slot="start" class="ion-no-margin">
+            <img src="assets/icon/calendar-circle.png" alt="">
+          </ion-note>
+          <ion-label>
+            <ion-text color="dark"><h5 class="title">escolha uma data e horário</h5></ion-text>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+  <section id="observation">
+    <ion-card button class="ion-no-margin">
+      <ion-card-content class="ion-no-padding">
+        <ion-item detail lines="none">
+          <ion-note slot="start" class="ion-no-margin">
+            <img src="assets/icon/gratipay.png" alt="">
+          </ion-note>
+          <ion-label>
+            <ion-text color="dark"><h5 class="title font-weight-bold">Observações</h5></ion-text>
+            <p class="text">adicione mais informações</p>
+          </ion-label>
+        </ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <ion-card button class="ion-no-margin add-photo">
+                <ion-card-content>
+                  <img src="assets/icon/add-photo.png" alt="">
+                  <p class="font-weight-bold ion-no-margin">adicionar imagem</p>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+            <ion-col size="6">
+              <ion-card button class="ion-no-margin add-photo">
+                <ion-card-content>
+                  <img src="assets/icon/add-photo.png" alt="">
+                  <p class="font-weight-bold ion-no-margin">adicionar imagem</p>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+  <div id="request" class="ion-text-center">
+    <ion-button color="tertiary" class="font-weight-bold" (click)="save()">Solicitar serviço</ion-button>
+  </div>
 
 </ion-content>

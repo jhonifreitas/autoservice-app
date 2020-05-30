@@ -26,7 +26,7 @@
     <h4 class="title font-weight-bold ion-margin-bottom">Escolha a categoria</h4>
     <ion-slides [options]="slideOption">
       <ion-slide *ngFor="let object of categories">
-        <ion-card button class="ion-no-margin" routerDirection="forward" routerLink="/category/{{ object.id }}">
+        <ion-card button color="light" class="ion-no-margin" routerDirection="forward" routerLink="/category/{{ object.id }}">
           <ion-card-content>
             <img src="{{ object.icon }}" alt="">
             <p class="font-weight-bold">{{ object.name }}</p>
@@ -40,7 +40,7 @@
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços solicitados</h4>
     <ion-slides [options]="slideOption">
       <ion-slide *ngFor="let object of services">
-        <ion-card button class="ion-no-margin">
+        <ion-card button color="light" class="ion-no-margin">
           <img src="https://picsum.photos/200/200" alt="">
           <ion-card-content>
             <h4 class="font-weight-bold">Ver serviço</h4>
@@ -52,7 +52,7 @@
         </div>
       </ion-slide>
       <ion-slide class="empty ion-justify-content-start" *ngIf="services.length <= 0">
-        <ion-card class="ion-no-margin">
+        <ion-card color="light" class="ion-no-margin">
           <ion-card-content>
             <ion-icon name="sad-outline" size="large"></ion-icon>
             <p>Nenhum<br>serviço<br>solicitado</p>
@@ -66,7 +66,7 @@
     <h4 class="title font-weight-bold ion-margin-bottom">Histórico de serviços</h4>
     <ion-slides [options]="slideOption">
       <ion-slide class="empty ion-justify-content-start" *ngIf="services.length <= 0">
-        <ion-card class="ion-no-margin">
+        <ion-card color="light" class="ion-no-margin">
           <ion-card-content>
             <ion-item lines="none">
               <ion-icon slot="start" name="sad-outline" size="large"></ion-icon>

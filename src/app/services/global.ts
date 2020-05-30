@@ -1,4 +1,7 @@
 import { Injectable } from '@angular/core';
+import { Profile } from 'src/app/interfaces/profile';
+import { Address } from 'src/app/interfaces/address';
+import { Service } from 'src/app/interfaces/service';
 import { CreditCard } from 'src/app/interfaces/card';
 
 export interface Card {
@@ -17,8 +20,17 @@ export interface Payment {
     card?: Card;
 }
 
+export interface RequestService {
+    service: Service;
+    professional: Profile;
+    address: Address;
+    datetime: string;
+    observation: {text: string; images: Blob[]}
+}
+
 @Injectable()
 export class Global {
+    request_service: RequestService;
     payment: Payment;
-    pagseguro: {cards: CreditCard}
+    pagseguro: {cards: CreditCard};
 }

@@ -1,39 +1,114 @@
-ion-content{
-  ion-slides{
-    height: 100%;
-    ion-slide{
-      padding: 3rem;
-      &>div{height: 100%;}
-      .header{
-        height: 30%;
-        .title{
-          font-family: 'Poppins', sans-serif;
-          font-size: 30px;
-          line-height: 35px;
-          margin-bottom: .5rem;
-        }
-        p{
-          font-size: 13px;
-          line-height: 25px;
-          letter-spacing: 0.65px;
-        }
-      }
-      .image{
-        height: 60%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      .footer{
-        height: 10%;
-        display: flex;
-        align-items: center;
-        justify-content: flex-end;
-        ion-button{
-          font-size: 12px;
-          --padding-end: 0;
-        }
-      }
+ion-header{
+    background: var(--ion-color-tertiary);
+    ion-title{
+        font-size: 16px;
+        font-family: 'Poppins', sans-serif;
     }
-  }
+    ion-slides{
+        padding: .5rem 1.2rem 0 1.2rem;
+        background: linear-gradient(to top, #FFF 35%, var(--ion-color-tertiary) 0);
+        ion-slide{
+            width: 6.2rem;
+            ion-card{
+                width: 100%;
+                box-shadow: none;
+                ion-card-content{
+                    padding: 1.2rem .6rem;
+                    img{
+                        width: 45px;
+                        height: 45px;
+                        padding: .5rem;
+                        object-fit: contain;
+                        border-radius: 10px;
+                        background: var(--ion-color-secondary);
+                    }
+                    p{
+                        font-size: 12px;
+                        margin-top: .5rem;
+                        color: var(--ion-color-dark);
+                    }
+                }
+            }
+        }
+    }
+}
+ion-content{
+    --background: #FFF;
+    --padding-end: 1.3rem;
+    --padding-start: 1.3rem;
+    ion-card{
+        box-shadow: none;
+        margin-top: 2rem;
+        --background: var(--ion-color-light);
+        ion-item{
+            --background: transparent;
+            ion-note[slot="start"]{
+                padding-top: .6rem;
+                padding-bottom: .4rem;
+                img{max-width: 30px;}
+            }
+            ion-label{
+                opacity: .5;
+                .title{font-size: 13px;}
+                .text{font-size: 8px;}
+            }
+        }
+    }
+    #address{
+        ion-radio-group{
+            display: flex;
+            padding: 0 2rem;
+            ion-item{
+                --padding-start: 0;
+                --inner-padding-end: 0;
+            }
+            ion-radio{
+                margin-right: 20px;
+                --border-width: 1px;
+                &.radio-checked+ion-label{opacity: 1;}
+            }
+            ion-label{
+                opacity: .5;
+                font-size: 10px;
+                line-height: 1;
+            }
+        }
+    }
+
+    #observation{
+        ion-grid{padding: 0 2rem 1rem 2rem;}
+        .add-photo{
+            margin-top: 0;
+            --background: var(--ion-color-secondary);
+            box-shadow: 0px 3px 6px rgba(68, 68, 68, 0.09);
+            ion-card-content{
+                display: flex;
+                align-items: center;
+                padding: 1rem 1.3rem;
+                p{
+                    opacity: .5;
+                    font-size: 9px;
+                    line-height: 1;
+                }
+                img{
+                    max-width: 25px;
+                    margin-right: 10px;
+                }
+            }
+        }
+    }
+
+    #request{
+        padding: 2rem 0;
+        ion-button{
+            height: auto;
+            font-size: 13px;
+            text-transform: none;
+            --padding-top: .9rem;
+            --padding-end: 3.5rem;
+            --padding-start: 3.5rem;
+            --padding-bottom: .9rem;
+            --box-shadow: 0px 5px 25px rgba(98, 74, 252, 0.35);
+        }
+    }
 }
