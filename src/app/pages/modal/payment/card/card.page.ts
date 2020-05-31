@@ -1,10 +1,9 @@
-import { NavController } from '@ionic/angular';
 import { Component, OnInit } from '@angular/core';
+import { NavController, ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Global } from 'src/app/services/global';
-import { Profile } from 'src/app/interfaces/profile';
-import { ApiService } from 'src/app/services/api/api.service';
+import { PaymentConfirmModal } from '../confirm/confirm.page';
 import { PaymentService } from 'src/app/services/payment/payment.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
@@ -13,9 +12,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
   templateUrl: './card.page.html',
   styleUrls: ['./card.page.scss'],
 })
-export class CardPage implements OnInit {
-
-  private profile: Profile;
+export class PaymentCardModal implements OnInit {
 
   form: FormGroup;
   now: Date = new Date();
@@ -26,46 +23,23 @@ export class CardPage implements OnInit {
 
   constructor(
     private global: Global,
-    private api: ApiService,
     private navCtrl: NavController,
-    private formBuilder: FormBuilder,
     private payment: PaymentService,
+    private formBuilder: FormBuilder,
+    private modalCtrl: ModalController,
     private functions: FunctionsService
   ) {
     this.form = this.formBuilder.group({
-      number: ['', Validators.required],
       name: ['', Validators.required],
-      birthdate: ['', Validators.required],
-      cpf: ['', Validators.required],
-      month: ['01', Validators.required],
-      year: [this.now.getFullYear().toString(), Validators.required],
+      number: ['', Validators.required],
+      expiration: ['', Validators.required],
       cvv: ['', [Validators.required, Validators.minLength(3)]]
     });
   }
 
   ngOnInit(){
     if(!this.global.pagseguro || !this.global.payment || this.global.payment.method != 'credit_card'){
-      this.navCtrl.back();
-    }else{
-      this.initMonths();
-      this.initYears();
-    }
-  }
-
-  initMonths(){
-    for (let index = 1; index <= 12; index++) {
-      let month = index.toString();
-      if(index < 10){
-        month = '0'+month;
-      }
-      this.months.push(month);
-    }
-  }
-
-  initYears(){
-    let year = this.now.getFullYear();
-    for (let index = year; index <= year+20; index++) {
-      this.years.push(index.toString());
+      this.close();
     }
   }
 
@@ -89,18 +63,22 @@ export class CardPage implements OnInit {
     if(this.form.valid){
       const loader = await this.functions.loading('Salvando...');
       const data = this.form.value;
-      await this.payment.getCardToken(data, this.cardBrand.name).then(token => {
+      data.month = data.expiration.split('/')[0];
+      data.year = data.expiration.split('/')[1];
+      await this.payment.getCardToken(data, this.cardBrand.name).then(async (token) => {
         this.global.payment.card = {
           card_token: token,
-          card_birthdate: data.birthdate,
           card_number: data.number,
           card_name: data.name,
-          card_cpf: data.cpf,
           card_month: data.month,
           card_year: data.year,
           card_cvv: data.cvv
         };
-        this.navCtrl.navigateForward('/payment/confirm');
+        this.close();
+        const modal = await this.modalCtrl.create({
+          component: PaymentConfirmModal
+        });
+        return await modal.present();
       }).catch(err => {
         this.functions.message('Dados inválidos!');
       });
@@ -108,5 +86,9 @@ export class CardPage implements OnInit {
     }else{
       this.functions.message('Verifique os dados antes de prosseguir!');
     }
+  }
+
+  close(){
+    this.modalCtrl.dismiss();
   }
 }

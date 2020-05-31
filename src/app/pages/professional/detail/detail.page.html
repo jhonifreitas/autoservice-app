@@ -1,5 +1,5 @@
 <ion-header class="ion-padding-top">
-  <ion-toolbar class="font-weight-light">
+  <ion-toolbar color="tertiary" class="font-weight-light">
     <ion-buttons slot="start">
       <ion-button (click)="goToBack()">
         <ion-icon slot="icon-only" color="light" name="arrow-back"></ion-icon>
@@ -21,7 +21,7 @@
   <div *ngIf="object" id="profile" class="ion-padding-horizontal ion-text-center">
     <h4 class="name ion-no-margin font-weight-bold">{{ object.name }}</h4>
     <div class="services">
-      <span *ngFor="let service of object.services">#{{ service.service.name }}</span>
+      <span *ngFor="let service of object.categories">#{{ service.service.name }}</span>
     </div>
     <div class="rating">
       <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, object.rating)" color="light"></ion-icon>

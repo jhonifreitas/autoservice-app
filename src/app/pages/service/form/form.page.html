@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="tertiary">
     <ion-buttons slot="start">
       <ion-button (click)="goToBack()" color="light">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
@@ -7,9 +7,9 @@
     </ion-buttons>
     <ion-title class="ion-no-padding" color="light">Solicitar serviço</ion-title>
   </ion-toolbar>
-  <ion-slides [options]="slideOption">
+  <ion-slides [options]="slideOption" *ngIf="!global.category">
     <ion-slide *ngFor="let object of categories">
-      <ion-card button class="ion-no-margin" color="light" routerDirection="forward" routerLink="/category/{{ object.id }}">
+      <ion-card button class="ion-no-margin" color="light" (click)="global.category = object">
         <ion-card-content>
           <img src="{{ object.icon }}" alt="">
           <p class="font-weight-bold">{{ object.name }}</p>
@@ -17,12 +17,21 @@
       </ion-card>
     </ion-slide>
   </ion-slides>
+  <div id="category" *ngIf="global.category">
+    <ion-card button class="ion-no-margin" color="tertiary">
+      <ion-card-content>
+        <img src="{{ global.category.icon }}" alt="">
+        <p class="font-weight-bold">{{ global.category.name }}</p>
+      </ion-card-content>
+    </ion-card>
+    <ion-text color="light"><h4 class="font-weight-bold">Adicione suas informações para o profissional</h4></ion-text>
+  </div>
 </ion-header>
 
 <ion-content>
 
   <section id="professional">
-    <ion-card button class="ion-no-margin">
+    <ion-card button class="ion-no-margin" (click)="addProfessional()">
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none">
           <ion-note slot="start" class="ion-no-margin">
@@ -38,7 +47,7 @@
   </section>
 
   <section id="address">
-    <ion-card button class="ion-no-margin">
+    <ion-card button class="ion-no-margin" (click)="!global.address ? addAddress() : null">
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none">
           <ion-note slot="start" class="ion-no-margin">
@@ -46,12 +55,12 @@
           </ion-note>
           <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">Endereço</h5></ion-text>
-            <p *ngIf="address" class="text">{{ address.address }}, {{ address.number }} | {{ address.complement }} | {{ address.district }} | {{ address.city.name }}</p>
+            <p *ngIf="global.address" class="text">{{ global.address.address }}, {{ global.address.number }}{{ global.address.complement ? ' |'+global.address.complement : '' }} | {{ global.address.district }} | {{ global.address.city.name }}</p>
           </ion-label>
         </ion-item>
       </ion-card-content>
     </ion-card>
-    <ion-radio-group value="current">
+    <ion-radio-group [(ngModel)]="addressOption" *ngIf="global.address" (ionChange)="addressOption == 'other' ? addAddress() : null">
       <ion-item lines="none">
         <ion-radio slot="start" color="tertiary" value="current"></ion-radio>
         <ion-label class="ion-text-wrap">usar esse endereço</ion-label>
@@ -64,7 +73,7 @@
   </section>
 
   <section id="calendar">
-    <ion-card button class="ion-no-margin">
+    <ion-card button class="ion-no-margin" (click)="addDatetime()">
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none">
           <ion-note slot="start" class="ion-no-margin">
@@ -79,11 +88,11 @@
   </section>
 
   <section id="observation">
-    <ion-card button class="ion-no-margin">
+    <ion-card class="ion-no-margin">
       <ion-card-content class="ion-no-padding">
-        <ion-item detail lines="none">
+        <ion-item button detail lines="none" (click)="addObservation()">
           <ion-note slot="start" class="ion-no-margin">
-            <img src="assets/icon/gratipay.png" alt="">
+            <img src="assets/icon/gratipay-gray.png" alt="">
           </ion-note>
           <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">Observações</h5></ion-text>
@@ -91,9 +100,16 @@
           </ion-label>
         </ion-item>
         <ion-grid>
+          <ion-row *ngIf="global.observation">
+            <ion-col size="6" *ngFor="let image of global.observation.images; let i = index">
+              <ion-card button class="ion-no-margin" (click)="removePhoto(i)">
+                <img [src]="image.path" alt="">
+              </ion-card>
+            </ion-col>
+          </ion-row>
           <ion-row>
             <ion-col size="6">
-              <ion-card button class="ion-no-margin add-photo">
+              <ion-card button class="ion-no-margin add-photo" (click)="takePhoto()">
                 <ion-card-content>
                   <img src="assets/icon/add-photo.png" alt="">
                   <p class="font-weight-bold ion-no-margin">adicionar imagem</p>
@@ -101,7 +117,7 @@
               </ion-card>
             </ion-col>
             <ion-col size="6">
-              <ion-card button class="ion-no-margin add-photo">
+              <ion-card button class="ion-no-margin add-photo" (click)="takePhoto()">
                 <ion-card-content>
                   <img src="assets/icon/add-photo.png" alt="">
                   <p class="font-weight-bold ion-no-margin">adicionar imagem</p>

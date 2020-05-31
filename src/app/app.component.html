@@ -37,7 +37,7 @@
       </ion-content>
       <ion-footer>
         <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
-          <ion-item routerDirection="root" routerLink="/payment/info" detail="false">
+          <ion-item button (click)="openPaymentInfo()" detail="false">
             <ion-label>quero virar profissional</ion-label>
           </ion-item>
         </ion-menu-toggle>

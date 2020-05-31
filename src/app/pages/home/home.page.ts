@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { Service } from 'src/app/interfaces/service';
+import { Category } from 'src/app/interfaces/category';
 import { ApiService } from 'src/app/services/api/api.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 
@@ -16,9 +16,9 @@ export class HomePage {
     spaceBetween: 10,
   };
   loading: boolean = true;
-  categories: Service[] = [];
   services: any[] = [];
   histories: any[] = [];
+  categories: Category[] = [];
 
   constructor(
     private api: ApiService,

@@ -30,10 +30,10 @@ ion-alert .text-danger.alert-button{color: var(--ion-color-danger);}
 .ion-page ion-modal{
     --max-width: 90%;
     --max-height: 90%;
-    &.modal-avaliation{
-        --max-width: 80%;
-        --max-height: 19rem;
-        --border-radius: 5px;
+    --border-radius: 20px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
+    .modal-wrapper{
+        box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
     }
 }
 
@@ -72,10 +72,9 @@ ion-button{
 ion-header{
     &::after{display: none;}
     ion-toolbar{
-        --ion-toolbar-background: transparent;
         ion-button{
-            font-family: 'Poppins', sans-serif;
             text-transform: none;
+            font-family: 'Poppins', sans-serif;
         }
     }
 }

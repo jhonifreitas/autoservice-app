@@ -1,0 +1,72 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="secondary" (click)="close()">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding-horizontal ion-padding-bottom ion-text-center">
+
+  <div id="top">
+    <ion-icon name="card" color="tertiary" style="font-size: 5rem;"></ion-icon>
+    <ion-text color="tertiary"><h2 class="font-weight-bold">Adicione um cartão</h2></ion-text>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()">
+
+    <div id="card">
+      <ion-item lines="none">
+        <ion-label color="dark" class="font-weight-bold">cartão<br>de crédito</ion-label>
+        <ion-input type="text" formControlName="name" placeholder="André santos"></ion-input>
+      </ion-item>
+  
+      <ion-item style="width: 9.5rem;">
+        <ion-input 
+          type="tel" 
+          maxlength="19" 
+          formControlName="number" 
+          [brmasker]="{mask:'0000 0000 0000 0000', len:19, type:'num'}" 
+          (ionBlur)="getCardBrand()"
+          placeholder="XXXX XXXX XXXX XXXX">
+        </ion-input>
+      </ion-item>
+
+      <ion-row class="ion-text-left">
+        <ion-col size="4" class="pl-0">
+          <ion-item style="width: 2.5rem;">
+            <ion-input
+              type="text"
+              formControlName="expiration"
+              [brmasker]="{mask:'00/00', len:5, type:'num'}"
+              placeholder="XX/XX">
+            </ion-input>
+          </ion-item>
+          <ion-label color="dark">vencimento</ion-label>
+        </ion-col>
+        <ion-col size="4" class="pr-0">
+          <ion-item style="width: 2.5rem;">
+            <ion-input 
+              type="tel"
+              [maxlength]="cardBrand ? cardBrand.cvvSize : 6"
+              formControlName="cvv"
+              [brmasker]="{mask:'0000', len:4, type:'num'}"
+              placeholder="XXXX">
+            </ion-input>
+          </ion-item>
+          <ion-label color="dark">cód. segurança</ion-label>
+        </ion-col>
+        <ion-col size="4" class="pr-0 ion-text-right">
+          <ion-note slot="end" *ngIf="cardBrand && cardBrand.image">
+            <img [src]="cardBrand.image" alt="">
+          </ion-note>
+        </ion-col>
+      </ion-row>
+    </div>
+
+    <ion-button type="submit" color="tertiary" [disabled]="form.invalid">Adicionar</ion-button>
+  </form>
+
+</ion-content>

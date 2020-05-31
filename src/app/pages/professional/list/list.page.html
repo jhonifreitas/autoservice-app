@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar color="secondary">
     <ion-buttons slot="start">
       <ion-button (click)="goToBack()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-title color="dark" class="font-weight-bold ion-no-padding">Busca por profissional</ion-title>
   </ion-toolbar>
-  <ion-item id="search" lines="none">
+  <ion-item id="search" color="secondary" lines="none">
     <ion-searchbar searchIcon="search-outline" placeholder="busque por profissional"></ion-searchbar>
     <ion-button slot="end" color="tertiary">ir</ion-button>
   </ion-item>
@@ -24,7 +24,7 @@
   </ion-refresher>
 
   <ion-list *ngIf="!loading" lines="none">
-    <ion-item *ngFor="let object of object_list" routerDirection="forward" routerLink="professional/{{ object.id }}">
+    <ion-item button *ngFor="let object of object_list" (click)="selectProfessional(object)">
       <ion-avatar slot="start">
         <ion-img [src]="object.photo ? object.photo : 'assets/user.png'" alt=""></ion-img>
       </ion-avatar>

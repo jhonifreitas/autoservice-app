@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="secondary" (click)="close()">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding-horizontal ion-padding-bottom ion-text-center">
+
+  <div id="top">
+    <img src="assets/icon/work.png" alt="">
+    <ion-text color="tertiary"><h2 class="font-weight-bold">Quer ser um profissional?</h2></ion-text>
+  </div>
+
+  <div class="text font-weight-bold">
+    <p>Ao apertar "Prosseguir", você será direcionado para um pré cadastro onde colocará suas informações e qualificações e aguardará para seu perfil ser aprovado.</p>
+    <p>Você ganhará <ion-text color="tertiary">30 dias FREE</ion-text> para utilizar como profissional. Logo após o período será emitido um boleto ou cobrado o valor de R$ 29,90/mês do seu cartão de crédito</p>
+  </div>
+
+  <ion-button color="tertiary" (click)="optionPayment()" class="font-weight-bold">Prosseguir</ion-button>
+
+</ion-content>

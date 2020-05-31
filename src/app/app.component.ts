@@ -1,9 +1,11 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
-import { Platform, IonRouterOutlet, NavController, MenuController } from '@ionic/angular';
+import { Platform, IonRouterOutlet, NavController, MenuController, ModalController } from '@ionic/angular';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+
 import { StorageService } from './services/storage/storage.service';
+import { PaymentInfoModal } from './pages/modal/payment/info/info.page';
 import { FunctionsService } from './services/functions/functions.service';
 
 @Component({
@@ -27,6 +29,7 @@ export class AppComponent {
     private navCtrl: NavController,
     private menuCtrl: MenuController,
     private splashScreen: SplashScreen,
+    private modalCtrl: ModalController,
     private functions: FunctionsService,
   ) {
     this.initializeApp();
@@ -57,6 +60,13 @@ export class AppComponent {
         });
       }
     });
+  }
+
+  async openPaymentInfo(){
+    const modal = await this.modalCtrl.create({
+      component: PaymentInfoModal
+    });
+    return await modal.present();
   }
 
   logout(){

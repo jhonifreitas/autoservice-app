@@ -28,11 +28,11 @@
     </ion-label>
   </ion-item>
 
-  <div id="rating" class="ion-text-center" *ngIf="isAutonomous()">
+  <div id="rating" class="ion-text-center" *ngIf="isProfessional()">
     <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, profile.rating)" color="tertiary"></ion-icon>
   </div>
 
-  <ion-segment color="light" mode="md" *ngIf="isAutonomous()" [(ngModel)]="segment">
+  <ion-segment color="light" mode="md" *ngIf="isProfessional()" [(ngModel)]="segment">
     <ion-segment-button value="info">
       <ion-label>Info</ion-label>
     </ion-segment-button>
@@ -167,6 +167,6 @@
 
 </ion-content>
 
-<ion-footer class="ion-text-center" *ngIf="!isAutonomous()">
+<ion-footer class="ion-text-center" *ngIf="!isProfessional()">
   <ion-button color="tertiary" class="font-weight-bold" routerDirection="forward" routerLink="/payment/info">Tornar-se um profissional</ion-button>
 </ion-footer>

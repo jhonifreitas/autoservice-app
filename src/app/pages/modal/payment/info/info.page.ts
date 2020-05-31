@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, ActionSheetController } from '@ionic/angular';
+import { NavController, ActionSheetController, ModalController } from '@ionic/angular';
+
+import { PaymentCardModal } from '../card/card.page';
+import { PaymentConfirmModal } from '../confirm/confirm.page';
 
 import { Global } from 'src/app/services/global';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -12,7 +15,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
   templateUrl: './info.page.html',
   styleUrls: ['./info.page.scss'],
 })
-export class PaymentInfoPage implements OnInit {
+export class PaymentInfoModal implements OnInit {
 
   constructor(
     private global: Global,
@@ -20,6 +23,7 @@ export class PaymentInfoPage implements OnInit {
     private navCtrl: NavController,
     private storage: StorageService,
     private paymentApi: PaymentService,
+    private modalCtrl: ModalController,
     private functions: FunctionsService,
     private actionSheetController: ActionSheetController
   ) {
@@ -30,11 +34,11 @@ export class PaymentInfoPage implements OnInit {
     await this.paymentApi.loadScript();
     await this.api.get('config').then(res => {
       this.storage.setConfig(res);
-    }).catch(_ => {})
+    }).catch(_ => {});
     loader.dismiss();
   }
 
-  async presentActionSheet() {
+  async optionPayment() {
     const loader = await this.functions.loading();
     const payMethods = [];
     await this.paymentApi.getPaymentMethods().then(async (res: any) => {
@@ -76,20 +80,27 @@ export class PaymentInfoPage implements OnInit {
     loader.dismiss();
   }
 
-  goToNext(method: 'credit_card' | 'ticket'){
+  async goToNext(method: 'credit_card' | 'ticket'){
     this.global.payment = {method: method};
     const profile = this.storage.getUser().profile;
-    let page:any[] = ['/payment/confirm'];
+    this.close();
+    
     if(!profile.cpf){
-      page = ['/profile']
       this.functions.message('Atualize seu dados antes de continuar!');
-    }else if(!profile.zipcode || !profile.address || !profile.number || !profile.district){
-      page = ['/profile/address', {payment: true}];
+      this.navCtrl.navigateForward('/profile');
     }else{
+      let page:any = PaymentConfirmModal;
       if(method == 'credit_card'){
-        page = ['/payment/card'];
+        page = PaymentCardModal;
       }
+      const modal = await this.modalCtrl.create({
+        component: page
+      });
+      return await modal.present();
     }
-    this.navCtrl.navigateForward(page);
+  }
+
+  close(){
+    this.modalCtrl.dismiss();
   }
 }

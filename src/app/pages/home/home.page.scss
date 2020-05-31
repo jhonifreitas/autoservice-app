@@ -1,8 +1,5 @@
 ion-header{
-    background: var(--ion-color-secondary);
     ion-item{
-        --color: #000;
-        --background: transparent;
         ion-avatar{
             width: 45px;
             height: 45px;
@@ -120,9 +117,9 @@ ion-content{
             ion-card{
                 box-shadow: none;
                 ion-card-content{
+                    opacity: .5;
                     padding: 2rem;
                     p{
-                        opacity: .5;
                         font-size: 12px;
                         margin-top: .5rem;
                         line-height: 14px;

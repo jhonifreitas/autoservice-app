@@ -1,27 +1,31 @@
 ion-header{
-    background: var(--ion-color-tertiary);
+    background: linear-gradient(to top, #FFF 25%, var(--ion-color-tertiary) 0);
     ion-title{
         font-size: 16px;
         font-family: 'Poppins', sans-serif;
     }
+    ion-card{
+        box-shadow: none;
+        ion-card-content{
+            text-align: center;
+            padding: 1.5rem .6rem;
+            img{
+                width: 45px;
+                height: 45px;
+                padding: .5rem;
+                object-fit: contain;
+                border-radius: 10px;
+                background: var(--ion-color-secondary);
+            }
+        }
+    }
     ion-slides{
         padding: .5rem 1.2rem 0 1.2rem;
-        background: linear-gradient(to top, #FFF 35%, var(--ion-color-tertiary) 0);
         ion-slide{
             width: 6.2rem;
             ion-card{
                 width: 100%;
-                box-shadow: none;
                 ion-card-content{
-                    padding: 1.2rem .6rem;
-                    img{
-                        width: 45px;
-                        height: 45px;
-                        padding: .5rem;
-                        object-fit: contain;
-                        border-radius: 10px;
-                        background: var(--ion-color-secondary);
-                    }
                     p{
                         font-size: 12px;
                         margin-top: .5rem;
@@ -29,6 +33,17 @@ ion-header{
                     }
                 }
             }
+        }
+    }
+    #category{
+        display: flex;
+        padding: 0 3.8rem;
+        ion-card{
+            width: 15rem;
+            margin-right: 1.3rem;
+        }
+        h4{
+            font-size: 15px;
         }
     }
 }

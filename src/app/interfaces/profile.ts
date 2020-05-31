@@ -1,5 +1,5 @@
-import { Service } from './service';
 import { Address } from './address';
+import { Category } from './category';
 
 export interface Review {
     id: number;
@@ -17,9 +17,9 @@ export interface TypePay {
     name: string;
 }
 
-export interface Category {
+export interface ProfileCategory {
     id: number;
-    service: Service;
+    category: Category;
     type_pay: TypePay;
     price: number;
 }
@@ -34,7 +34,7 @@ export interface Profile {
     address: Address;
     rating: string;
     photo: string;
-    categories: Category[];
+    categories: ProfileCategory[];
     reviews: Review[];
     gallery: Gallery[];
 }

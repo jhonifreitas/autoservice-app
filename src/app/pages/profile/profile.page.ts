@@ -53,11 +53,6 @@ export class ProfilePage implements OnInit {
       state: ['', Validators.required],
       city: ['', Validators.required]
     });
-
-    if(this.isAutonomous()){
-      this.form.get('about').setValidators([Validators.required]);
-      this.form.get('birthday').setValidators([Validators.required]);
-    }
   }
 
   async ngOnInit(){
@@ -65,7 +60,7 @@ export class ProfilePage implements OnInit {
     await this.api.get('state').then(res => {
       this.states = res;
       setTimeout(() => {
-        this.form.get('state').setValue(this.profile.city.state.id);
+        this.form.get('state').setValue(this.profile.address.city.state.id);
       });
     }).catch(_ => {});
     this.setValues();
@@ -78,7 +73,7 @@ export class ProfilePage implements OnInit {
     await this.api.get('city/'+state_id).then(res => {
       this.cities = res;
       setTimeout(() => {
-        this.form.get('city').setValue(this.profile.city.id);
+        this.form.get('city').setValue(this.profile.address.city.id);
       });
     }).catch(_ => {});
     loader.dismiss();
@@ -169,8 +164,8 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  isAutonomous(){
-    return this.profile.types == 'autonomous';
+  isProfessional(){
+    return this.profile.types == 'professional';
   }
 
   goToBack(){

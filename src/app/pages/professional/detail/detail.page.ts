@@ -8,7 +8,7 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AvaliationPage } from '../avaliation/avaliation.page';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { Profile, ProfileService, Review } from 'src/app/interfaces/profile';
+import { Profile, ProfileCategory, Review } from 'src/app/interfaces/profile';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
@@ -19,12 +19,12 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
 export class ProfessionalDetailPage {
 
   private id: number;
+  private category: ProfileCategory;
   private category_id: number;
 
   segment: string = 'avaliations';
   object: Profile;
   loading: boolean = true;
-  service: ProfileService;
 
   constructor(
     private api: ApiService,
@@ -46,7 +46,7 @@ export class ProfessionalDetailPage {
     await this.api.get('autonomous/'+this.id+'/detail').then(data => {
       this.object = data;
     }).catch(() => {})
-    this.service = this.object.services.filter(item => item.service.id == this.category_id)[0];
+    this.category = this.object.categories.filter(item => item.category.id == this.category_id)[0];
     if(event){ event.target.complete();}
     this.loading = false;
   }
@@ -81,7 +81,7 @@ export class ProfessionalDetailPage {
 
   openWhatsapp(){
     const msgWhatsapp = 'Olá, vi seu perfil no aplicativo AUTO SERVICE, gostaria de contratar '+
-                        'seu serviço de '+this.service.service.name+'. Obrigado.';
+                        'seu serviço de '+this.category.category.name+'. Obrigado.';
     if(this.platform.is('ios')){
       window.location.href = 'https://wa.me/55'+this.object.phone+'?text='+msgWhatsapp;
     }else{

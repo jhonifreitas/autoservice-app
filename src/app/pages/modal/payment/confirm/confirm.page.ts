@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { NavController, ModalController } from '@ionic/angular';
 
 import { Global } from 'src/app/services/global';
 import { Profile } from 'src/app/interfaces/profile';
@@ -12,7 +12,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
   templateUrl: './confirm.page.html',
   styleUrls: ['./confirm.page.scss'],
 })
-export class PaymentConfirmPage {
+export class PaymentConfirmModal {
 
   config = this.storage.getConfig();
   first_pay = new Date();
@@ -22,8 +22,9 @@ export class PaymentConfirmPage {
     private navCtrl: NavController,
     private payment: PaymentService,
     private storage: StorageService,
+    private modalCtrl: ModalController,
     private functions: FunctionsService
-  ) {
+    ) {
     this.first_pay.setDate(this.first_pay.getDate() + this.config.trial_period);
     if(!this.global.payment || !this.global.payment.method){
       this.navCtrl.back();
@@ -40,8 +41,8 @@ export class PaymentConfirmPage {
       const user = this.storage.getUser();
       user.profile = res;
       this.storage.setUser(user);
+      this.close();
       this.functions.message('Bem-vindo autônomo, adicione seu serviços!');
-      this.navCtrl.navigateRoot('/profile/my-services');
     }).catch(_ => {});
     loader.dismiss();
   }
@@ -51,6 +52,10 @@ export class PaymentConfirmPage {
       return this.global.payment.method == 'ticket'
     }
     return false
+  }
+
+  close(){
+    this.modalCtrl.dismiss();
   }
 
 }

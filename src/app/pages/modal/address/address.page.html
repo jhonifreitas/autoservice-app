@@ -1,0 +1,60 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="secondary" (click)="close()">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding-horizontal ion-padding-bottom ion-text-center">
+
+  <div id="top">
+    <img src="assets/icon/map-marked.png" alt="">
+    <ion-text color="tertiary"><h2 class="font-weight-bold">Adicione outro endereço</h2></ion-text>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
+    <ion-item>
+      <ion-label position="floating">CEP</ion-label>
+      <ion-input type="tel" formControlName="zipcode" [brmasker]="{mask: '00000-000'}" (ionChange)="fetchAddres()" maxlength="9" class="font-weight-bold"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Estado</ion-label>
+      <ion-select formControlName="state" (ionChange)="getCities()" cancelText="Cancelar" class="font-weight-bold">
+        <ion-select-option *ngFor="let state of states" [value]="state.id">{{ state.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item *ngIf="form.get('state').value">
+      <ion-label position="floating">Cidade</ion-label>
+      <ion-select formControlName="city" cancelText="Cancelar" class="font-weight-bold">
+        <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Bairro</ion-label>
+      <ion-input type="text" formControlName="district" class="font-weight-bold"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Endereço</ion-label>
+      <ion-input type="text" formControlName="address" class="font-weight-bold"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Número</ion-label>
+      <ion-input type="text" formControlName="number" class="font-weight-bold"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Complemento</ion-label>
+      <ion-input type="text" formControlName="complement" class="font-weight-bold"></ion-input>
+    </ion-item>
+    
+    <ion-button type="submit" color="tertiary" class="font-weight-bold" [disabled]="form.invalid">Adicionar</ion-button>
+  </form>
+
+</ion-content>

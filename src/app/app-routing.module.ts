@@ -16,9 +16,7 @@ const routes: Routes = [
     { path: 'professional/:id', loadChildren: () => import('./pages/professional/detail/detail.module').then( m => m.ProfessionalDetailPageModule) }
   ]},
   { path: 'service', canActivate: [AuthGuard] , children: [
-    { path: 'form', loadChildren: () => import('./pages/service/form/form.module').then( m => m.ServiceFormPageModule) },
-    { path: 'detail', loadChildren: () => import('./pages/payment/card/card.module').then( m => m.CardPageModule) },
-    { path: 'confirm', loadChildren: () => import('./pages/payment/confirm/confirm.module').then( m => m.PaymentConfirmPageModule) },
+    { path: 'form', loadChildren: () => import('./pages/service/form/form.module').then( m => m.ServiceFormPageModule) }
   ]},
 ];
 

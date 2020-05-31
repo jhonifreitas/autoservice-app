@@ -18,6 +18,10 @@ import { AppComponent } from './app.component';
 import { Global } from 'src/app/services/global';
 import { AppRoutingModule } from './app-routing.module';
 
+import { PaymentInfoModalModule } from './pages/modal/payment/info/info.module';
+import { PaymentCardModalModule } from './pages/modal/payment/card/card.module';
+import { PaymentConfirmModalModule } from './pages/modal/payment/confirm/confirm.module';
+
 registerLocaleData(localePt);
 
 @NgModule({
@@ -28,6 +32,9 @@ registerLocaleData(localePt);
     HttpClientModule,
     AppRoutingModule,
     IonicModule.forRoot(),
+    PaymentInfoModalModule,
+    PaymentCardModalModule,
+    PaymentConfirmModalModule
   ],
   providers: [
     File,
