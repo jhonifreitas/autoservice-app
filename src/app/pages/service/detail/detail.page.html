@@ -1,0 +1,155 @@
+<ion-header>
+  <ion-toolbar color="secondary">
+    <ion-buttons slot="start">
+      <ion-button (click)="goToBack()" color="dark">
+        <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="ion-no-padding" color="dark">Solicitar serviço</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="delete()" color="dark">
+        <ion-icon slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div id="category">
+    <ion-card class="ion-no-margin" *ngIf="!loading">
+      <ion-card-content class="ion-no-padding">
+        <div class="icon">
+          <img src="{{ object.category.icon }}" alt="">
+        </div>
+        <div class="text">
+          <ion-text color="dark">
+            <h4 class="font-weight-bold">Solicitação<br>de serviço<br><span>{{ object.category.name }}</span></h4>
+            <p>confira abaixo as informações<br>que você passou para o nosso<br>prestador de serviços</p>
+          </ion-text>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    <ion-card class="ion-no-margin" *ngIf="loading">
+      <ion-card-content class="ion-no-padding">
+        <div class="icon">
+          <ion-skeleton-text animated class="ion-no-margin" style="width: 40px; height: 50px; border-radius: 10px;"></ion-skeleton-text>
+        </div>
+        <div class="text">
+          <ion-skeleton-text animated style="width: 5rem;"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 7rem"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 6.5rem"></ion-skeleton-text>
+          <ion-skeleton-text animated style="width: 9rem"></ion-skeleton-text>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-header>
+
+<ion-content>
+
+  <section id="professional">
+    <ion-card button class="ion-no-margin" (click)="goToProfessional()">
+      <ion-card-content class="ion-no-padding">
+        <ion-item detail lines="none" *ngIf="!loading">
+          <ion-note slot="start" class="ion-no-margin">
+            <img [src]="object.professional.photo ? object.professional.photo : 'assets/user.png'" alt="">
+          </ion-note>
+          <ion-label>
+            <ion-text color="dark"><h5 class="title font-weight-bold">{{ object.professional.first_name }} {{ object.professional.last_name }}</h5></ion-text>
+          </ion-label>
+        </ion-item>
+        <ion-item detail lines="none" *ngIf="loading">
+          <ion-note slot="start" class="ion-no-margin">
+            <ion-avatar>
+              <ion-skeleton-text animated class="ion-no-margin" style="width: 30px;"></ion-skeleton-text>
+            </ion-avatar>
+          </ion-note>
+          <ion-label>
+            <ion-skeleton-text animated class="ion-no-margin" style="width: 70%;"></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+  <section id="address">
+    <ion-card button class="ion-no-margin" (click)="openAddress()">
+      <ion-card-content class="ion-no-padding">
+        <ion-item detail lines="none">
+          <ion-note slot="start" class="ion-no-margin">
+            <img src="assets/icon/map-marker.png" alt="">
+          </ion-note>
+          <ion-label *ngIf="!loading">
+            <ion-text color="dark"><h5 class="title font-weight-bold">Endereço</h5></ion-text>
+            <p class="text">
+              {{ object.address }},
+              {{ object.number }}
+              {{ object.complement ? '|'+object.complement : '' }} | 
+              {{ object.district }} | {{ object.city.name }}
+            </p>
+          </ion-label>
+          <ion-label *ngIf="loading">
+            <ion-skeleton-text animated style="width: 90%;"></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+  <section id="calendar">
+    <ion-card class="ion-no-margin">
+      <ion-card-content class="ion-no-padding">
+        <ion-item detail lines="none">
+          <ion-note slot="start" class="ion-no-margin">
+            <img src="assets/icon/calendar-circle.png" alt="">
+          </ion-note>
+          <ion-label *ngIf="!loading">
+            <ion-text color="dark"><h4 id="date" class="font-weight-bold">{{ object.date|date:'dd/MM' }}</h4></ion-text>
+            <ion-text color="dark"><h5 id="hour">{{ object.time }}</h5></ion-text>
+          </ion-label>
+          <ion-label *ngIf="loading">
+            <ion-skeleton-text id="date" animated style="width: 20%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+  <section id="observation" *ngIf="!loading && (object.observation || object.images.length)">
+    <ion-card class="ion-no-margin">
+      <ion-card-content class="ion-no-padding">
+        <ion-item detail lines="none">
+          <ion-note slot="start" class="ion-no-margin">
+            <img src="assets/icon/gratipay.png" alt="">
+          </ion-note>
+          <ion-label *ngIf="!loading">
+            <ion-text color="dark"><h5 class="title font-weight-bold">Observações</h5></ion-text>
+            <p class="text">{{ object.observation }}</p>
+          </ion-label>
+          <ion-label *ngIf="loading">
+            <ion-skeleton-text animated style="width: 30%;"></ion-skeleton-text>
+            <ion-skeleton-text animated></ion-skeleton-text>
+          </ion-label>
+        </ion-item>
+        <ion-grid>
+          <ion-row class="ion-justify-content-center" *ngIf="!loading">
+            <ion-col size="6" *ngFor="let image of object.images">
+              <ion-card button class="ion-no-margin add-photo" (click)="showImage(image.image)">
+                <ion-card-content>
+                  <img src="assets/icon/photo-video.png" alt="">
+                  <p class="font-weight-bold ion-no-margin">ver a imagem</p>
+                </ion-card-content>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+          <ion-row *ngIf="loading">
+            <ion-col size="6" *ngFor="let image of [1,2,3,4]">
+              <ion-card button class="ion-no-margin">
+                <ion-skeleton-text animated class="ion-no-margin" style="height: 4rem;"></ion-skeleton-text>
+              </ion-card>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </section>
+
+</ion-content>

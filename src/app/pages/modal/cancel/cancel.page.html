@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="secondary" (click)="close()">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding-horizontal ion-padding-bottom ion-text-center">
+
+  <div id="top">
+    <img src="assets/icon/feelings.png" alt="">
+    <ion-text color="tertiary"><h2 class="font-weight-bold">Cancelamento de serviços</h2></ion-text>
+  </div>
+
+  <div class="text font-weight-bold">
+    <p class="ion-no-margin">
+      Você está prestes a cancelar a
+      solicitação que criou. Caso 
+      queira continuar clique no botão 
+      prosseguir abaixo, ou se deseja 
+      voltar à tela anterior, clique no 
+      botão "<ion-icon name="close-circle"></ion-icon>" acima.
+    </p>
+  </div>
+
+  <ion-button expand="block" color="tertiary" (click)="delete()" class="font-weight-bold">Prosseguir</ion-button>
+
+</ion-content>

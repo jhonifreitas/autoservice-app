@@ -1,6 +1,20 @@
+import { City } from './city';
 import { Profile } from './profile';
+import { Category } from './category';
 
 export interface Service {
-    from_profile: Profile;
+    id?: number;
+    category: Category;
+    professional: Profile;
+    zipcode: string;
+    city: City;
+    address: string;
+    district: string;
+    number: string;
+    complement?: string;
+    date: string;
+    time: string;
+    observation?: string;
+    images?: {image: string}[];
     status: 'done' | 'recused' | 'approved' | 'requested';
 }

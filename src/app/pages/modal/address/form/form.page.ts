@@ -10,11 +10,11 @@ import { AddressService } from 'src/app/services/address/address.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-modal-address',
-  templateUrl: './address.page.html',
-  styleUrls: ['./address.page.scss'],
+  selector: 'app-modal-address-form',
+  templateUrl: './form.page.html',
+  styleUrls: ['./form.page.scss'],
 })
-export class AddressModal {
+export class AddressFormModal {
 
   form: FormGroup;
   city_name: string;

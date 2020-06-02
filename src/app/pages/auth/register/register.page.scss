@@ -42,9 +42,10 @@ ion-content{
           }
         }
         ion-item{
-          --ion-color-primary: var(--ion-color-tertiary);
           --padding-start: 0;
+          --min-height: auto;
           --inner-padding-end: 0;
+          --ion-color-primary: var(--ion-color-tertiary);
           ion-label{
             opacity: 0.5;
           }

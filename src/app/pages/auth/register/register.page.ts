@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -36,12 +36,12 @@ export class RegisterPage implements OnInit {
     this.menuCtrl.enable(false);
     this.form = this.formBuilder.group({
       photo: [''],
-      name: ['', Validators.required],
+      name: ['', [Validators.required, this.validatorName]],
       email: ['', Validators.required],
       phone: ['', Validators.required],
       password: ['', Validators.required],
       confirmPass: ['', Validators.required],
-    }, {validator: this.formValidator });
+    }, {validators: this.validatorPassword});
   }
 
   ngOnInit(){
@@ -68,21 +68,27 @@ export class RegisterPage implements OnInit {
     loader.dismiss();
   }
 
-  formValidator(group: FormGroup) {
-    let result:any = {};
-    let name = group.get('name').value;
-    let first_name = name.split(' ')[0];
-    let last_name = name.split(' ')[1];
+  validatorName(name: FormControl) {
+    const result:any = {};
+    let value = name.value;
+    let first_name = value.split(' ')[0];
+    let last_name = value.split(' ')[1];
+
+    if(!first_name || !last_name){
+      result.invalid = true;
+    }
+    return result;
+  }
+
+  validatorPassword(group: FormGroup) {
+    const result:any = {};
     let password = group.get('password').value;
     let confirmPass = group.get('confirmPass').value;
 
     if(password != confirmPass){
-      result.notSame = true;
+      result.passNotSame = true;
     }
-    if(!first_name || !last_name){
-      result.notLastName = true;
-    }
-    return result
+    return result;
   }
 
   async save(){

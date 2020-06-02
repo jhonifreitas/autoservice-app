@@ -4,6 +4,7 @@ import { Platform, IonRouterOutlet, NavController, MenuController, ModalControll
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
+import { Global } from './services/global';
 import { StorageService } from './services/storage/storage.service';
 import { PaymentInfoModal } from './pages/modal/payment/info/info.page';
 import { FunctionsService } from './services/functions/functions.service';
@@ -23,6 +24,7 @@ export class AppComponent {
   selectedIndex = 0;
 
   constructor(
+    private global: Global,
     private platform: Platform,
     private statusBar: StatusBar,
     public storage: StorageService,
@@ -67,6 +69,11 @@ export class AppComponent {
       component: PaymentInfoModal
     });
     return await modal.present();
+  }
+
+  goToServiceForm(){
+    this.global.professional = null;
+    this.navCtrl.navigateForward('/service/form');
   }
 
   isProfessional(){

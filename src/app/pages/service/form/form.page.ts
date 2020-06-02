@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ModalController, ActionSheetController } from '@ionic/angular';
 
-import { AddressModal } from '../../modal/address/address.page';
 import { DatetimeModal } from '../../modal/datetime/datetime.page';
+import { AddressFormModal } from '../../modal/address/form/form.page';
 import { ObservationModal } from '../../modal/observation/observation.page';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -20,7 +20,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
   templateUrl: './form.page.html',
   styleUrls: ['./form.page.scss'],
 })
-export class ServiceFormPage implements OnInit {
+export class ServiceFormPage {
 
   slideOption = {
     slidesPerView: 'auto',
@@ -52,12 +52,16 @@ export class ServiceFormPage implements OnInit {
   ) {
   }
 
-  async ngOnInit(){
+  async ionViewDidEnter(){
     this.loading = true;
     this.global.address = this.storage.getUser().profile.address;
-    await this.api.get('category').then(data => {
-      this.categories = data;
-    }).catch(() => {})
+    if(this.global.professional){
+      this.categories = this.global.professional.categories.map(category => category.category);
+    }else{
+      await this.api.get('category').then(data => {
+        this.categories = data;
+      }).catch(() => {})
+    }
     this.loading = false;
   }
 
@@ -98,11 +102,7 @@ export class ServiceFormPage implements OnInit {
           path: pathFile,
           file: image.file
         }
-        if(this.global.observation){
-          this.global.observation.images.push(data);
-        }else{
-          this.global.observation = {text: null, images: [data]};
-        }
+        this.global.images.push(data);
       }).catch(_ => {});
       loader.dismiss();
     });
@@ -110,7 +110,7 @@ export class ServiceFormPage implements OnInit {
 
   removePhoto(index: number){
     this.functions.alertDelete('Atenção!', 'Deseja remover esta foto?').then(_ => {
-      this.global.observation.images.splice(index, 1);
+      this.global.images.splice(index, 1);
     }).catch(_ => {})
   }
 
@@ -124,7 +124,7 @@ export class ServiceFormPage implements OnInit {
   }
   
   addAddress(){
-    this.openModal(AddressModal);
+    this.openModal(AddressFormModal);
   }
 
   addDatetime(){
@@ -144,16 +144,26 @@ export class ServiceFormPage implements OnInit {
 
   async save(){
     if(this.validation()){
+      const loader = await this.functions.loading();
       const data = {
         category: this.global.category.id,
         professional: this.global.professional.id,
-        address: this.global.address,
-        datetime: this.global.datetime,
+        zipcode: this.global.address.zipcode,
+        city: this.global.address.city.id,
+        address: this.global.address.address,
+        district: this.global.address.district,
+        number: this.global.address.number,
+        complement: this.global.address.complement,
+        date: this.global.date,
+        time: this.global.time,
         observation: this.global.observation,
+        images: this.global.images,
       }
-      this.api.post('service', data).then(res => {
+      await this.api.post('service', data).then(res => {
+        this.navCtrl.navigateBack('/home');
         this.functions.message('Serviço solicitado!');
       }).catch(_ => {})
+      loader.dismiss();
     }
   }
 
@@ -167,8 +177,8 @@ export class ServiceFormPage implements OnInit {
     }else if(!this.global.address){
       this.functions.message('Selecione um endereço!');
       return false;
-    }else if(!this.global.datetime){
-      this.functions.message('Selecione um data e hora!');
+    }else if(!this.global.date || !this.global.time){
+      this.functions.message('Selecione um data e horário!');
       return false;
     }
     return true;

@@ -24,12 +24,7 @@ export class ObservationModal {
   }
 
   save(){
-    const text = this.form.get('text').value;
-    if(this.global.observation){
-      this.global.observation.text = text;
-    }else{
-      this.global.observation = {text: text, images: []};
-    }
+    this.global.observation = this.form.get('text').value;
     this.close();
   }
 

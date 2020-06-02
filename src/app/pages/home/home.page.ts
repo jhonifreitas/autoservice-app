@@ -32,11 +32,23 @@ export class HomePage {
   async ionViewDidEnter(event=null){
     this.loading = true;
     if(this.isProfessional()){
+      await this.api.get('service/requested').then(data => {
+        this.waiting_services = data;
+      }).catch(() => {});
+      await this.api.get('service/approved').then(data => {
+        this.approved_services = data;
+      }).catch(() => {});
     }else{
       await this.api.get('category').then(data => {
         this.categories = data;
       }).catch(() => {});
+      await this.api.get('service/waiting').then(data => {
+        this.requested_services = data;
+      }).catch(() => {});
     }
+    await this.api.get('service/history').then(data => {
+      this.historic_services = data;
+    }).catch(() => {});
     if(event){ event.target.complete();}
     this.loading = false;
   }

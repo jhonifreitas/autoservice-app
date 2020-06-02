@@ -74,7 +74,9 @@ ion-content{
             padding-bottom: 3rem;
             ion-card{
                 img{
+                    height: 8rem;
                     padding: 4px;
+                    object-fit: cover;
                     border-top-left-radius: 20px;
                     border-top-right-radius: 20px;
                 }

@@ -16,6 +16,7 @@ const routes: Routes = [
     { path: 'professional/:id', loadChildren: () => import('./pages/professional/detail/detail.module').then( m => m.ProfessionalDetailPageModule) }
   ]},
   { path: 'service', canActivate: [AuthGuard] , children: [
+    { path: ':id', loadChildren: () => import('./pages/service/detail/detail.module').then( m => m.ServiceDetailPageModule) },
     { path: 'form', loadChildren: () => import('./pages/service/form/form.module').then( m => m.ServiceFormPageModule) }
   ]},
 ];

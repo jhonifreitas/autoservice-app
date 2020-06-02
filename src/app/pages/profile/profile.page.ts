@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NavController, ActionSheetController, ModalController } from '@ionic/angular';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -7,7 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 import { City } from 'src/app/interfaces/city';
 import { State } from 'src/app/interfaces/state';
-import { Profile, ProfileCategory } from 'src/app/interfaces/profile';
+import { Profile, ProfileCategory, Gallery, Review } from 'src/app/interfaces/profile';
 
 import { CompetenceModal } from '../modal/competence/competence.page';
 import { PaymentInfoModal } from 'src/app/pages/modal/payment/info/info.page';
@@ -27,8 +27,11 @@ export class ProfilePage implements OnInit {
   photo: string;
   form: FormGroup;
   city_name: string;
-  states: State[] = [];
   cities: City[] = [];
+  states: State[] = [];
+  reviews: Review[] = [];
+  gallery: Gallery[] = [];
+  loading: boolean = true;
   segment: string = 'info';
   profile = this.storage.getUser().profile;
 
@@ -63,10 +66,10 @@ export class ProfilePage implements OnInit {
       district: [''],
       birthday: [''],
       complement: [''],
-      name: ['', Validators.required],
+      name: ['', [Validators.required, this.validatorName]],
       email: ['', Validators.required],
       phone: ['', Validators.required]
-    }, {validator: this.formValidator });
+    });
   }
 
   async ngOnInit(){
@@ -81,16 +84,17 @@ export class ProfilePage implements OnInit {
     }).catch(_ => {});
     this.setValues();
     loader.dismiss();
+    this.loading = false;
   }
 
-  formValidator(group: FormGroup) {
+  validatorName(name: FormControl) {
     let result:any = {};
-    let name = group.get('name').value;
-    let first_name = name.split(' ')[0];
-    let last_name = name.split(' ')[1];
+    let value = name.value;
+    let first_name = value.split(' ')[0];
+    let last_name = value.split(' ')[1];
 
     if(!first_name || !last_name){
-      result.notLastName = true;
+      result.invalid = true;
     }
     return result
   }
@@ -126,14 +130,30 @@ export class ProfilePage implements OnInit {
   }
 
   async getCategories(){
-    const loader = await this.functions.loading();
+    this.loading = true;
     await this.api.get('profile/category').then(res => {
       const user = this.storage.getUser();
       this.profile.categories = res;
       user.profile = this.profile;
       this.storage.setUser(user);
     }).catch(_ => {});
-    loader.dismiss();
+    this.loading = false;
+  }
+
+  async getAvaliations(){
+    this.loading = true;
+    await this.api.get('review').then(res => {
+      this.reviews = res;
+    }).catch(_ => {});
+    this.loading = false;
+  }
+
+  async getGallery(){
+    this.loading = true;
+    await this.api.get('gallery').then(res => {
+      this.gallery = res;
+    }).catch(_ => {});
+    this.loading = false;
   }
 
   async choiceMedia(){
@@ -207,10 +227,6 @@ export class ProfilePage implements OnInit {
     this.form.get('complement').setValue(this.profile.address.complement);
   }
 
-  checkStar(star: number, rating: number){
-    return this.functions.nameStar(star, rating);
-  }
-
   async save(){
     if(this.form.valid){
       const loader = await this.functions.loading('Salvando...');
@@ -224,7 +240,7 @@ export class ProfilePage implements OnInit {
       loader.dismiss();
     }else{
       let message = 'Verifique os dados antes de prosseguir!';
-      if(this.form.hasError('notLastName')){
+      if(this.form.get('name').hasError('invalid')){
         message = 'Nome deve conter nome e sobrenome!';
       }else if(this.form.get('email').hasError('required')){
         message = 'O campo Email é obrigatório!';
@@ -250,6 +266,18 @@ export class ProfilePage implements OnInit {
     await modal.present();
     await modal.onWillDismiss();
     this.getCategories();
+  }
+
+  checkStar(star: number, rating: number){
+    return this.functions.nameStar(star, rating);
+  }
+
+  async changeSegment(){
+    if(this.segment == 'avaliations'){
+      await this.getAvaliations();
+    }else if(this.segment == 'gallery'){
+      await this.getGallery();
+    }
   }
 
   isProfessional(){

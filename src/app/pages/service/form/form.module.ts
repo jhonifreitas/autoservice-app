@@ -6,7 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrMaskerModule } from 'br-mask';
 import { ServiceFormPage } from './form.page';
-import { AddressModal } from '../../modal/address/address.page';
+import { AddressFormModal } from '../../modal/address/form/form.page';
 import { DatetimeModal } from '../../modal/datetime/datetime.page';
 import { ObservationModal } from '../../modal/observation/observation.page';
 
@@ -24,7 +24,7 @@ import { ObservationModal } from '../../modal/observation/observation.page';
       }
     ])
   ],
-  entryComponents: [DatetimeModal, AddressModal, ObservationModal],
-  declarations: [ServiceFormPage, DatetimeModal, AddressModal, ObservationModal]
+  entryComponents: [DatetimeModal, AddressFormModal, ObservationModal],
+  declarations: [ServiceFormPage, DatetimeModal, AddressFormModal, ObservationModal]
 })
 export class ServiceFormPageModule {}

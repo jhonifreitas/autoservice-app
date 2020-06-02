@@ -27,8 +27,7 @@ export class PaymentService {
     return new Promise((resolve) => {
       if(!this.scriptLoaded) {
         let script: HTMLScriptElement = document.createElement('script');
-        script.addEventListener('load', async (_) => {
-          await this.startSession();
+        script.addEventListener('load', (_) => {
           resolve()
         });
         script.src = this.scriptURL;
@@ -42,7 +41,7 @@ export class PaymentService {
     });
   }
 
-  private async startSession(){
+  async startSession(){
     await this.api.get('pagseguro/get-session').then(data => {
       PagSeguroDirectPayment.setSessionId(data.session_id);
     }).catch(_ => {});

@@ -30,8 +30,8 @@
             <ion-label position="floating" color="dark">Nome</ion-label>
             <ion-input type="text" formControlName="name" class="font-weight-bold"></ion-input>
           </ion-item>
-          <ion-item lines="none" *ngIf="form.get('name').value && form.hasError('notLastName')">
-            <ion-label color="danger">Nome deve conter nome e sobrenome!</ion-label>
+          <ion-item lines="none" *ngIf="form.get('name').value && form.get('name').hasError('invalid')">
+            <ion-label color="danger" class="ion-no-margin"><small>Nome deve conter nome e sobrenome!</small></ion-label>
           </ion-item>
 
           <ion-item>
@@ -53,7 +53,7 @@
             <ion-label position="floating" color="dark">Confirmar sua senha</ion-label>
             <ion-input type="password" formControlName="confirmPass" class="font-weight-bold"></ion-input>
           </ion-item>
-          <ion-item lines="none" *ngIf="form.get('password').value && form.get('confirmPass').value && form.hasError('notSame')">
+          <ion-item lines="none" *ngIf="form.get('password').value && form.get('confirmPass').value && form.hasError('passNotSame')">
             <ion-label color="danger">As senhas não coincidem!</ion-label>
           </ion-item>
 

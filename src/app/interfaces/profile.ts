@@ -37,6 +37,4 @@ export interface Profile {
     rating: string;
     photo: string;
     categories: ProfileCategory[];
-    reviews: Review[];
-    gallery: Gallery[];
 }

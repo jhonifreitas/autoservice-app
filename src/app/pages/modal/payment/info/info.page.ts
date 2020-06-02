@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ActionSheetController, ModalController } from '@ionic/angular';
 
 import { PaymentCardModal } from '../card/card.page';
@@ -15,7 +15,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
   templateUrl: './info.page.html',
   styleUrls: ['./info.page.scss'],
 })
-export class PaymentInfoModal implements OnInit {
+export class PaymentInfoModal {
 
   value: string;
   trial_period: number;
@@ -32,9 +32,10 @@ export class PaymentInfoModal implements OnInit {
   ) {
   }
 
-  async ngOnInit(){
+  async ionViewDidEnter(){
     const loader = await this.functions.loading();
     await this.paymentApi.loadScript();
+    await this.paymentApi.startSession();
     await this.api.get('config').then(res => {
       this.storage.setConfig(res);
       this.value = res.value;

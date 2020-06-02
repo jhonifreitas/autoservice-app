@@ -3,8 +3,8 @@ import { ModalController, NavParams } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Category } from 'src/app/interfaces/category';
-import { TypePay, ProfileCategory } from 'src/app/interfaces/profile';
 import { ApiService } from 'src/app/services/api/api.service';
+import { TypePay, ProfileCategory } from 'src/app/interfaces/profile';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({

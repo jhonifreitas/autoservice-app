@@ -18,18 +18,15 @@ export interface Payment {
     card?: Card;
 }
 
-export interface Observation {
-    text?: string;
-    images?: {path: string; file: Blob[]}[];
-}
-
 @Injectable()
 export class Global {
     category: Category;
     professional: Profile;
     address: Address;
-    datetime: string;
-    observation: Observation;
+    date: string;
+    time: string;
+    observation?: string;
+    images?: {path: string; file: Blob}[] = [];
 
     payment: Payment;
     pagseguro: {cards: CreditCard};

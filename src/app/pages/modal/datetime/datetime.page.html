@@ -14,6 +14,19 @@
     <ion-text color="tertiary"><h2 class="font-weight-bold">Escolha a data e um horário</h2></ion-text>
   </div>
 
-  <ion-button color="tertiary" (click)="save()" class="font-weight-bold">Adicionar</ion-button>
+  <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
+
+    <ion-item lines="none">
+      <ion-label>Data</ion-label>
+      <ion-datetime formControlName="date" displayFormat="DD MMM YYYY" [min]="minDate" [max]="maxDate" class="font-weight-bold" [monthShortNames]="monthShortNames" cancelText="Cancelar" doneText="Ok"></ion-datetime>
+    </ion-item>
+
+    <ion-item button lines="none" (click)="openPicker()">
+      <ion-label>Horário</ion-label>
+      <ion-input type="text" formControlName="time" class="font-weight-bold" readonly></ion-input>
+    </ion-item>
+
+    <ion-button type="submit" color="tertiary" class="font-weight-bold" [disabled]="form.invalid">Adicionar</ion-button>
+  </form>
 
 </ion-content>

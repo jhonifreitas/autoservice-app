@@ -14,20 +14,28 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
+  <ion-item id="search" lines="none" [color]="!isProfessional() ? 'secondary' : 'tertiary'" *ngIf="!isProfessional()">
+    <ion-searchbar searchIcon="search-outline" placeholder="busque por serviço ou profissional"></ion-searchbar>
+    <ion-button slot="end" color="tertiary">ir</ion-button>
+  </ion-item>
 </ion-header>
 
 <ion-content [ngClass]="{'common': !isProfessional(), 'professional': isProfessional()}">
 
-  <ion-item id="search" lines="none" *ngIf="!isProfessional()">
-    <ion-searchbar searchIcon="search-outline" placeholder="busque por serviço ou profissional"></ion-searchbar>
-    <ion-button slot="end" color="tertiary">ir</ion-button>
-  </ion-item>
+  <ion-refresher slot="fixed" (ionRefresh)="ionViewDidEnter($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-down"
+      pullingText="Puxe para atualizar"
+      refreshingSpinner="circular"
+      refreshingText="Atualizando...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <!-- CLIENT -->
 
   <section id="categories" *ngIf="!isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Escolha a categoria</h4>
-    <ion-slides [options]="slideOption">
+    <ion-slides [options]="slideOption" *ngIf="!loading">
       <ion-slide *ngFor="let object of categories">
         <ion-card button color="light" class="ion-no-margin" routerDirection="forward" routerLink="/category/{{ object.id }}">
           <ion-card-content>
@@ -37,13 +45,20 @@
         </ion-card>
       </ion-slide>
     </ion-slides>
+    <ion-slides [options]="slideOption" *ngIf="loading">
+      <ion-slide *ngFor="let object of [1,2,3,4]">
+        <ion-card class="ion-no-margin" color="light">
+          <ion-skeleton-text animated class="ion-no-margin" style="height: 7rem;"></ion-skeleton-text>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
   </section>
 
   <section class="services" *ngIf="!isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços solicitados</h4>
     <ion-slides [options]="slideOption">
       <ion-slide *ngFor="let object of requested_services">
-        <ion-card button color="light" class="ion-no-margin">
+        <ion-card button color="light" class="ion-no-margin" routerDirection="forward" routerLink="/service/{{ object.id }}">
           <img [src]="object.category.image" alt="">
           <ion-card-content>
             <h4 class="font-weight-bold">Ver serviço</h4>

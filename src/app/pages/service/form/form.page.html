@@ -7,13 +7,20 @@
     </ion-buttons>
     <ion-title class="ion-no-padding" color="light">Solicitar serviço</ion-title>
   </ion-toolbar>
-  <ion-slides [options]="slideOption" *ngIf="!global.category">
+  <ion-slides [options]="slideOption" *ngIf="!loading && !global.category">
     <ion-slide *ngFor="let object of categories">
       <ion-card button class="ion-no-margin" color="light" (click)="global.category = object">
         <ion-card-content>
           <img src="{{ object.icon }}" alt="">
           <p class="font-weight-bold">{{ object.name }}</p>
         </ion-card-content>
+      </ion-card>
+    </ion-slide>
+  </ion-slides>
+  <ion-slides [options]="slideOption" *ngIf="loading && !global.category">
+    <ion-slide *ngFor="let object of [1,2,3,4]">
+      <ion-card class="ion-no-margin" color="light">
+        <ion-skeleton-text animated class="ion-no-margin" style="height: 8rem;"></ion-skeleton-text>
       </ion-card>
     </ion-slide>
   </ion-slides>
@@ -42,11 +49,11 @@
             <p class="text">adicione o profissional para o seu trabalho</p>
           </ion-label>
         </ion-item>
-        <ion-item detail lines="none" *ngIf="global.professional">
+        <ion-item detail lines="none" *ngIf="global.professional" [ngClass]="{'hasData': global.professional}">
           <ion-note slot="start" class="ion-no-margin">
             <img [src]="global.professional.photo ? global.professional.photo : 'assets/user.png'" alt="">
           </ion-note>
-          <ion-label style="opacity: 1;">
+          <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">{{ global.professional.first_name }} {{ global.professional.last_name }}</h5></ion-text>
           </ion-label>
         </ion-item>
@@ -54,21 +61,32 @@
     </ion-card>
   </section>
 
-  <section id="address">
-    <ion-card button class="ion-no-margin" (click)="!global.address ? addAddress() : null">
+  <section id="address" *ngIf="global.address">
+    <ion-card button class="ion-no-margin" 
+      (click)="!global.address.address && !global.address.number && !global.address.district && !global.address.city ? addAddress() : null">
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none">
           <ion-note slot="start" class="ion-no-margin">
-            <img src="assets/icon/map-marker.png" alt="">
+            <img src="assets/icon/map-marker-gray.png" alt="">
           </ion-note>
           <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">Endereço</h5></ion-text>
-            <p *ngIf="global.address" class="text">{{ global.address.address }}, {{ global.address.number }}{{ global.address.complement ? ' |'+global.address.complement : '' }} | {{ global.address.district }} | {{ global.address.city.name }}</p>
+            <p 
+              *ngIf="global.address.address && global.address.number && global.address.district && global.address.city" 
+              class="text">
+              {{ global.address.address }},
+              {{ global.address.number }}
+              {{ global.address.complement ? '|'+global.address.complement : '' }} | 
+              {{ global.address.district }} | {{ global.address.city.name }}
+            </p>
           </ion-label>
         </ion-item>
       </ion-card-content>
     </ion-card>
-    <ion-radio-group [(ngModel)]="addressOption" *ngIf="global.address" (ionChange)="addressOption == 'other' ? addAddress() : null">
+    <ion-radio-group 
+      [(ngModel)]="addressOption" 
+      *ngIf="global.address.address && global.address.number && global.address.district && global.address.city" 
+      (ionChange)="addressOption == 'other' ? addAddress() : null">
       <ion-item lines="none">
         <ion-radio slot="start" color="tertiary" value="current"></ion-radio>
         <ion-label class="ion-text-wrap">usar esse endereço</ion-label>
@@ -83,12 +101,16 @@
   <section id="calendar">
     <ion-card button class="ion-no-margin" (click)="addDatetime()">
       <ion-card-content class="ion-no-padding">
-        <ion-item detail lines="none">
+        <ion-item detail lines="none" [ngClass]="{'hasData': global.date && global.time}">
           <ion-note slot="start" class="ion-no-margin">
-            <img src="assets/icon/calendar-circle.png" alt="">
+            <img src="assets/icon/calendar-circle-gray.png" alt="">
           </ion-note>
-          <ion-label>
+          <ion-label *ngIf="!global.date && !global.time">
             <ion-text color="dark"><h5 class="title">escolha uma data e horário</h5></ion-text>
+          </ion-label>
+          <ion-label *ngIf="global.date && global.time">
+            <ion-text color="dark"><h4 id="date" class="font-weight-bold">{{ global.date|date:'dd/MM' }}</h4></ion-text>
+            <ion-text color="dark"><h5 id="hour">{{ global.time }}</h5></ion-text>
           </ion-label>
         </ion-item>
       </ion-card-content>
@@ -98,18 +120,18 @@
   <section id="observation">
     <ion-card class="ion-no-margin">
       <ion-card-content class="ion-no-padding">
-        <ion-item button detail lines="none" (click)="addObservation()">
+        <ion-item button detail lines="none" (click)="addObservation()" [ngClass]="{'hasData': global.observation}">
           <ion-note slot="start" class="ion-no-margin">
             <img src="assets/icon/gratipay-gray.png" alt="">
           </ion-note>
           <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">Observações</h5></ion-text>
-            <p class="text">adicione mais informações</p>
+            <p class="text">{{ global.observation ? global.observation : 'adicione mais informações' }}</p>
           </ion-label>
         </ion-item>
         <ion-grid>
-          <ion-row *ngIf="global.observation">
-            <ion-col size="6" *ngFor="let image of global.observation.images; let i = index">
+          <ion-row *ngIf="global.images.length">
+            <ion-col size="6" *ngFor="let image of global.images; let i = index">
               <ion-card button class="ion-no-margin" (click)="removePhoto(i)">
                 <img [src]="image.path" alt="">
               </ion-card>

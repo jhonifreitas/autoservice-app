@@ -28,7 +28,7 @@
       <ion-badge mode="ios">{{ object.rating }}</ion-badge>
     </div>
   </div>
-  <ion-segment color="light" mode="md" [(ngModel)]="segment">
+  <ion-segment color="light" mode="md" [(ngModel)]="segment" (ionChange)="changeSegment()">
     <ion-segment-button value="avaliations">
       <ion-label>Avaliações</ion-label>
     </ion-segment-button>
@@ -49,12 +49,11 @@
 
   <div id="avaliations" *ngIf="segment == 'avaliations'">
     <ion-list lines="none" *ngIf="!loading">
-      <ion-item class="empty" *ngIf="!object.reviews.length">
+      <ion-item class="empty" *ngIf="!reviews.length">
         <ion-icon name="sad-outline" slot="start" size="large"></ion-icon>
-        <ion-label color="dark" *ngIf="canAddAvaliation()">Seja o primeiro a avaliar!</ion-label>
-        <ion-label color="dark" *ngIf="!canAddAvaliation()">Nenhum avaliação encontrada!</ion-label>
+        <ion-label color="dark">Nenhum avaliação encontrada!</ion-label>
       </ion-item>
-      <ion-item button *ngFor="let commentary of object.reviews" (click)="openAvaliation(commentary)" [ngClass]="{'featured': commentary.note == 5}">
+      <ion-item button *ngFor="let commentary of reviews" (click)="openAvaliation(commentary)" [ngClass]="{'featured': commentary.note == 5}">
         <ion-avatar slot="start">
           <ion-img [src]="commentary.from_profile.photo ? commentary.from_profile.photo : 'assets/user.png'" alt=""></ion-img>
         </ion-avatar>
@@ -90,12 +89,12 @@
   <div id="gallery" *ngIf="segment == 'gallery'">
     <ion-grid *ngIf="!loading">
       <ion-row>
-        <ion-col size="4" class="ion-no-padding" *ngFor="let gallery of object.gallery">
+        <ion-col size="4" class="ion-no-padding" *ngFor="let photo of gallery">
           <ion-card>
-            <img src="{{ gallery.image }}" alt="">
+            <img src="{{ photo.image }}" alt="">
           </ion-card>
         </ion-col>
-        <ion-col size="6" *ngIf="!object.gallery.length">
+        <ion-col size="6" *ngIf="!gallery.length">
           <ion-card class="empty">
             <ion-card-content class="ion-text-center">
               <ion-icon name="sad-outline" size="large"></ion-icon>

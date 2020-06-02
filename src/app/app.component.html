@@ -3,7 +3,7 @@
     <ion-menu side="end" contentId="main-content" type="push" swipeGesture="false" *ngIf="storage.getUser()">
       <ion-header>
         <ion-menu-toggle auto-hide="false">
-          <ion-item lines="none" routerDirection="root" routerLink="/profile">
+          <ion-item lines="none" routerDirection="forward" routerLink="/profile">
             <ion-avatar slot="start">
               <ion-img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'"></ion-img>
             </ion-avatar>
@@ -19,7 +19,7 @@
           <ion-list class="ion-no-padding">
             <!-- CLIENT -->
             <ion-menu-toggle auto-hide="false" *ngIf="isCommon()">
-              <ion-item routerDirection="root" routerLink="/service/form" detail="false">
+              <ion-item (click)="goToServiceForm()" detail="false">
                 <ion-label>solicitar serviço</ion-label>
               </ion-item>
             </ion-menu-toggle>

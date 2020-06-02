@@ -61,9 +61,14 @@ export class PaymentCardModal implements OnInit {
   async save(){
     if(this.form.valid){
       const loader = await this.functions.loading('Salvando...');
-      const data = this.form.value;
-      data.month = data.expiration.split('/')[0];
-      data.year = data.expiration.split('/')[1];
+      const values = this.form.value;
+      const data = {
+        number: values.number,
+        name: values.name,
+        month: values.expiration.split('/')[0],
+        year: 20+values.expiration.split('/')[1],
+        cvv: values.cvv
+      }
       await this.payment.getCardToken(data, this.cardBrand.name).then(async (token) => {
         this.global.payment.card = {
           card_token: token,
@@ -79,6 +84,7 @@ export class PaymentCardModal implements OnInit {
         });
         return await modal.present();
       }).catch(err => {
+        console.log(err)
         this.functions.message('Dados inválidos!');
       });
       loader.dismiss();
