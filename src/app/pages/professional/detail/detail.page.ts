@@ -5,6 +5,8 @@ import { ModalController, Platform, NavController } from '@ionic/angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
+import { Global } from 'src/app/services/global';
+import { Service } from 'src/app/interfaces/service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AvaliationPage } from '../avaliation/avaliation.page';
 import { StorageService } from 'src/app/services/storage/storage.service';
@@ -22,11 +24,13 @@ export class ProfessionalDetailPage {
   private category: ProfileCategory;
   private category_id: number;
 
-  segment: string = 'avaliations';
   object: Profile;
+  service: Service;
   loading: boolean = true;
+  segment: string = 'avaliations';
 
   constructor(
+    private global: Global,
     private api: ApiService,
     private platform: Platform,
     private router: ActivatedRoute,
@@ -43,7 +47,7 @@ export class ProfessionalDetailPage {
 
   async ionViewDidEnter(event=null){
     this.loading = true;
-    await this.api.get('autonomous/'+this.id+'/detail').then(data => {
+    await this.api.get('professional/'+this.id+'/detail').then(data => {
       this.object = data;
     }).catch(() => {})
     this.category = this.object.categories.filter(item => item.category.id == this.category_id)[0];
@@ -57,7 +61,7 @@ export class ProfessionalDetailPage {
 
   canAddAvaliation(){
     const user = this.storage.getUser();
-    if(this.isAutonomous()){
+    if(this.isProfessional()){
       return false;
     }else if(this.object.reviews.filter(review => review.from_profile.id == user.profile.id).length){
       return false;
@@ -66,7 +70,7 @@ export class ProfessionalDetailPage {
   }
 
   async openAvaliation(review: Review = null){
-    if(this.isAutonomous()){
+    if(this.isProfessional()){
       return;
     }
     const modal = await this.modalCtrl.create({
@@ -77,6 +81,11 @@ export class ProfessionalDetailPage {
     await modal.present();
     await modal.onWillDismiss();
     this.ionViewDidEnter();
+  }
+
+  requestService(){
+    this.global.professional = this.object;
+    this.navCtrl.navigateForward('/service/form');
   }
 
   openWhatsapp(){
@@ -93,8 +102,8 @@ export class ProfessionalDetailPage {
     this.photoViewer.show(image);
   }
 
-  isAutonomous(){
-    return this.storage.getUser().profile.types == 'autonomous';
+  isProfessional(){
+    return this.storage.getUser().profile.types == 'professional';
   }
 
   goToBack(){

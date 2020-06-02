@@ -7,6 +7,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrMaskerModule } from 'br-mask';
 
 import { ProfilePage } from './profile.page';
+import { CompetenceModal } from '../modal/competence/competence.page';
+
 
 @NgModule({
   imports: [
@@ -22,6 +24,7 @@ import { ProfilePage } from './profile.page';
       }
     ])
   ],
-  declarations: [ProfilePage]
+  entryComponents: [CompetenceModal],
+  declarations: [ProfilePage, CompetenceModal]
 })
 export class ProfilePageModule {}

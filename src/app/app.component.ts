@@ -69,6 +69,16 @@ export class AppComponent {
     return await modal.present();
   }
 
+  isProfessional(){
+    if (!this.storage.getUser()){return false}
+    return this.storage.getUser().profile.types == 'professional';
+  }
+
+  isCommon(){
+    if (!this.storage.getUser()){return false}
+    return this.storage.getUser().profile.types == 'common';
+  }
+
   logout(){
     this.menuCtrl.close().finally(() => {
       this.storage.removeUser();

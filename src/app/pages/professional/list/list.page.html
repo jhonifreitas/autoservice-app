@@ -30,7 +30,7 @@
       </ion-avatar>
       <ion-label class="ion-text-wrap">
         <div class="name">
-          <ion-text color="tertiary" class="font-weight-bold">{{ object.name }}</ion-text>
+          <ion-text color="tertiary" class="font-weight-bold">{{ object.first_name }} {{ object.last_name }}</ion-text>
         </div>
         <div class="stars ion-text-center">
           <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, object.rating)" color="dark"></ion-icon>

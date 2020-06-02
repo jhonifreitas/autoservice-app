@@ -1,6 +1,6 @@
 <ion-content>
 
-  <ion-slides>
+  <ion-slides #slides>
     <ion-slide>
       <div class="ion-text-center">
         <div class="header">
@@ -11,7 +11,7 @@
           <img src="assets/intro-1.png" alt="">
         </div>
         <div class="footer">
-          <ion-button fill="clear" color="dark" (click)="goToLogin()" class="ion-text-capitalize font-weight-medium">
+          <ion-button fill="clear" color="dark" (click)="goToNext()" class="ion-text-capitalize font-weight-medium">
             Pular
             <ion-icon name="chevron-forward"></ion-icon>
           </ion-button>
@@ -28,7 +28,7 @@
           <img src="assets/intro-2.png" alt="">
         </div>
         <div class="footer">
-          <ion-button fill="clear" color="dark" (click)="goToLogin()" class="ion-text-capitalize font-weight-medium">
+          <ion-button fill="clear" color="dark" (click)="goToNext()" class="ion-text-capitalize font-weight-medium">
             Pular
             <ion-icon name="chevron-forward"></ion-icon>
           </ion-button>

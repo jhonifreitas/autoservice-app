@@ -1,0 +1,44 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="secondary" (click)="close()">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding-horizontal ion-padding-bottom ion-text-center">
+
+  <div id="top">
+    <ion-icon name="barbell" color="tertiary" style="font-size: 5rem;"></ion-icon>
+    <ion-text color="tertiary">
+      <h2 class="font-weight-bold" *ngIf="object">Edite sua competência</h2>
+      <h2 class="font-weight-bold" *ngIf="!object">Adicione uma competência</h2>
+    </ion-text>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding">
+    <ion-item>
+      <ion-label position="floating">Categoria</ion-label>
+      <ion-select formControlName="category" cancelText="Cancelar" class="font-weight-bold">
+        <ion-select-option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Tipo de pagamento</ion-label>
+      <ion-select formControlName="type_pay" cancelText="Cancelar" class="font-weight-bold">
+        <ion-select-option *ngFor="let type_pay of types_pay" [value]="type_pay.id">{{ type_pay.name }}</ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="floating">Preço</ion-label>
+      <ion-input type="tel" formControlName="price" [brmasker]="{money: true}" maxlength="12" class="font-weight-bold"></ion-input>
+    </ion-item>
+    
+    <ion-button type="submit" color="tertiary" class="font-weight-bold" [disabled]="form.invalid">{{ object ? 'Editar' : 'Adicionar' }}</ion-button>
+    <ion-button type="button" color="danger" fill="outline" class="font-weight-bold" (click)="delete()" *ngIf="object">Deletar</ion-button>
+  </form>
+
+</ion-content>

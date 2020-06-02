@@ -1,5 +1,5 @@
 <ion-app>
-  <ion-split-pane contentId="main-content">
+  <ion-split-pane contentId="main-content" [ngClass]="{'common': isCommon(), 'professional': isProfessional()}">
     <ion-menu side="end" contentId="main-content" type="push" swipeGesture="false" *ngIf="storage.getUser()">
       <ion-header>
         <ion-menu-toggle auto-hide="false">
@@ -8,7 +8,7 @@
               <ion-img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'"></ion-img>
             </ion-avatar>
             <ion-label class="ion-text-wrap">
-              <h2 class="ion-no-margin font-weight-bold">Olá {{ storage.getUser().profile.name }}</h2>
+              <h2 class="ion-no-margin font-weight-bold">Olá {{ storage.getUser().profile.first_name }}</h2>
               <p>ver perfil</p>
             </ion-label>
           </ion-item>
@@ -17,17 +17,31 @@
       <ion-content>
         <div class="vertical-align">
           <ion-list class="ion-no-padding">
-            <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
+            <!-- CLIENT -->
+            <ion-menu-toggle auto-hide="false" *ngIf="isCommon()">
               <ion-item routerDirection="root" routerLink="/service/form" detail="false">
-                <ion-label>Solicitar serviço</ion-label>
+                <ion-label>solicitar serviço</ion-label>
               </ion-item>
             </ion-menu-toggle>
-            <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
+            <ion-menu-toggle auto-hide="false" *ngIf="isCommon()">
               <ion-item routerDirection="root" routerLink="/home" detail="false">
                 <ion-label>serviços solicitados</ion-label>
               </ion-item>
             </ion-menu-toggle>
-            <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
+
+            <!-- PROFESSIONAL -->
+            <ion-menu-toggle auto-hide="false" *ngIf="isProfessional()">
+              <ion-item routerDirection="root" routerLink="/home" detail="false">
+                <ion-label>serviços aceitos</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" *ngIf="isProfessional()">
+              <ion-item routerDirection="root" routerLink="/home" detail="false">
+                <ion-label>serviços em espera</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle auto-hide="false">
               <ion-item routerDirection="root" routerLink="/home" detail="false">
                 <ion-label>histórico de serviços</ion-label>
               </ion-item>
@@ -36,14 +50,14 @@
         </div>
       </ion-content>
       <ion-footer>
-        <ion-menu-toggle auto-hide="false" *ngIf="storage.getUser().profile.types == 'common'">
+        <ion-menu-toggle auto-hide="false" *ngIf="isCommon()">
           <ion-item button (click)="openPaymentInfo()" detail="false">
             <ion-label>quero virar profissional</ion-label>
           </ion-item>
         </ion-menu-toggle>
         <ion-menu-toggle auto-hide="false">
           <ion-item button lines="none" detail="false" class="logout" (click)="logout()">
-            <ion-label class="font-weight-bold">Sair</ion-label>
+            <ion-label class="font-weight-bold">sair</ion-label>
           </ion-item>
         </ion-menu-toggle>
       </ion-footer>

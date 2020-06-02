@@ -1,5 +1,16 @@
 ion-split-pane{
-    background: var(--ion-color-secondary);
+    &.professional{
+        background: var(--ion-color-tertiary);
+        ion-item{
+            --color: var(--ion-color-tertiary-contrast);
+        }
+    }
+    &.common{
+        background: var(--ion-color-secondary);
+        ion-item{
+            --color: var(--ion-color-secondary-contrast);
+        }
+    }
 
     ion-menu {
         top: 4%;
@@ -15,14 +26,14 @@ ion-split-pane{
                     box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.16);
                 }
                 h2{
-                    color: #000;
                     font-size: 21px;
                     font-family: 'Poppins', sans-serif;
                 }
                 p{
+                    opacity: .5;
                     font-size: 13px;
+                    color: var(--color);
                     text-decoration: none;
-                    color: rgba(0,0,0,.5);
                 }
             }
         }
@@ -32,7 +43,6 @@ ion-split-pane{
         }
         ion-label{
             font-size: 10px;
-            --color: rgba(var(--ion-color-dark-rgb), .5);
         }
         ion-content{
             .vertical-align{
@@ -43,6 +53,7 @@ ion-split-pane{
             ion-list{
                 width: 100%;
                 ion-item {
+                    opacity: .5;
                     --padding-end: 1rem;
                     --inner-padding-top: .8rem;
                     --inner-padding-bottom: .8rem;
@@ -51,6 +62,7 @@ ion-split-pane{
         }
         ion-footer{
             &::before{display: none;}
+            ion-label{opacity: .5;}
             .logout{
                 margin-top: 3rem;
                 ion-label{

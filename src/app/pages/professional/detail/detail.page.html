@@ -9,8 +9,8 @@
       <ion-img [src]="object.photo ? object.photo : 'assets/user.png'" alt=""></ion-img>
       <ion-ripple-effect type="unbounded"></ion-ripple-effect>
     </ion-avatar>
-    <ion-buttons slot="end" *ngIf="object">
-      <ion-button id="whatsapp" (click)="openWhatsapp()">
+    <ion-buttons slot="end">
+      <ion-button id="whatsapp" *ngIf="object && service && service.status == 'approved'" (click)="openWhatsapp()">
         <div>
           <ion-icon name="logo-whatsapp" color="light" size="large"></ion-icon>
           <ion-text color="light"><p>Chamar no<br>Whatsapp</p></ion-text>
@@ -19,9 +19,9 @@
     </ion-buttons>
   </ion-toolbar>
   <div *ngIf="object" id="profile" class="ion-padding-horizontal ion-text-center">
-    <h4 class="name ion-no-margin font-weight-bold">{{ object.name }}</h4>
+    <h4 class="name ion-no-margin font-weight-bold">{{ object.first_name }} {{ object.last_name }}</h4>
     <div class="services">
-      <span *ngFor="let service of object.categories">#{{ service.service.name }}</span>
+      <span *ngFor="let category of object.categories">#{{ category.category.name }}</span>
     </div>
     <div class="rating">
       <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, object.rating)" color="light"></ion-icon>
@@ -119,6 +119,6 @@
 
 </ion-content>
 
-<ion-footer class="ion-text-center">
+<ion-footer class="ion-text-center" *ngIf="!service">
   <ion-button (click)="requestService()" fill="outline" color="light" class="font-weight-bold">Solicitar serviço</ion-button>
 </ion-footer>

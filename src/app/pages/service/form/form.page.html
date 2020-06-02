@@ -33,13 +33,21 @@
   <section id="professional">
     <ion-card button class="ion-no-margin" (click)="addProfessional()">
       <ion-card-content class="ion-no-padding">
-        <ion-item detail lines="none">
+        <ion-item detail lines="none" *ngIf="!global.professional">
           <ion-note slot="start" class="ion-no-margin">
             <img src="assets/icon/add-user.png" alt="">
           </ion-note>
           <ion-label>
             <ion-text color="dark"><h5 class="title">Profissional</h5></ion-text>
             <p class="text">adicione o profissional para o seu trabalho</p>
+          </ion-label>
+        </ion-item>
+        <ion-item detail lines="none" *ngIf="global.professional">
+          <ion-note slot="start" class="ion-no-margin">
+            <img [src]="global.professional.photo ? global.professional.photo : 'assets/user.png'" alt="">
+          </ion-note>
+          <ion-label style="opacity: 1;">
+            <ion-text color="dark"><h5 class="title font-weight-bold">{{ global.professional.first_name }} {{ global.professional.last_name }}</h5></ion-text>
           </ion-label>
         </ion-item>
       </ion-card-content>

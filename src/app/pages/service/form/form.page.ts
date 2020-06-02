@@ -55,7 +55,7 @@ export class ServiceFormPage implements OnInit {
   async ngOnInit(){
     this.loading = true;
     this.global.address = this.storage.getUser().profile.address;
-    await this.api.get('service').then(data => {
+    await this.api.get('category').then(data => {
       this.categories = data;
     }).catch(() => {})
     this.loading = false;

@@ -17,6 +17,9 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
 })
 export class PaymentInfoModal implements OnInit {
 
+  value: string;
+  trial_period: number;
+
   constructor(
     private global: Global,
     private api: ApiService,
@@ -34,6 +37,8 @@ export class PaymentInfoModal implements OnInit {
     await this.paymentApi.loadScript();
     await this.api.get('config').then(res => {
       this.storage.setConfig(res);
+      this.value = res.value;
+      this.trial_period = res.trial_period;
     }).catch(_ => {});
     loader.dismiss();
   }
@@ -85,8 +90,9 @@ export class PaymentInfoModal implements OnInit {
     const profile = this.storage.getUser().profile;
     this.close();
     
-    if(!profile.cpf){
-      this.functions.message('Atualize seu dados antes de continuar!');
+    if(!profile.cpf || !profile.address || !profile.birthday || !profile.address.zipcode || !profile.address.city ||
+        !profile.address.district || !profile.address.address || !profile.address.number){
+      this.functions.message('Complete seu cadastro antes de continuar!');
       this.navCtrl.navigateForward('/profile');
     }else{
       let page:any = PaymentConfirmModal;

@@ -26,11 +26,13 @@ export interface ProfileCategory {
 
 export interface Profile {
     id: number;
-    name: string;
+    first_name: string;
+    last_name: string;
     types: string;
     cpf: string;
     email: string;
     phone: string;
+    birthday: string;
     address: Address;
     rating: string;
     photo: string;

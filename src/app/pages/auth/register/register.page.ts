@@ -39,28 +39,12 @@ export class RegisterPage implements OnInit {
       name: ['', Validators.required],
       email: ['', Validators.required],
       phone: ['', Validators.required],
-      state: ['', Validators.required],
-      city: ['', Validators.required],
       password: ['', Validators.required],
       confirmPass: ['', Validators.required],
-    }, {validator: this.checkPasswords });
+    }, {validator: this.formValidator });
   }
 
-  async ngOnInit(){
-    const loader = await this.functions.loading();
-    await this.api.get('state').then(res => {
-      this.states = res;
-    }).catch(_ => {});
-    loader.dismiss();
-  }
-
-  async getCities(){
-    const loader = await this.functions.loading();
-    const state_id = this.form.get('state').value;
-    await this.api.get('city/'+state_id).then(res => {
-      this.cities = res;
-    }).catch(_ => {});
-    loader.dismiss();
+  ngOnInit(){
   }
 
   async takePhoto(){
@@ -84,20 +68,31 @@ export class RegisterPage implements OnInit {
     loader.dismiss();
   }
 
-  checkPasswords(group: FormGroup) {
+  formValidator(group: FormGroup) {
+    let result:any = {};
+    let name = group.get('name').value;
+    let first_name = name.split(' ')[0];
+    let last_name = name.split(' ')[1];
     let password = group.get('password').value;
     let confirmPass = group.get('confirmPass').value;
-    return password === confirmPass ? null : { notSame: true }     
+
+    if(password != confirmPass){
+      result.notSame = true;
+    }
+    if(!first_name || !last_name){
+      result.notLastName = true;
+    }
+    return result
   }
 
   async save(){
     if(this.form.valid){
       const loader = await this.functions.loading('Registrando-se...');
       const data = this.form.value;
-      await this.api.post('register/profile', data).then((res: any) => {
+      await this.api.post('register', data).then((res: any) => {
         this.storage.setUser(res);
         this.menuCtrl.enable(true);
-        this.navCtrl.navigateRoot('/service');
+        this.navCtrl.navigateRoot('/home');
       }).catch(() => {})
       loader.dismiss();
     }else{

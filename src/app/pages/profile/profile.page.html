@@ -23,7 +23,7 @@
     </ion-avatar>
     <ion-label>
       <p class="welcome ion-no-margin">bem-vindo</p>
-      <ion-text color="tertiary" *ngIf="profile"><h2 class="ion-no-margin font-weight-bold">{{ profile.name }}</h2></ion-text>
+      <ion-text color="tertiary" *ngIf="profile"><h2 class="ion-no-margin font-weight-bold">{{ profile.first_name }}</h2></ion-text>
       <ion-skeleton-text animated *ngIf="!profile"></ion-skeleton-text>
     </ion-label>
   </ion-item>
@@ -62,10 +62,20 @@
         <ion-label>Telefone</ion-label>
         <ion-input type="tel" formControlName="phone" [brmasker]="{phone: true}" maxlength="15" class="font-weight-bold"></ion-input>
       </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>Data de nascimento</ion-label>
+        <ion-datetime formControlName="birthday" displayFormat="DD/MM/YYYY" class="font-weight-bold" cancelText="Cancelar" doneText="Ok"></ion-datetime>
+      </ion-item>
   
       <ion-item lines="none">
         <ion-label>CPF</ion-label>
         <ion-input type="tel" formControlName="cpf" [brmasker]="{mask: '000.000.000-00'}" maxlength="14" class="font-weight-bold"></ion-input>
+      </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>CEP</ion-label>
+        <ion-input type="tel" formControlName="zipcode" [brmasker]="{mask: '00000-000'}" (ionChange)="fetchAddres()" maxlength="9" class="font-weight-bold"></ion-input>
       </ion-item>
   
       <ion-item lines="none">
@@ -81,7 +91,37 @@
           <ion-select-option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</ion-select-option>
         </ion-select>
       </ion-item>
+
+      <ion-item lines="none">
+        <ion-label>Bairro</ion-label>
+        <ion-input type="text" formControlName="district" class="font-weight-bold"></ion-input>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label>Endereço</ion-label>
+        <ion-input type="text" formControlName="address" class="font-weight-bold"></ion-input>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label>Número</ion-label>
+        <ion-input type="text" formControlName="number" class="font-weight-bold"></ion-input>
+      </ion-item>
+  
+      <ion-item lines="none">
+        <ion-label>Complemento</ion-label>
+        <ion-input type="text" formControlName="complement" class="font-weight-bold"></ion-input>
+      </ion-item>
     </form>
+
+    <div id="categories" class="ion-padding-horizontal">
+      <ion-item button lines="none" *ngFor="let object of profile.categories; let i = index" (click)="addCompetence(object)">
+        <ion-label>Competência {{ i + 1 }}</ion-label>
+        <ion-input type="text" class="font-weight-bold" [value]="object.category.name"></ion-input>
+      </ion-item>
+      <div class="ion-text-center ion-padding-vertical">
+        <ion-button color="light" class="font-weight-bold" (click)="addCompetence()">Adicionar competência</ion-button>
+      </div>
+    </div>
   </section>
 
   <section id="avaliations" *ngIf="segment == 'avaliations'" class="ion-padding-horizontal">
@@ -143,14 +183,6 @@
             </div>
           </ion-button>
         </ion-col>
-        <ion-col size="6" *ngIf="!object.gallery.length">
-          <ion-card class="empty">
-            <ion-card-content class="ion-text-center">
-              <ion-icon name="sad-outline" size="large"></ion-icon>
-              <p>Nenhuma<br>foto<br>registrada!</p>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
       </ion-row>
     </ion-grid>
 
@@ -168,5 +200,5 @@
 </ion-content>
 
 <ion-footer class="ion-text-center" *ngIf="!isProfessional()">
-  <ion-button color="tertiary" class="font-weight-bold" routerDirection="forward" routerLink="/payment/info">Tornar-se um profissional</ion-button>
+  <ion-button color="tertiary" class="font-weight-bold" (click)="openPaymentInfo()">Tornar-se um profissional</ion-button>
 </ion-footer>

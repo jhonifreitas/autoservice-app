@@ -1,12 +1,13 @@
 <ion-header>
-  <ion-toolbar color="secondary">
-    <ion-item color="secondary" lines="none">
+  <ion-toolbar [color]="!isProfessional() ? 'secondary' : 'tertiary'">
+    <ion-item [color]="!isProfessional() ? 'secondary' : 'tertiary'" lines="none">
       <ion-avatar slot="start">
         <ion-img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'"></ion-img>
       </ion-avatar>
       <ion-label class="ion-text-wrap">
-        <h2 class="ion-no-margin font-weight-bold">Olá {{ storage.getUser().profile.name }},</h2>
-        <p>o que você precisa hoje?</p>
+        <h2 class="ion-no-margin font-weight-bold">Olá {{ storage.getUser().profile.first_name }},</h2>
+        <p *ngIf="!isProfessional()">o que você precisa hoje?</p>
+        <p *ngIf="isProfessional()">vamos ao trabalho!</p>
       </ion-label>
     </ion-item>
     <ion-buttons slot="end">
@@ -15,14 +16,16 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content [ngClass]="{'common': !isProfessional(), 'professional': isProfessional()}">
 
-  <ion-item id="search" lines="none">
+  <ion-item id="search" lines="none" *ngIf="!isProfessional()">
     <ion-searchbar searchIcon="search-outline" placeholder="busque por serviço ou profissional"></ion-searchbar>
     <ion-button slot="end" color="tertiary">ir</ion-button>
   </ion-item>
 
-  <section id="categories">
+  <!-- CLIENT -->
+
+  <section id="categories" *ngIf="!isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Escolha a categoria</h4>
     <ion-slides [options]="slideOption">
       <ion-slide *ngFor="let object of categories">
@@ -36,22 +39,73 @@
     </ion-slides>
   </section>
 
-  <section id="requested-services">
+  <section class="services" *ngIf="!isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços solicitados</h4>
     <ion-slides [options]="slideOption">
-      <ion-slide *ngFor="let object of services">
+      <ion-slide *ngFor="let object of requested_services">
         <ion-card button color="light" class="ion-no-margin">
-          <img src="https://picsum.photos/200/200" alt="">
+          <img [src]="object.category.image" alt="">
           <ion-card-content>
             <h4 class="font-weight-bold">Ver serviço</h4>
             <p>acompanhe os dados<br>da sua solicitação</p>
           </ion-card-content>
         </ion-card>
         <div class="status">
-          <p class="font-weight-bold">aguardando aprovação</p>
+          <p class="font-weight-bold">{{ object.status }}</p>
         </div>
       </ion-slide>
-      <ion-slide class="empty ion-justify-content-start" *ngIf="services.length <= 0">
+      <ion-slide class="empty ion-justify-content-start" *ngIf="requested_services.length <= 0">
+        <ion-card color="light" class="ion-no-margin">
+          <ion-card-content>
+            <ion-icon name="sad-outline" size="large"></ion-icon>
+            <p>Nenhum<br>serviço<br>solicitado</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </section>
+
+  <!-- PROFESSIONAL -->
+
+  <section class="services" *ngIf="isProfessional()">
+    <h4 class="title font-weight-bold ion-margin-bottom">Serviços aceitos</h4>
+    <ion-slides [options]="slideOption">
+      <ion-slide *ngFor="let object of approved_services">
+        <ion-card button color="light" class="ion-no-margin">
+          <img [src]="object.category.image" alt="">
+          <ion-card-content>
+            <h4 class="font-weight-bold">Ver serviço</h4>
+            <p>acompanhe os dados<br>do seu serviço</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+      <ion-slide class="empty ion-justify-content-start" *ngIf="approved_services.length <= 0">
+        <ion-card color="light" class="ion-no-margin">
+          <ion-card-content>
+            <ion-icon name="sad-outline" size="large"></ion-icon>
+            <p>Nenhum<br>serviço<br>solicitado</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+  </section>
+
+  <section class="services" *ngIf="isProfessional()">
+    <h4 class="title font-weight-bold ion-margin-bottom">Serviços em espera</h4>
+    <ion-slides [options]="slideOption">
+      <ion-slide *ngFor="let object of waiting_services">
+        <ion-card button color="light" class="ion-no-margin">
+          <img [src]="object.category.image" alt="">
+          <ion-card-content>
+            <h4 class="font-weight-bold">Ver serviço</h4>
+            <p>acompanhe os dados<br>da solicitação</p>
+          </ion-card-content>
+        </ion-card>
+        <div class="status">
+          <p class="font-weight-bold">{{ object.status }}</p>
+        </div>
+      </ion-slide>
+      <ion-slide class="empty ion-justify-content-start" *ngIf="waiting_services.length <= 0">
         <ion-card color="light" class="ion-no-margin">
           <ion-card-content>
             <ion-icon name="sad-outline" size="large"></ion-icon>
@@ -65,7 +119,16 @@
   <section id="history-services">
     <h4 class="title font-weight-bold ion-margin-bottom">Histórico de serviços</h4>
     <ion-slides [options]="slideOption">
-      <ion-slide class="empty ion-justify-content-start" *ngIf="services.length <= 0">
+      <ion-slide *ngFor="let object of historic_services">
+        <ion-card button color="light" class="ion-no-margin">
+          <img [src]="object.category.image" alt="">
+          <ion-card-content>
+            <h4 class="font-weight-bold">Ver serviço</h4>
+            <p>reveja os dados<br>do seu serviço</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+      <ion-slide class="empty ion-justify-content-start" *ngIf="historic_services.length <= 0">
         <ion-card color="light" class="ion-no-margin">
           <ion-card-content>
             <ion-item lines="none">

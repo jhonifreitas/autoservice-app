@@ -53,8 +53,7 @@ export class PaymentCardModal implements OnInit {
 
       const path = this.global.pagseguro.cards[this.cardBrand.name.toUpperCase()].images.SMALL.path;
       this.cardBrand.image = this.payment.host + path;
-    }).catch(err => {
-      console.log(err)
+    }).catch(_ => {
       this.form.get('number').setErrors({'invalid': true});
     });
   }

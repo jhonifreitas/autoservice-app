@@ -33,7 +33,7 @@ export class ProfessionalPage {
 
   async ionViewDidEnter(event=null){
     this.loading = true;
-    await this.api.get('service/'+this.category_id+'/autonomous').then(data => {
+    await this.api.get('category/'+this.category_id+'/professional').then(data => {
       this.object_list = data;
     }).catch(() => {})
     if(event){ event.target.complete();}
@@ -49,7 +49,7 @@ export class ProfessionalPage {
       this.global.professional = professional;
       this.goToBack();
     }else{
-      this.navCtrl.navigateForward('professional/'+professional.id);
+      this.navCtrl.navigateForward('category/'+ this.category_id +'/professional/'+professional.id);
     }
   }
 
