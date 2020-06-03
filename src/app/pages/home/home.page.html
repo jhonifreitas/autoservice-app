@@ -56,8 +56,8 @@
 
   <section class="services" *ngIf="!isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços solicitados</h4>
-    <ion-slides [options]="slideOption">
-      <ion-slide *ngFor="let object of requested_services">
+    <ion-slides [options]="slideOption" *ngIf="!loading">
+      <ion-slide *ngFor="let object of requested_services" class="hasStatus">
         <ion-card button color="light" class="ion-no-margin" routerDirection="forward" routerLink="/service/{{ object.id }}">
           <img [src]="object.category.image" alt="">
           <ion-card-content>
@@ -66,7 +66,7 @@
           </ion-card-content>
         </ion-card>
         <div class="status">
-          <p class="font-weight-bold">{{ object.status }}</p>
+          <p class="font-weight-bold">{{ object.status.text }}</p>
         </div>
       </ion-slide>
       <ion-slide class="empty ion-justify-content-start" *ngIf="requested_services.length <= 0">
@@ -78,15 +78,30 @@
         </ion-card>
       </ion-slide>
     </ion-slides>
+    <ion-slides [options]="slideOption" *ngIf="loading">
+      <ion-slide *ngFor="let object of [1,2,3,4]" class="hasStatus">
+        <ion-card class="ion-no-margin" color="light" style="width: 100%;">
+          <ion-skeleton-text animated class="ion-no-margin" style="height: 8rem;"></ion-skeleton-text>
+          <ion-card-content>
+            <ion-skeleton-text animated style="margin: 10px auto 5px auto; width: 60%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="margin: 5px auto; width: 80%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="margin: 5px auto 0 auto; width: 50%;"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-card>
+        <div class="status">
+          <p><ion-skeleton-text animated style="margin: 5px auto 0 auto; width: 5rem;"></ion-skeleton-text></p>
+        </div>
+      </ion-slide>
+    </ion-slides>
   </section>
 
   <!-- PROFESSIONAL -->
 
   <section class="services" *ngIf="isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços aceitos</h4>
-    <ion-slides [options]="slideOption">
+    <ion-slides [options]="slideOption" *ngIf="!loading">
       <ion-slide *ngFor="let object of approved_services">
-        <ion-card button color="light" class="ion-no-margin">
+        <ion-card button color="light" class="ion-no-margin" routerDirection="forward" routerLink="/service/{{ object.id }}">
           <img [src]="object.category.image" alt="">
           <ion-card-content>
             <h4 class="font-weight-bold">Ver serviço</h4>
@@ -103,13 +118,25 @@
         </ion-card>
       </ion-slide>
     </ion-slides>
+    <ion-slides [options]="slideOption" *ngIf="loading">
+      <ion-slide *ngFor="let object of [1,2,3,4]">
+        <ion-card class="ion-no-margin" color="light" style="width: 100%;">
+          <ion-skeleton-text animated class="ion-no-margin" style="height: 8rem;"></ion-skeleton-text>
+          <ion-card-content>
+            <ion-skeleton-text animated style="margin: 10px auto 5px auto; width: 60%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="margin: 5px auto; width: 80%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="margin: 5px auto 0 auto; width: 50%;"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
   </section>
 
   <section class="services" *ngIf="isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços em espera</h4>
-    <ion-slides [options]="slideOption">
-      <ion-slide *ngFor="let object of waiting_services">
-        <ion-card button color="light" class="ion-no-margin">
+    <ion-slides [options]="slideOption" *ngIf="!loading">
+      <ion-slide *ngFor="let object of waiting_services" class="hasStatus">
+        <ion-card button color="light" class="ion-no-margin" routerDirection="forward" routerLink="/service/{{ object.id }}">
           <img [src]="object.category.image" alt="">
           <ion-card-content>
             <h4 class="font-weight-bold">Ver serviço</h4>
@@ -117,7 +144,7 @@
           </ion-card-content>
         </ion-card>
         <div class="status">
-          <p class="font-weight-bold">{{ object.status }}</p>
+          <p class="font-weight-bold">{{ object.status.text }}</p>
         </div>
       </ion-slide>
       <ion-slide class="empty ion-justify-content-start" *ngIf="waiting_services.length <= 0">
@@ -129,13 +156,28 @@
         </ion-card>
       </ion-slide>
     </ion-slides>
+    <ion-slides [options]="slideOption" *ngIf="loading">
+      <ion-slide *ngFor="let object of [1,2,3,4]" class="hasStatus">
+        <ion-card class="ion-no-margin" color="light" style="width: 100%;">
+          <ion-skeleton-text animated class="ion-no-margin" style="height: 8rem;"></ion-skeleton-text>
+          <ion-card-content>
+            <ion-skeleton-text animated style="margin: 10px auto 5px auto; width: 60%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="margin: 5px auto; width: 80%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="margin: 5px auto 0 auto; width: 50%;"></ion-skeleton-text>
+          </ion-card-content>
+        </ion-card>
+        <div class="status">
+          <p><ion-skeleton-text animated style="margin: 5px auto 0 auto; width: 5rem;"></ion-skeleton-text></p>
+        </div>
+      </ion-slide>
+    </ion-slides>
   </section>
 
-  <section id="history-services">
+  <section id="history-services" class="services">
     <h4 class="title font-weight-bold ion-margin-bottom">Histórico de serviços</h4>
-    <ion-slides [options]="slideOption">
+    <ion-slides [options]="slideOption" *ngIf="!loading">
       <ion-slide *ngFor="let object of historic_services">
-        <ion-card button color="light" class="ion-no-margin">
+        <ion-card button color="light" class="ion-no-margin" routerDirection="forward" routerLink="/service/{{ object.id }}">
           <img [src]="object.category.image" alt="">
           <ion-card-content>
             <h4 class="font-weight-bold">Ver serviço</h4>
@@ -150,6 +192,18 @@
               <ion-icon slot="start" name="sad-outline" size="large"></ion-icon>
               <ion-label color="dark">Nenhum serviço realizado</ion-label>
             </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-slide>
+    </ion-slides>
+    <ion-slides [options]="slideOption" *ngIf="loading">
+      <ion-slide *ngFor="let object of [1,2,3,4]">
+        <ion-card class="ion-no-margin" color="light" style="width: 100%;">
+          <ion-skeleton-text animated class="ion-no-margin" style="height: 8rem;"></ion-skeleton-text>
+          <ion-card-content>
+            <ion-skeleton-text animated style="margin: 10px auto 5px auto; width: 60%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="margin: 5px auto; width: 80%;"></ion-skeleton-text>
+            <ion-skeleton-text animated style="margin: 5px auto 0 auto; width: 50%;"></ion-skeleton-text>
           </ion-card-content>
         </ion-card>
       </ion-slide>

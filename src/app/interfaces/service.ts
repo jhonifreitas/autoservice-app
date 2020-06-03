@@ -6,15 +6,19 @@ export interface Service {
     id?: number;
     category: Category;
     professional: Profile;
+
+    lat: number;
+    lng: number;
     zipcode: string;
     city: City;
     address: string;
     district: string;
     number: string;
     complement?: string;
+
     date: string;
     time: string;
     observation?: string;
     images?: {image: string}[];
-    status: 'done' | 'recused' | 'approved' | 'requested';
+    status: {text: string, value: 'done' | 'recused' | 'approved' | 'requested'};
 }

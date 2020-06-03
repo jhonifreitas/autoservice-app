@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  host: 'http://127.0.0.1:8000/api/v1/',
-  // host: 'http://192.168.0.12:8000/api/v1/',
+  // host: 'http://127.0.0.1:8000/api/v1/',
+  host: 'http://192.168.0.12:8000/api/v1/',
   pagseguro_host: 'https://stc.sandbox.pagseguro.uol.com.br'
 };
 

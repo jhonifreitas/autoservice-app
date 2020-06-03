@@ -5,11 +5,11 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
-  selector: 'app-modal-cancel',
-  templateUrl: './cancel.page.html',
-  styleUrls: ['./cancel.page.scss'],
+  selector: 'app-modal-cancel-info',
+  templateUrl: './info.page.html',
+  styleUrls: ['./info.page.scss'],
 })
-export class CancelModal {
+export class CancelInfoModal {
 
   private id: number;
 

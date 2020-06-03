@@ -20,6 +20,7 @@ ion-header{
 }
 ion-content{
     --padding-bottom: 2rem;
+    --ion-text-color: var(--color);
     &.professional{
         --background: var(--ion-color-tertiary);
         --color: var(--ion-color-tertiary-contrast);
@@ -27,10 +28,6 @@ ion-content{
     &.common{
         --background: var(--ion-color-secondary);
         --color: var(--ion-color-secondary-contrast);
-    }
-
-    ion-item{
-        --background: transparent;
     }
     .title{
         font-size: 16px;
@@ -71,7 +68,7 @@ ion-content{
     .services{
         ion-slide{
             width: 9.5rem;
-            padding-bottom: 3rem;
+            &.hasStatus{padding-bottom: 3rem;}
             ion-card{
                 img{
                     height: 8rem;
@@ -115,7 +112,6 @@ ion-content{
                     opacity: .5;
                     margin: 1rem 0;
                     font-size: 8px;
-                    color: var(--ion-color-dark);
                 }
             }
         }
@@ -137,16 +133,18 @@ ion-content{
         }
     }
     #history-services{
-        ion-card{
-            box-shadow: none;
-            ion-card-content{
-                padding: 0 .5rem;
-                ion-icon{
-                    margin-right: 10px;
-                }
-                ion-label{
-                    opacity: .5;
-                    font-size: 12px;
+        .empty{
+            width: auto;
+            ion-card{
+                box-shadow: none;
+                ion-card-content{
+                    padding: 0 .5rem;
+                    ion-icon{
+                        margin-right: 10px;
+                    }
+                    ion-label{
+                        font-size: 12px;
+                    }
                 }
             }
         }

@@ -28,7 +28,7 @@ export interface Profile {
     id: number;
     first_name: string;
     last_name: string;
-    types: string;
+    types: 'common' | 'professional';
     cpf: string;
     email: string;
     phone: string;

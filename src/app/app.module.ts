@@ -13,6 +13,7 @@ import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
+import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
 
 import { AppComponent } from './app.component';
 import { Global } from 'src/app/services/global';
@@ -47,6 +48,7 @@ registerLocaleData(localePt);
     SplashScreen,
     CurrencyPipe,
     SocialSharing,
+    LaunchNavigator,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],

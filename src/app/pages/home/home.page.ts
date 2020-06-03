@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 
+import { Service } from 'src/app/interfaces/service';
 import { Category } from 'src/app/interfaces/category';
 import { ApiService } from 'src/app/services/api/api.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { Service } from 'src/app/interfaces/service';
 
 @Component({
   selector: 'app-home',
@@ -32,17 +32,17 @@ export class HomePage {
   async ionViewDidEnter(event=null){
     this.loading = true;
     if(this.isProfessional()){
-      await this.api.get('service/requested').then(data => {
-        this.waiting_services = data;
-      }).catch(() => {});
       await this.api.get('service/approved').then(data => {
         this.approved_services = data;
+      }).catch(() => {});
+      await this.api.get('service/waiting').then(data => {
+        this.waiting_services = data;
       }).catch(() => {});
     }else{
       await this.api.get('category').then(data => {
         this.categories = data;
       }).catch(() => {});
-      await this.api.get('service/waiting').then(data => {
+      await this.api.get('service/requested').then(data => {
         this.requested_services = data;
       }).catch(() => {});
     }

@@ -10,7 +10,7 @@
 <ion-content class="ion-padding-horizontal ion-padding-bottom ion-text-center">
 
   <div id="top">
-    <div id="map"></div>
+    <div id="map_modal" *ngIf="!loading"></div>
     <ion-skeleton-text animated *ngIf="loading" style="margin: auto; height: 10rem;"></ion-skeleton-text>
     <ion-text color="tertiary"><h2 class="font-weight-bold">Endereço para o serviço solicitado</h2></ion-text>
   </div>
@@ -27,5 +27,7 @@
     <ion-skeleton-text animated style="margin: .5rem auto; width: 60%;"></ion-skeleton-text>
     <ion-skeleton-text animated style="margin: .5rem auto; width: 65%;"></ion-skeleton-text>
   </div>
+
+  <ion-button color="tertiary" class="font-weight-bold" (click)="openMap()" *ngIf="isProfessional()"><img src="assets/icon/waze.png" alt="">Sincronizar GPS</ion-button>
 
 </ion-content>

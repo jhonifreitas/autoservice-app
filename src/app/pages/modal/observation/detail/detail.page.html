@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="secondary" (click)="close()">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding-horizontal ion-padding-bottom ion-text-center">
+
+  <div id="top">
+    <img src="assets/icon/gratipay.png" alt="">
+    <ion-text color="tertiary"><h2 class="font-weight-bold">Observação que poderá ajudar no serviço</h2></ion-text>
+  </div>
+
+  <div class="text font-weight-bold">
+    <p>{{ text }}</p>
+  </div>
+
+</ion-content>

@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
+import { Geocoder, GeocoderResult } from '@ionic-native/google-maps/ngx';
+
 import { City } from 'src/app/interfaces/city';
 import { State } from 'src/app/interfaces/state';
 import { Global } from 'src/app/services/global';
@@ -81,6 +83,12 @@ export class AddressFormModal {
   async save(){
     const data = this.form.value;
     const city = this.cities.filter(city => city.id == data.city)[0];
+    const address = data.address.address + ', ' +
+                    data.address.number + ', ' +
+                    data.address.district + ', ' +
+                    data.address.city.name + ', ' +
+                    data.address.city.state.name + ', ' +
+                    'Brazil';
     this.global.address = {
       zipcode: data.zipcode,
       address: data.address,
@@ -89,6 +97,12 @@ export class AddressFormModal {
       city: city,
       complement: data.complement
     };
+    await Geocoder.geocode({address: address}).then((results: GeocoderResult[]) => {
+      if (results.length > 0) {
+        this.global.address.lat = results[0].position.lat;
+        this.global.address.lng = results[0].position.lng;
+      }
+    });
     this.close();
   }
 

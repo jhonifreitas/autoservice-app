@@ -3,7 +3,7 @@ import { NavController, ModalController, ActionSheetController } from '@ionic/an
 
 import { DatetimeModal } from '../../modal/datetime/datetime.page';
 import { AddressFormModal } from '../../modal/address/form/form.page';
-import { ObservationModal } from '../../modal/observation/observation.page';
+import { ObservationFormModal } from '../../modal/observation/form/form.page';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
@@ -14,6 +14,8 @@ import { Category } from 'src/app/interfaces/category';
 import { ApiService } from 'src/app/services/api/api.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
+
+declare var google;
 
 @Component({
   selector: 'app-service-form',
@@ -62,7 +64,28 @@ export class ServiceFormPage {
         this.categories = data;
       }).catch(() => {})
     }
+    if(this.global.address.lat && this.global.address.lng){
+      this.loadMap();
+    }
     this.loading = false;
+  }
+
+  loadMap(){
+    const position = {lat: this.global.address.lat, lng: this.global.address.lng }
+    const map = new google.maps.Map(document.getElementById("map"), {
+      center: position,
+      zoom: 16,
+      disableDefaultUI: true,
+      gestureHandling: 'none'
+    });
+    const marker = new google.maps.Marker({
+      map: map,
+      position: position,
+      icon: {
+        url: '/assets/icon/pointer.png',
+        scaledSize : new google.maps.Size(24, 32),
+      }
+    });
   }
 
   async choiceMedia(){
@@ -132,12 +155,12 @@ export class ServiceFormPage {
   }
 
   addObservation(){
-    this.openModal(ObservationModal);
+    this.openModal(ObservationFormModal);
   }
 
-  async openModal(Page){
+  async openModal(page: any){
     const modal = await this.modalCtrl.create({
-      component: Page
+      component: page
     });
     return await modal.present();
   }
@@ -148,6 +171,8 @@ export class ServiceFormPage {
       const data = {
         category: this.global.category.id,
         professional: this.global.professional.id,
+        lat: this.global.address.lat,
+        lng: this.global.address.lng,
         zipcode: this.global.address.zipcode,
         city: this.global.address.city.id,
         address: this.global.address.address,

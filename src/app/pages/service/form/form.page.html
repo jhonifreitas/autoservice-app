@@ -82,6 +82,7 @@
           </ion-label>
         </ion-item>
       </ion-card-content>
+      <div id="map" *ngIf="global.address.lat && global.address.lng"></div>
     </ion-card>
     <ion-radio-group 
       [(ngModel)]="addressOption" 

@@ -41,7 +41,7 @@ export class AppComponent {
     this.platform.ready().then(() => {
       if(this.platform.is('cordova')){
         this.statusBar.backgroundColorByHexString('#E8EFFD');
-        this.statusBar.styleLightContent();
+        this.statusBar.styleDefault();
         this.splashScreen.hide();
 
         // BUTTON BACK DEVICE

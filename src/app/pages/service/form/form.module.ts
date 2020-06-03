@@ -8,7 +8,7 @@ import { BrMaskerModule } from 'br-mask';
 import { ServiceFormPage } from './form.page';
 import { AddressFormModal } from '../../modal/address/form/form.page';
 import { DatetimeModal } from '../../modal/datetime/datetime.page';
-import { ObservationModal } from '../../modal/observation/observation.page';
+import { ObservationFormModal } from '../../modal/observation/form/form.page';
 
 @NgModule({
   imports: [
@@ -24,7 +24,7 @@ import { ObservationModal } from '../../modal/observation/observation.page';
       }
     ])
   ],
-  entryComponents: [DatetimeModal, AddressFormModal, ObservationModal],
-  declarations: [ServiceFormPage, DatetimeModal, AddressFormModal, ObservationModal]
+  entryComponents: [DatetimeModal, AddressFormModal, ObservationFormModal],
+  declarations: [ServiceFormPage, DatetimeModal, AddressFormModal, ObservationFormModal]
 })
 export class ServiceFormPageModule {}

@@ -23,13 +23,13 @@
     </ion-avatar>
     <ion-label>
       <p class="welcome ion-no-margin">bem-vindo</p>
-      <ion-text color="tertiary" *ngIf="profile"><h2 class="ion-no-margin font-weight-bold">{{ profile.first_name }}</h2></ion-text>
-      <ion-skeleton-text animated *ngIf="!profile"></ion-skeleton-text>
+      <ion-text color="tertiary" *ngIf="object"><h2 class="ion-no-margin font-weight-bold">{{ object.first_name }}</h2></ion-text>
+      <ion-skeleton-text animated *ngIf="!object"></ion-skeleton-text>
     </ion-label>
   </ion-item>
 
   <div id="rating" class="ion-text-center" *ngIf="isProfessional()">
-    <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, profile.rating)" color="tertiary"></ion-icon>
+    <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, object.rating)" color="tertiary"></ion-icon>
   </div>
 
   <ion-segment color="light" mode="md" *ngIf="isProfessional()" [(ngModel)]="segment" (ionChange)="changeSegment()">
@@ -115,7 +115,7 @@
 
     <div id="categories" class="ion-padding-horizontal" *ngIf="isProfessional()">
       <ion-list lines="none" *ngIf="!loading">
-        <ion-item button *ngFor="let object of profile.categories; let i = index" (click)="addCompetence(object)">
+        <ion-item button *ngFor="let object of object.categories; let i = index" (click)="addCompetence(object)">
           <ion-label>Competência {{ i + 1 }}</ion-label>
           <ion-input type="text" class="font-weight-bold" [value]="object.category.name"></ion-input>
         </ion-item>

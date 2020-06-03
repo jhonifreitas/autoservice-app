@@ -33,7 +33,7 @@ export class ProfilePage implements OnInit {
   gallery: Gallery[] = [];
   loading: boolean = true;
   segment: string = 'info';
-  profile = this.storage.getUser().profile;
+  object = this.storage.getUser().profile;
 
   private camOptions: CameraOptions = {
     quality: 90,
@@ -76,9 +76,9 @@ export class ProfilePage implements OnInit {
     const loader = await this.functions.loading();
     await this.api.get('state').then(res => {
       this.states = res;
-      if(this.profile.address && this.profile.address.city){
+      if(this.object.address && this.object.address.city){
         setTimeout(() => {
-          this.form.get('state').setValue(this.profile.address.city.state.id);
+          this.form.get('state').setValue(this.object.address.city.state.id);
         });
       }
     }).catch(_ => {});
@@ -133,8 +133,8 @@ export class ProfilePage implements OnInit {
     this.loading = true;
     await this.api.get('profile/category').then(res => {
       const user = this.storage.getUser();
-      this.profile.categories = res;
-      user.profile = this.profile;
+      this.object.categories = res;
+      user.profile = this.object;
       this.storage.setUser(user);
     }).catch(_ => {});
     this.loading = false;
@@ -214,17 +214,17 @@ export class ProfilePage implements OnInit {
   }
 
   setValues(){
-    this.photo = this.profile.photo;
-    this.form.get('name').setValue(this.profile.first_name + ' ' + this.profile.last_name);
-    this.form.get('email').setValue(this.profile.email);
-    this.form.get('phone').setValue(this.profile.phone);
-    this.form.get('cpf').setValue(this.profile.cpf);
-    this.form.get('birthday').setValue(this.profile.birthday);
-    this.form.get('zipcode').setValue(this.profile.address.zipcode);
-    this.form.get('address').setValue(this.profile.address.address);
-    this.form.get('district').setValue(this.profile.address.district);
-    this.form.get('number').setValue(this.profile.address.number);
-    this.form.get('complement').setValue(this.profile.address.complement);
+    this.photo = this.object.photo;
+    this.form.get('name').setValue(this.object.first_name + ' ' + this.object.last_name);
+    this.form.get('email').setValue(this.object.email);
+    this.form.get('phone').setValue(this.object.phone);
+    this.form.get('cpf').setValue(this.object.cpf);
+    this.form.get('birthday').setValue(this.object.birthday);
+    this.form.get('zipcode').setValue(this.object.address.zipcode);
+    this.form.get('address').setValue(this.object.address.address);
+    this.form.get('district').setValue(this.object.address.district);
+    this.form.get('number').setValue(this.object.address.number);
+    this.form.get('complement').setValue(this.object.address.complement);
   }
 
   async save(){
@@ -281,7 +281,7 @@ export class ProfilePage implements OnInit {
   }
 
   isProfessional(){
-    return this.profile.types == 'professional';
+    return this.object.types == 'professional';
   }
 
   goToBack(){

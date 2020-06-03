@@ -1,13 +1,13 @@
-<ion-header>
-  <ion-toolbar color="secondary">
+<ion-header [ngClass]="{'common': !isProfessional(), 'professional': isProfessional()}">
+  <ion-toolbar [color]="isProfessional() ? 'tertiary' : 'secondary'">
     <ion-buttons slot="start">
-      <ion-button (click)="goToBack()" color="dark">
+      <ion-button (click)="goToBack()">
         <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title class="ion-no-padding" color="dark">Solicitar serviço</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="delete()" color="dark">
+    <ion-title class="ion-no-padding">Detalhes do serviço</ion-title>
+    <ion-buttons slot="end" *ngIf="!isProfessional() && object && object.status.value != 'done'">
+      <ion-button (click)="delete()">
         <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -44,7 +44,7 @@
 
 <ion-content>
 
-  <section id="professional">
+  <section id="professional" *ngIf="!isProfessional()">
     <ion-card button class="ion-no-margin" (click)="goToProfessional()">
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none" *ngIf="!loading">
@@ -90,6 +90,7 @@
           </ion-label>
         </ion-item>
       </ion-card-content>
+      <div id="map"></div>
     </ion-card>
   </section>
 
@@ -116,7 +117,7 @@
   <section id="observation" *ngIf="!loading && (object.observation || object.images.length)">
     <ion-card class="ion-no-margin">
       <ion-card-content class="ion-no-padding">
-        <ion-item detail lines="none">
+        <ion-item button detail lines="none" (click)="openObservation()">
           <ion-note slot="start" class="ion-no-margin">
             <img src="assets/icon/gratipay.png" alt="">
           </ion-note>
@@ -129,8 +130,8 @@
             <ion-skeleton-text animated></ion-skeleton-text>
           </ion-label>
         </ion-item>
-        <ion-grid>
-          <ion-row class="ion-justify-content-center" *ngIf="!loading">
+        <ion-grid *ngIf="object.images.length">
+          <ion-row class="ion-justify-content-center">
             <ion-col size="6" *ngFor="let image of object.images">
               <ion-card button class="ion-no-margin add-photo" (click)="showImage(image.image)">
                 <ion-card-content>
@@ -140,16 +141,14 @@
               </ion-card>
             </ion-col>
           </ion-row>
-          <ion-row *ngIf="loading">
-            <ion-col size="6" *ngFor="let image of [1,2,3,4]">
-              <ion-card button class="ion-no-margin">
-                <ion-skeleton-text animated class="ion-no-margin" style="height: 4rem;"></ion-skeleton-text>
-              </ion-card>
-            </ion-col>
-          </ion-row>
         </ion-grid>
       </ion-card-content>
     </ion-card>
   </section>
+
+  <div id="actions" *ngIf="isProfessional() && object && object.status.value == 'requested'">
+    <ion-button expand="block" color="tertiary" class="font-weight-bold" (click)="accept()">Aceitar</ion-button>
+    <ion-button expand="block" fill="clear" color="dark" class="font-weight-bold" (click)="recuse()">recusar</ion-button>
+  </div>
 
 </ion-content>

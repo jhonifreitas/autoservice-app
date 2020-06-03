@@ -5,11 +5,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Global } from 'src/app/services/global';
 
 @Component({
-  selector: 'app-modal-observation',
-  templateUrl: './observation.page.html',
-  styleUrls: ['./observation.page.scss'],
+  selector: 'app-modal-observation-form',
+  templateUrl: './form.page.html',
+  styleUrls: ['./form.page.scss'],
 })
-export class ObservationModal {
+export class ObservationFormModal {
   
   form: FormGroup;
 
