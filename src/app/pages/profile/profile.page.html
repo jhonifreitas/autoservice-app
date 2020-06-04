@@ -178,26 +178,26 @@
   
     <ion-grid *ngIf="!loading">
       <ion-row>
-        <ion-col size="4" class="ion-no-padding" *ngFor="let photo of gallery">
-          <ion-card>
+        <ion-col size="4" *ngFor="let photo of gallery">
+          <ion-card class="ion-no-margin">
             <img src="{{ photo.image }}" alt="">
           </ion-card>
         </ion-col>
         <ion-col class="add" size="4">
-          <ion-button fill="outline" color="light" class="font-weight-bold" (click)="addGallery()">
-            <div>
+          <ion-card button class="ion-no-margin" (click)="addGallery()">
+            <ion-card-content class="ion-text-center">
               <ion-icon name="camera" size="large"></ion-icon>
-              <p class="ion-no-margin">adicionar<br>fotos</p>
-            </div>
-          </ion-button>
+              <p class="ion-no-margin font-weight-bold">adicionar<br>fotos</p>
+            </ion-card-content>
+          </ion-card>
         </ion-col>
       </ion-row>
     </ion-grid>
 
     <ion-grid *ngIf="loading">
       <ion-row>
-        <ion-col size="4" class="ion-no-padding" *ngFor="let item of [1,2,3,4,5,6]">
-          <ion-card>
+        <ion-col size="4" *ngFor="let item of [1,2,3,4,5,6]">
+          <ion-card class="ion-no-margin">
             <ion-skeleton-text animated class="ion-no-margin" style="height: 6rem;"></ion-skeleton-text>
           </ion-card>
         </ion-col>

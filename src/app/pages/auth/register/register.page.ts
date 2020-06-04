@@ -7,6 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 import { City } from 'src/app/interfaces/city';
 import { State } from 'src/app/interfaces/state';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { ApiService } from 'src/app/services/api/api.service';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
@@ -27,6 +28,7 @@ export class RegisterPage implements OnInit {
     private camera: Camera,
     private api: ApiService,
     private webview: WebView,
+    private oneSignal: OneSignal,
     private navCtrl: NavController,
     private storage: StorageService,
     private formBuilder: FormBuilder,
@@ -95,6 +97,9 @@ export class RegisterPage implements OnInit {
     if(this.form.valid){
       const loader = await this.functions.loading('Registrando-se...');
       const data = this.form.value;
+      await this.oneSignal.getIds().then(res => {
+        data.onesignal = res.userId;
+      });
       await this.api.post('register', data).then((res: any) => {
         this.storage.setUser(res);
         this.menuCtrl.enable(true);

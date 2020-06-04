@@ -42,7 +42,8 @@ export class PaymentConfirmModal {
       user.profile = res;
       this.storage.setUser(user);
       this.close();
-      this.functions.message('Bem-vindo autônomo, adicione seu serviços!');
+      this.navCtrl.navigateForward('/profile');
+      this.functions.message('Bem-vindo profissional, adicione um ou mais serviços para as pessoas possam solicitar te encontrar!');
     }).catch(_ => {});
     loader.dismiss();
   }

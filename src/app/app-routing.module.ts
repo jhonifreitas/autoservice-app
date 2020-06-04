@@ -11,9 +11,9 @@ const routes: Routes = [
   { path: 'forgot-password', loadChildren: () => import('./pages/auth/forgot/forgot.module').then( m => m.ForgotPageModule) },
   { path: 'home', loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule), canActivate: [AuthGuard] },
   { path: 'profile', loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule), canActivate: [AuthGuard] },
-  { path: 'category/:category_id', canActivate: [AuthGuard] , children: [
+  { path: 'professional', canActivate: [AuthGuard] , children: [
     { path: '', loadChildren: () => import('./pages/professional/list/list.module').then( m => m.ProfessionalPageModule) },
-    { path: 'professional/:id', loadChildren: () => import('./pages/professional/detail/detail.module').then( m => m.ProfessionalDetailPageModule) }
+    { path: ':id', loadChildren: () => import('./pages/professional/detail/detail.module').then( m => m.ProfessionalDetailPageModule) }
   ]},
   { path: 'service', canActivate: [AuthGuard] , children: [
     { path: 'form', loadChildren: () => import('./pages/service/form/form.module').then( m => m.ServiceFormPageModule) },

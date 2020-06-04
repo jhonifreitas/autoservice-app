@@ -22,8 +22,6 @@ export class ProfessionalDetailPage {
 
   private id: number;
   private service_id: number;
-  private category_id: number;
-  private category: ProfileCategory;
 
   object: Profile;
   service: Service;
@@ -46,18 +44,16 @@ export class ProfessionalDetailPage {
   ) {
     this.id = parseInt(this.router.snapshot.paramMap.get('id'));
     this.service_id = parseInt(this.router.snapshot.paramMap.get('service_id'));
-    this.category_id = parseInt(this.router.snapshot.paramMap.get('category_id'));
   }
 
   async ionViewDidEnter(event=null){
     this.loading = true;
-    await this.api.get('professional/'+this.id+'/detail').then(data => {
+    await this.api.get('professional/'+this.id).then(data => {
       this.object = data;
     }).catch(() => {});
     if(this.service_id){await this.getService()}
     await this.getAvaliations();
     await this.getGallery();
-    this.category = this.object.categories.filter(item => item.category.id == this.category_id)[0];
     if(event){ event.target.complete();}
     this.loading = false;
   }
@@ -111,8 +107,10 @@ export class ProfessionalDetailPage {
   }
 
   openWhatsapp(){
-    const msgWhatsapp = 'Olá, vi seu perfil no aplicativo AUTO SERVICE, gostaria de contratar '+
-                        'seu serviço de '+this.category.category.name+'. Obrigado.';
+    const msgWhatsapp = 'Olá!%0a'+
+                        'Encontrei seu perfil no aplicativo *GO JOB*.%0a'+
+                        'Gostaria de saber mais sobre seus serviços.%0a'+
+                        'Obrigado!';
     if(this.platform.is('ios')){
       window.location.href = 'https://wa.me/55'+this.object.phone+'?text='+msgWhatsapp;
     }else{

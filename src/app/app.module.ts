@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
 import { Global } from 'src/app/services/global';
 import { AppRoutingModule } from './app-routing.module';
 
+import { DatetimeModalModule } from './pages/modal/datetime/datetime.module';
 import { PaymentInfoModalModule } from './pages/modal/payment/info/info.module';
 import { PaymentCardModalModule } from './pages/modal/payment/card/card.module';
 import { PaymentConfirmModalModule } from './pages/modal/payment/confirm/confirm.module';
@@ -33,6 +34,7 @@ registerLocaleData(localePt);
     HttpClientModule,
     AppRoutingModule,
     IonicModule.forRoot(),
+    DatetimeModalModule,
     PaymentInfoModalModule,
     PaymentCardModalModule,
     PaymentConfirmModalModule

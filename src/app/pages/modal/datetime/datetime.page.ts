@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { ModalController, PickerController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ModalController, PickerController, NavParams } from '@ionic/angular';
 
 import { Global } from 'src/app/services/global';
+import { Service } from 'src/app/interfaces/service';
+import { ApiService } from 'src/app/services/api/api.service';
+import { FunctionsService } from 'src/app/services/functions/functions.service';
 
 @Component({
   selector: 'app-modal-datetime',
@@ -12,6 +15,7 @@ import { Global } from 'src/app/services/global';
 export class DatetimeModal {
 
   form: FormGroup;
+  object: Service;
   minDate: string = new Date().toISOString();
   maxDate: number = new Date().getFullYear() + 1;
   monthShortNames: string[] = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
@@ -27,14 +31,25 @@ export class DatetimeModal {
   
   constructor(
     private global: Global,
+    private api: ApiService,
+    private navParams: NavParams,
     private formBuilder: FormBuilder,
     private modalCtrl: ModalController,
+    private functions: FunctionsService,
     private pickerCtrl: PickerController,
   ) {
     this.form = this.formBuilder.group({
       date: ['', Validators.required],
       time: ['', Validators.required]
     });
+    this.object = this.navParams.get('object');
+    if(this.object){
+      this.form.get('date').setValue(this.object.date);
+      this.form.get('time').setValue(this.object.time);
+    }else if(this.global.date && this.global.time){
+      this.form.get('date').setValue(this.global.date);
+      this.form.get('time').setValue(this.global.time);
+    }
   }
 
   async openPicker(){
@@ -58,12 +73,21 @@ export class DatetimeModal {
 
   async save(){
     const data = this.form.value;
-    this.global.date = data.date;
-    this.global.time = data.time;
-    this.close();
+    if(this.object){
+      const loader = await this.functions.loading();
+      await this.api.patch('service/'+this.object.id, data).then(res => {
+        this.functions.message('Data e Horário alterado!');
+        this.close(data);
+      }).catch(_ => {})
+      loader.dismiss();
+    }else{
+      this.global.date = data.date;
+      this.global.time = data.time;
+      this.close();
+    }
   }
 
-  close(){
-    this.modalCtrl.dismiss();
+  close(param = null){
+    this.modalCtrl.dismiss(param);
   }
 }

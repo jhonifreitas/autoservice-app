@@ -5,9 +5,8 @@ import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { BrMaskerModule } from 'br-mask';
-import { ServiceFormPage } from './form.page';
-import { AddressFormModal } from '../../modal/address/form/form.page';
-import { ObservationFormModal } from '../../modal/observation/form/form.page';
+
+import { DatetimeModal } from './datetime.page';
 
 @NgModule({
   imports: [
@@ -19,11 +18,10 @@ import { ObservationFormModal } from '../../modal/observation/form/form.page';
     RouterModule.forChild([
       {
         path: '',
-        component: ServiceFormPage
+        component: DatetimeModal
       }
     ])
   ],
-  entryComponents: [AddressFormModal, ObservationFormModal],
-  declarations: [ServiceFormPage, AddressFormModal, ObservationFormModal]
+  declarations: [DatetimeModal]
 })
-export class ServiceFormPageModule {}
+export class DatetimeModalModule {}

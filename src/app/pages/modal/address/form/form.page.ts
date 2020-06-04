@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { Geocoder, GeocoderResult } from '@ionic-native/google-maps/ngx';
@@ -26,6 +26,7 @@ export class AddressFormModal {
   constructor(
     private global: Global,
     private api: ApiService,
+    private platform: Platform,
     private address: AddressService,
     private formBuilder: FormBuilder,
     private modalCtrl: ModalController,
@@ -84,11 +85,11 @@ export class AddressFormModal {
     const data = this.form.value;
     const city = this.cities.filter(city => city.id == data.city)[0];
     const address = data.address.address + ', ' +
-                    data.address.number + ', ' +
-                    data.address.district + ', ' +
-                    data.address.city.name + ', ' +
-                    data.address.city.state.name + ', ' +
-                    'Brazil';
+    data.address.number + ', ' +
+    data.address.district + ', ' +
+    city.name + ', ' +
+    city.state.name + ', ' +
+    'Brazil';
     this.global.address = {
       zipcode: data.zipcode,
       address: data.address,
@@ -97,12 +98,14 @@ export class AddressFormModal {
       city: city,
       complement: data.complement
     };
-    await Geocoder.geocode({address: address}).then((results: GeocoderResult[]) => {
-      if (results.length > 0) {
-        this.global.address.lat = results[0].position.lat;
-        this.global.address.lng = results[0].position.lng;
-      }
-    });
+    if(this.platform.is('cordova')){
+      await Geocoder.geocode({address: address}).then((results: GeocoderResult[]) => {
+        if (results.length > 0) {
+          this.global.address.lat = results[0].position.lat;
+          this.global.address.lng = results[0].position.lng;
+        }
+      });
+    }
     this.close();
   }
 

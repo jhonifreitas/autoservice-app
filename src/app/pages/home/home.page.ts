@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Component, ViewChild } from '@angular/core';
+import { IonContent, NavController } from '@ionic/angular';
 
 import { Service } from 'src/app/interfaces/service';
 import { Category } from 'src/app/interfaces/category';
@@ -12,10 +14,13 @@ import { StorageService } from 'src/app/services/storage/storage.service';
 })
 export class HomePage {
 
+  @ViewChild(IonContent, {static: true}) content: IonContent;
+
   slideOption = {
     slidesPerView: 'auto',
     spaceBetween: 10,
   };
+  search: string;
   loading: boolean = true;
   histories: any[] = [];
   categories: Category[] = [];
@@ -26,7 +31,9 @@ export class HomePage {
 
   constructor(
     private api: ApiService,
-    public storage: StorageService
+    private route: ActivatedRoute,
+    public storage: StorageService,
+    private navCtrl: NavController
   ) {}
 
   async ionViewDidEnter(event=null){
@@ -51,6 +58,16 @@ export class HomePage {
     }).catch(() => {});
     if(event){ event.target.complete();}
     this.loading = false;
+
+    const elementScroll = this.route.snapshot.paramMap.get('scroll');
+    if(elementScroll){
+      const pointElement = document.getElementById(elementScroll).offsetTop;
+      this.content.scrollToPoint(null, pointElement, 500);
+    }
+  }
+
+  goToProfessional(){
+    this.navCtrl.navigateForward(['/professional', {search: this.search}])
   }
 
   isProfessional(){

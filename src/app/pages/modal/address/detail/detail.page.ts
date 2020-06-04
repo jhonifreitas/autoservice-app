@@ -52,7 +52,9 @@ export class AddressDetailModal {
     }
     this.loading = false;
     setTimeout(() => {
-      this.loadMap();
+      if(this.object.lat && this.object.lng){
+        this.loadMap();
+      }
     });
   }
 

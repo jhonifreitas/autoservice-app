@@ -93,6 +93,7 @@ ion-content{
     }
 
     #observation{
+        margin-bottom: 2rem;
         ion-grid{padding: 0 2rem 1rem 2rem;}
         .add-photo{
             margin-top: 0;
@@ -116,7 +117,7 @@ ion-content{
     }
 
     #actions{
-        padding: 2rem 3rem;
+        padding: 0 3rem 2rem 3rem;
         ion-button{
             height: auto;
             font-size: 13px;

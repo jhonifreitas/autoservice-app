@@ -1,10 +1,12 @@
 import { Component, QueryList, ViewChildren } from '@angular/core';
 import { Platform, IonRouterOutlet, NavController, MenuController, ModalController } from '@ionic/angular';
 
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 import { Global } from './services/global';
+import { environment } from 'src/environments/environment';
 import { StorageService } from './services/storage/storage.service';
 import { PaymentInfoModal } from './pages/modal/payment/info/info.page';
 import { FunctionsService } from './services/functions/functions.service';
@@ -27,6 +29,7 @@ export class AppComponent {
     private global: Global,
     private platform: Platform,
     private statusBar: StatusBar,
+    private oneSignal: OneSignal,
     public storage: StorageService,
     private navCtrl: NavController,
     private menuCtrl: MenuController,
@@ -43,6 +46,15 @@ export class AppComponent {
         this.statusBar.backgroundColorByHexString('#E8EFFD');
         this.statusBar.styleDefault();
         this.splashScreen.hide();
+
+        this.oneSignal.startInit(environment.onesignal_key, environment.onesignal_id);
+        this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+
+        this.oneSignal.handleNotificationOpened().subscribe((res) => {
+          console.log(res)
+        });
+
+        this.oneSignal.endInit();
 
         // BUTTON BACK DEVICE
         this.platform.backButton.subscribe(() => {

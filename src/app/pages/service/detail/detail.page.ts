@@ -4,15 +4,17 @@ import { NavController, ModalController } from '@ionic/angular';
 
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
+import { DatetimeModal } from '../../modal/datetime/datetime.page';
+import { CancelInfoModal } from '../../modal/cancel/info/info.page';
+import { CancelFormModal } from '../../modal/cancel/form/form.page';
+import { AddressDetailModal } from '../../modal/address/detail/detail.page';
+import { ObservationDetailModal } from '../../modal/observation/detail/detail.page';
+
 import { Address } from 'src/app/interfaces/address';
 import { Service } from 'src/app/interfaces/service';
 import { ApiService } from 'src/app/services/api/api.service';
-import { CancelInfoModal } from '../../modal/cancel/info/info.page';
-import { CancelFormModal } from '../../modal/cancel/form/form.page';
 import { StorageService } from 'src/app/services/storage/storage.service';
-import { AddressDetailModal } from '../../modal/address/detail/detail.page';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
-import { ObservationDetailModal } from '../../modal/observation/detail/detail.page';
 
 declare var google;
 
@@ -42,7 +44,7 @@ export class ServiceDetailPage {
     await this.api.get('service/'+id).then(res => {
       this.object = res;
     }).catch(() => {});
-    this.loadMap();
+    if(this.object.lat && this.object.lng){this.loadMap()};
     this.loading = false;
   }
 
@@ -90,7 +92,7 @@ export class ServiceDetailPage {
     return await modal.present();
   }
 
-  async cancel(){
+  async delete(){
     const modal = await this.modalCtrl.create({
       component: CancelInfoModal,
       componentProps: {id: this.object.id}
@@ -99,6 +101,19 @@ export class ServiceDetailPage {
     const { data } = await modal.onWillDismiss();
     if(data && data.deleted){
       this.goToBack();
+    }
+  }
+
+  async openDatetime(){
+    const modal = await this.modalCtrl.create({
+      component: DatetimeModal,
+      componentProps: {object: this.object}
+    });
+    await modal.present();
+    const { data } = await modal.onWillDismiss();
+    if(data){
+      this.object.date = data.date;
+      this.object.time = data.time;
     }
   }
 
@@ -125,7 +140,7 @@ export class ServiceDetailPage {
   }
 
   goToProfessional(){
-    const url = '/category/'+this.object.category.id+'/professional/'+this.object.professional.id;
+    const url = '/professional/'+this.object.professional.id;
     this.navCtrl.navigateForward([url, {service_id: this.object.id}])
   }
 

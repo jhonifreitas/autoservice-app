@@ -30,7 +30,7 @@ export class ForgotPage {
     if(this.form.valid){
       const loader = await this.functions.loading('Buscando...');
       const data = this.form.value;
-      await this.api.post('forgot-password', data).then(_ => {
+      await this.api.post('password-reset', data).then(_ => {
         this.functions.message('Verifique seu email!');
       }).catch(() => {});
       loader.dismiss();

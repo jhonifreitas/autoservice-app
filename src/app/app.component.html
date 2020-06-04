@@ -24,25 +24,25 @@
               </ion-item>
             </ion-menu-toggle>
             <ion-menu-toggle auto-hide="false" *ngIf="isCommon()">
-              <ion-item routerDirection="root" routerLink="/home" detail="false">
+              <ion-item routerDirection="root" [routerLink]="['/home', {scroll: 'requested-services'}]" detail="false">
                 <ion-label>serviços solicitados</ion-label>
               </ion-item>
             </ion-menu-toggle>
 
             <!-- PROFESSIONAL -->
             <ion-menu-toggle auto-hide="false" *ngIf="isProfessional()">
-              <ion-item routerDirection="root" routerLink="/home" detail="false">
+              <ion-item routerDirection="root" [routerLink]="['/home', {scroll: 'approved-services'}]" detail="false">
                 <ion-label>serviços aceitos</ion-label>
               </ion-item>
             </ion-menu-toggle>
             <ion-menu-toggle auto-hide="false" *ngIf="isProfessional()">
-              <ion-item routerDirection="root" routerLink="/home" detail="false">
+              <ion-item routerDirection="root" [routerLink]="['/home', {scroll: 'waiting-services'}]" detail="false">
                 <ion-label>serviços em espera</ion-label>
               </ion-item>
             </ion-menu-toggle>
 
             <ion-menu-toggle auto-hide="false">
-              <ion-item routerDirection="root" routerLink="/home" detail="false">
+              <ion-item routerDirection="root" [routerLink]="['/home', {scroll: 'history-services'}]" detail="false">
                 <ion-label>histórico de serviços</ion-label>
               </ion-item>
             </ion-menu-toggle>
@@ -62,6 +62,10 @@
         </ion-menu-toggle>
       </ion-footer>
     </ion-menu>
-    <ion-router-outlet id="main-content"></ion-router-outlet>
+    <ion-router-outlet id="main-content">
+      <span id="one"></span>
+      <span id="two"></span>
+      <span id="three"></span>
+    </ion-router-outlet>
   </ion-split-pane>
 </ion-app>

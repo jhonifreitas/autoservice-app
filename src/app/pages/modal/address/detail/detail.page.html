@@ -7,10 +7,10 @@
     </ion-buttons>
   </ion-toolbar>
 </ion-header>
-<ion-content class="ion-padding-horizontal ion-padding-bottom ion-text-center">
+<div class="inner-content ion-padding-horizontal ion-padding-bottom ion-text-center">
 
   <div id="top">
-    <div id="map_modal" *ngIf="!loading"></div>
+    <div id="map_modal" *ngIf="!loading && object.lat && object.lng"></div>
     <ion-skeleton-text animated *ngIf="loading" style="margin: auto; height: 10rem;"></ion-skeleton-text>
     <ion-text color="tertiary"><h2 class="font-weight-bold">Endereço para o serviço solicitado</h2></ion-text>
   </div>
@@ -30,4 +30,4 @@
 
   <ion-button color="tertiary" class="font-weight-bold" (click)="openMap()" *ngIf="isProfessional()"><img src="assets/icon/waze.png" alt="">Sincronizar GPS</ion-button>
 
-</ion-content>
+</div>

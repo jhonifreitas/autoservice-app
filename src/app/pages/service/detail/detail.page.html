@@ -48,9 +48,9 @@
     <ion-card button class="ion-no-margin" (click)="goToProfessional()">
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none" *ngIf="!loading">
-          <ion-note slot="start" class="ion-no-margin">
+          <ion-avatar slot="start">
             <img [src]="object.professional.photo ? object.professional.photo : 'assets/user.png'" alt="">
-          </ion-note>
+          </ion-avatar>
           <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">{{ object.professional.first_name }} {{ object.professional.last_name }}</h5></ion-text>
           </ion-label>
@@ -90,22 +90,27 @@
           </ion-label>
         </ion-item>
       </ion-card-content>
-      <div id="map"></div>
+      <div id="map" *ngIf="!loading && object.lat && object.lng"></div>
     </ion-card>
   </section>
 
   <section id="calendar">
     <ion-card class="ion-no-margin">
       <ion-card-content class="ion-no-padding">
-        <ion-item detail lines="none">
+        <ion-item detail lines="none" *ngIf="!loading" [button]="object.status.value == 'approved' ? true: false" (click)="object.status.value == 'approved' ? openDatetime() : null">
           <ion-note slot="start" class="ion-no-margin">
             <img src="assets/icon/calendar-circle.png" alt="">
           </ion-note>
-          <ion-label *ngIf="!loading">
+          <ion-label>
             <ion-text color="dark"><h4 id="date" class="font-weight-bold">{{ object.date|date:'dd/MM' }}</h4></ion-text>
             <ion-text color="dark"><h5 id="hour">{{ object.time }}</h5></ion-text>
           </ion-label>
-          <ion-label *ngIf="loading">
+        </ion-item>
+        <ion-item detail lines="none" *ngIf="loading">
+          <ion-note slot="start" class="ion-no-margin">
+            <img src="assets/icon/calendar-circle.png" alt="">
+          </ion-note>
+          <ion-label>
             <ion-skeleton-text id="date" animated style="width: 20%;"></ion-skeleton-text>
             <ion-skeleton-text animated style="width: 50%;"></ion-skeleton-text>
           </ion-label>
@@ -117,7 +122,7 @@
   <section id="observation" *ngIf="!loading && (object.observation || object.images.length)">
     <ion-card class="ion-no-margin">
       <ion-card-content class="ion-no-padding">
-        <ion-item button detail lines="none" (click)="openObservation()">
+        <ion-item detail lines="none" [button]="object.observation ? true: false" (click)="object.observation ? openObservation() : null">
           <ion-note slot="start" class="ion-no-margin">
             <img src="assets/icon/gratipay.png" alt="">
           </ion-note>

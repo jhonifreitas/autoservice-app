@@ -1,4 +1,4 @@
-ion-content{
+.inner-content{
     #top{
         padding: 0 3.5rem;
         img{max-width: 35%;}
@@ -7,6 +7,7 @@ ion-content{
             font-family: 'Poppins', sans-serif;
         }
     }
+    ion-label{flex: inherit;}
     ion-button{
         height: auto;
         font-size: 13px;

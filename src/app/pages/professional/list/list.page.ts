@@ -14,9 +14,12 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
 })
 export class ProfessionalPage {
 
+  private page = 1;
+  private total: number;
+  private select = true;
   private category_id: number;
-  private select: boolean = true;
 
+  search: string;
   loading: boolean = true;
   object_list: Profile[] = [];
 
@@ -27,17 +30,44 @@ export class ProfessionalPage {
     private router: ActivatedRoute,
     private functions: FunctionsService
   ) {
-    this.category_id = parseInt(this.router.snapshot.paramMap.get('category_id'));
+    this.search = this.router.snapshot.paramMap.get('search');
     this.select = this.router.snapshot.paramMap.get('select') == 'true';
+    this.category_id = parseInt(this.router.snapshot.paramMap.get('category_id'));
   }
 
-  async ionViewDidEnter(event=null){
+  async ionViewDidEnter(){
     this.loading = true;
-    await this.api.get('category/'+this.category_id+'/professional').then(data => {
-      this.object_list = data;
-    }).catch(() => {})
-    if(event){ event.target.complete();}
+    this.object_list = await this.getProfessional();
     this.loading = false;
+  }
+
+  async getProfessional(): Promise<Profile[]>{
+    let data:any = {page: this.page}
+    if(this.search){data.search = this.search}
+    if(this.category_id){data.category_id = this.category_id}
+
+    return new Promise(async (resolve) => {
+      await this.api.get('professional', data).then(data => {
+        this.total = data.count;
+        resolve(data.results);
+      }).catch(() => {})
+    })
+  }
+
+  async refresh(event){
+    this.page = 1;
+    this.object_list = await this.getProfessional();
+    if(event){ event.target.complete();}
+  }
+
+  async nextPage(event){
+    if(!this.total || this.object_list.length < this.total){
+      this.page += 1;
+      const list = await this.getProfessional();
+      this.object_list = this.object_list.concat(list);
+      if(event){ event.target.complete();}
+    }
+    if(this.total == this.object_list.length){event.target.disabled = true;}
   }
 
   checkStar(star: number, rating: number){
@@ -49,7 +79,7 @@ export class ProfessionalPage {
       this.global.professional = professional;
       this.goToBack();
     }else{
-      this.navCtrl.navigateForward('category/'+ this.category_id +'/professional/'+professional.id);
+      this.navCtrl.navigateForward('/professional/'+professional.id);
     }
   }
 

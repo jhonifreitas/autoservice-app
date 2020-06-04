@@ -15,8 +15,8 @@
     </ion-buttons>
   </ion-toolbar>
   <ion-item id="search" lines="none" [color]="!isProfessional() ? 'secondary' : 'tertiary'" *ngIf="!isProfessional()">
-    <ion-searchbar searchIcon="search-outline" placeholder="busque por serviço ou profissional"></ion-searchbar>
-    <ion-button slot="end" color="tertiary">ir</ion-button>
+    <ion-searchbar searchIcon="search-outline" [(ngModel)]="search" placeholder="busque por serviço ou profissional"></ion-searchbar>
+    <ion-button slot="end" color="tertiary" [disabled]="!search" (click)="goToProfessional()">ir</ion-button>
   </ion-item>
 </ion-header>
 
@@ -37,7 +37,7 @@
     <h4 class="title font-weight-bold ion-margin-bottom">Escolha a categoria</h4>
     <ion-slides [options]="slideOption" *ngIf="!loading">
       <ion-slide *ngFor="let object of categories">
-        <ion-card button color="light" class="ion-no-margin" routerDirection="forward" routerLink="/category/{{ object.id }}">
+        <ion-card button color="light" class="ion-no-margin" routerDirection="forward" [routerLink]="['/professional', {category_id: object.id}]">
           <ion-card-content>
             <img src="{{ object.icon }}" alt="">
             <p class="font-weight-bold">{{ object.name }}</p>
@@ -54,7 +54,7 @@
     </ion-slides>
   </section>
 
-  <section class="services" *ngIf="!isProfessional()">
+  <section id="requested-services" class="services" *ngIf="!isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços solicitados</h4>
     <ion-slides [options]="slideOption" *ngIf="!loading">
       <ion-slide *ngFor="let object of requested_services" class="hasStatus">
@@ -97,7 +97,7 @@
 
   <!-- PROFESSIONAL -->
 
-  <section class="services" *ngIf="isProfessional()">
+  <section id="approved-services" class="services" *ngIf="isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços aceitos</h4>
     <ion-slides [options]="slideOption" *ngIf="!loading">
       <ion-slide *ngFor="let object of approved_services">
@@ -132,7 +132,7 @@
     </ion-slides>
   </section>
 
-  <section class="services" *ngIf="isProfessional()">
+  <section id="waiting-services" class="services" *ngIf="isProfessional()">
     <h4 class="title font-weight-bold ion-margin-bottom">Serviços em espera</h4>
     <ion-slides [options]="slideOption" *ngIf="!loading">
       <ion-slide *ngFor="let object of waiting_services" class="hasStatus">

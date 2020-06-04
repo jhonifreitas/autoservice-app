@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { NavController, ActionSheetController, ModalController } from '@ionic/angular';
+import { NavController, ActionSheetController, ModalController, Platform, IonContent } from '@ionic/angular';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
+import { Geocoder, GeocoderResult } from '@ionic-native/google-maps/ngx';
 
 import { City } from 'src/app/interfaces/city';
 import { State } from 'src/app/interfaces/state';
@@ -24,17 +26,9 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
 })
 export class ProfilePage implements OnInit {
 
-  photo: string;
-  form: FormGroup;
-  city_name: string;
-  cities: City[] = [];
-  states: State[] = [];
-  reviews: Review[] = [];
-  gallery: Gallery[] = [];
-  loading: boolean = true;
-  segment: string = 'info';
-  object = this.storage.getUser().profile;
+  @ViewChild(IonContent, {static: true}) content: IonContent;
 
+  private city_name: string;
   private camOptions: CameraOptions = {
     quality: 90,
     destinationType: this.camera.DestinationType.FILE_URI,
@@ -43,10 +37,22 @@ export class ProfilePage implements OnInit {
     correctOrientation: true
   }
 
+  photo: string;
+  form: FormGroup;
+  cities: City[] = [];
+  states: State[] = [];
+  reviews: Review[] = [];
+  gallery: Gallery[] = [];
+  loading: boolean = true;
+  segment: string = 'info';
+  object = this.storage.getUser().profile;
+
   constructor(
     private camera: Camera,
     private api: ApiService,
     private webview: WebView,
+    private platform: Platform,
+    private route: ActivatedRoute,
     private navCtrl: NavController,
     private storage: StorageService,
     private address: AddressService,
@@ -127,6 +133,9 @@ export class ProfilePage implements OnInit {
       }
     }).catch(_ => {});
     loader.dismiss();
+    if(this.route.snapshot.paramMap.get('scroll')){
+      this.content.scrollToBottom(500);
+    }
   }
 
   async getCategories(){
@@ -231,6 +240,21 @@ export class ProfilePage implements OnInit {
     if(this.form.valid){
       const loader = await this.functions.loading('Salvando...');
       const data = this.form.value;
+      if(this.platform.is('cordova')){
+        const city = this.cities.filter(city => city.id == data.city)[0];
+        const address = data.address + ', ' +
+                        data.number + ', ' +
+                        data.district + ', ' +
+                        city.name + ', ' +
+                        city.state.name + ', ' +
+                        'Brazil';
+        await Geocoder.geocode({address: address}).then((results: GeocoderResult[]) => {
+          if (results.length > 0) {
+            data.lat = results[0].position.lat;
+            data.lng = results[0].position.lng;
+          }
+        });
+      }
       await this.api.patch('profile', data).then((res: Profile) => {
         const user = this.storage.getUser();
         user.profile = res;

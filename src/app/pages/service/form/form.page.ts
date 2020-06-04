@@ -139,8 +139,8 @@ export class ServiceFormPage {
 
   addProfessional(){
     if(this.global.category){
-      const url = '/category/'+this.global.category.id;
-      this.navCtrl.navigateForward([url, {select: true}]);
+      const param = {select: true, category_id: this.global.category.id};
+      this.navCtrl.navigateForward(['/professional', param]);
     }else{
       this.functions.message('Selecione uma categoria antes de selecionar o profissional!');
     }
