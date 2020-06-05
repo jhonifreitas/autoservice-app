@@ -8,6 +8,7 @@ import { registerLocaleData, CurrencyPipe, DatePipe } from '@angular/common';
 
 import { File } from '@ionic-native/file/ngx';
 import { Camera } from '@ionic-native/camera/ngx';
+import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
@@ -45,6 +46,7 @@ registerLocaleData(localePt);
     Camera,
     WebView,
     DatePipe,
+    OneSignal,
     StatusBar,
     PhotoViewer,
     SplashScreen,

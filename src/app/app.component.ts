@@ -47,11 +47,19 @@ export class AppComponent {
         this.statusBar.styleDefault();
         this.splashScreen.hide();
 
-        this.oneSignal.startInit(environment.onesignal_key, environment.onesignal_id);
+        // ONESIGNAL
+        this.oneSignal.startInit(environment.onesignal_id, environment.onesignal_key);
         this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
 
-        this.oneSignal.handleNotificationOpened().subscribe((res) => {
-          console.log(res)
+        this.oneSignal.handleNotificationOpened().subscribe((data) => {
+          if(this.storage.isAuthenticated()){
+            let params = data.notification.payload.additionalData
+            if (params) {
+              if (params.service_id) {
+                this.navCtrl.navigateForward(['/service/'+params.service_id])
+              }
+            }
+          }
         });
 
         this.oneSignal.endInit();

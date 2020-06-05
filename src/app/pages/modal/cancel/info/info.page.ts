@@ -26,7 +26,8 @@ export class CancelInfoModal {
 
   async delete(){
     const loader = await this.functions.loading();
-    await this.api.delete('service/'+this.id).then(res => {
+    const data = {status: 'canceled'};
+    await this.api.patch('service/'+this.id, data).then(res => {
       this.close({deleted: true});
       this.functions.message('Serviço cancelado!');
     }).catch(_ => {})

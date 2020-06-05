@@ -1,8 +1,9 @@
 <ion-header>
   <ion-toolbar [color]="!isProfessional() ? 'secondary' : 'tertiary'">
     <ion-item [color]="!isProfessional() ? 'secondary' : 'tertiary'" lines="none">
-      <ion-avatar slot="start">
-        <ion-img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'"></ion-img>
+      <ion-avatar slot="start" class="ion-activatable ripple-parent" routerDirection="forward" routerLink="/profile">
+        <img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'">
+        <ion-ripple-effect></ion-ripple-effect>
       </ion-avatar>
       <ion-label class="ion-text-wrap">
         <h2 class="ion-no-margin font-weight-bold">Olá {{ storage.getUser().profile.first_name }},</h2>

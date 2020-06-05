@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { NavController, ModalController } from '@ionic/angular';
+import { NavController, ModalController, Platform } from '@ionic/angular';
 
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 
 import { DatetimeModal } from '../../modal/datetime/datetime.page';
@@ -23,13 +24,15 @@ declare var google;
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
 })
-export class ServiceDetailPage {
+export class ServiceDetailPage implements OnInit {
 
   object: Service;
   loading: boolean = true;
 
   constructor(
     private api: ApiService,
+    private platform: Platform,
+    private statusBar: StatusBar,
     private router: ActivatedRoute,
     private navCtrl: NavController,
     private storage: StorageService,
@@ -37,6 +40,18 @@ export class ServiceDetailPage {
     private modalCtrl: ModalController,
     private functions: FunctionsService
   ) { }
+
+  ngOnInit(){
+    if(this.platform.is('cordova')){
+      if(this.isProfessional()){
+        this.statusBar.backgroundColorByHexString('#624AFC');
+        this.statusBar.styleLightContent();
+      }else{
+        this.statusBar.backgroundColorByHexString('#E8EFFD');
+        this.statusBar.styleDefault();
+      }
+    }
+  }
 
   async ionViewDidEnter(){
     this.loading = true;
@@ -92,7 +107,7 @@ export class ServiceDetailPage {
     return await modal.present();
   }
 
-  async delete(){
+  async cancel(){
     const modal = await this.modalCtrl.create({
       component: CancelInfoModal,
       componentProps: {id: this.object.id}

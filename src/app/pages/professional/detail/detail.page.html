@@ -10,7 +10,7 @@
       <ion-ripple-effect type="unbounded"></ion-ripple-effect>
     </ion-avatar>
     <ion-buttons slot="end">
-      <ion-button id="whatsapp" *ngIf="object && service && service.status == 'approved'" (click)="openWhatsapp()">
+      <ion-button id="whatsapp" *ngIf="object && service && service.status.value == 'approved'" (click)="openWhatsapp()">
         <div>
           <ion-icon name="logo-whatsapp" color="light" size="large"></ion-icon>
           <ion-text color="light"><p>Chamar no<br>Whatsapp</p></ion-text>

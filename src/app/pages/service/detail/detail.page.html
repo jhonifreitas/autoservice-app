@@ -7,7 +7,7 @@
     </ion-buttons>
     <ion-title class="ion-no-padding">Detalhes do serviço</ion-title>
     <ion-buttons slot="end" *ngIf="!isProfessional() && object && object.status.value != 'done'">
-      <ion-button (click)="delete()">
+      <ion-button (click)="cancel()">
         <ion-icon slot="icon-only" name="trash"></ion-icon>
       </ion-button>
     </ion-buttons>
@@ -150,6 +150,10 @@
       </ion-card-content>
     </ion-card>
   </section>
+
+  <div id="status" class="ion-text-center ion-padding-top" *ngIf="!isProfessional() && !loading">
+    <ion-text color="tertiary"><h5 class="font-weight-bold">{{ object.status.text }}</h5></ion-text>
+  </div>
 
   <div id="actions" *ngIf="isProfessional() && object && object.status.value == 'requested'">
     <ion-button expand="block" color="tertiary" class="font-weight-bold" (click)="accept()">Aceitar</ion-button>

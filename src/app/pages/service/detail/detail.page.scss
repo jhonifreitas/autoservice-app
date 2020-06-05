@@ -46,6 +46,7 @@ ion-header{
 ion-content{
     --padding-end: 1.3rem;
     --padding-start: 1.3rem;
+    --padding-bottom: 2rem;
     ion-card{
         box-shadow: none;
         margin-top: 2rem;
@@ -93,7 +94,6 @@ ion-content{
     }
 
     #observation{
-        margin-bottom: 2rem;
         ion-grid{padding: 0 2rem 1rem 2rem;}
         .add-photo{
             margin-top: 0;
@@ -116,8 +116,10 @@ ion-content{
         }
     }
 
+    #status{font-family: 'Poppins', sans-serif;}
+
     #actions{
-        padding: 0 3rem 2rem 3rem;
+        padding: 2rem 3rem 0 3rem;
         ion-button{
             height: auto;
             font-size: 13px;

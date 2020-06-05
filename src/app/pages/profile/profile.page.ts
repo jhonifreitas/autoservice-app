@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { NavController, ActionSheetController, ModalController, Platform, IonContent } from '@ionic/angular';
 
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 import { Geocoder, GeocoderResult } from '@ionic-native/google-maps/ngx';
@@ -52,6 +53,7 @@ export class ProfilePage implements OnInit {
     private api: ApiService,
     private webview: WebView,
     private platform: Platform,
+    private statusBar: StatusBar,
     private route: ActivatedRoute,
     private navCtrl: NavController,
     private storage: StorageService,
@@ -80,6 +82,10 @@ export class ProfilePage implements OnInit {
 
   async ngOnInit(){
     const loader = await this.functions.loading();
+    if(this.platform.is('cordova')){
+      this.statusBar.backgroundColorByHexString('#444444');
+      this.statusBar.styleLightContent();
+    }
     await this.api.get('state').then(res => {
       this.states = res;
       if(this.object.address && this.object.address.city){

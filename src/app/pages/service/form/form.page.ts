@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { NavController, ModalController, ActionSheetController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
+import { NavController, ModalController, ActionSheetController, Platform } from '@ionic/angular';
 
 import { DatetimeModal } from '../../modal/datetime/datetime.page';
 import { AddressFormModal } from '../../modal/address/form/form.page';
@@ -22,7 +22,7 @@ declare var google;
   templateUrl: './form.page.html',
   styleUrls: ['./form.page.scss'],
 })
-export class ServiceFormPage {
+export class ServiceFormPage implements OnInit {
 
   slideOption = {
     slidesPerView: 'auto',
@@ -46,12 +46,21 @@ export class ServiceFormPage {
     private camera: Camera,
     private api: ApiService,
     private webview: WebView,
+    private platform: Platform,
+    private statusBar: StatusBar,
     private navCtrl: NavController,
     private storage: StorageService,
     private modalCtrl: ModalController,
     private functions: FunctionsService,
     private actionSheetController: ActionSheetController
   ) {
+  }
+
+  ngOnInit(){
+    if(this.platform.is('cordova')){
+      this.statusBar.backgroundColorByHexString('#624AFC');
+      this.statusBar.styleLightContent();
+    }
   }
 
   async ionViewDidEnter(){
@@ -185,6 +194,13 @@ export class ServiceFormPage {
         images: this.global.images,
       }
       await this.api.post('service', data).then(res => {
+        this.global.address = null;
+        this.global.professional = null;
+        this.global.category = null;
+        this.global.date = null;
+        this.global.time = null;
+        this.global.observation = null;
+        this.global.images = [];
         this.navCtrl.navigateBack('/home');
         this.functions.message('Serviço solicitado!');
       }).catch(_ => {})

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavController, MenuController } from '@ionic/angular';
+import { NavController, MenuController, Platform } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 import { WebView } from '@ionic-native/ionic-webview/ngx';
@@ -28,6 +28,7 @@ export class RegisterPage implements OnInit {
     private camera: Camera,
     private api: ApiService,
     private webview: WebView,
+    private platform: Platform,
     private oneSignal: OneSignal,
     private navCtrl: NavController,
     private storage: StorageService,
@@ -46,8 +47,7 @@ export class RegisterPage implements OnInit {
     }, {validators: this.validatorPassword});
   }
 
-  ngOnInit(){
-  }
+  ngOnInit(){}
 
   async takePhoto(){
     const loader = await this.functions.loading();
@@ -97,9 +97,11 @@ export class RegisterPage implements OnInit {
     if(this.form.valid){
       const loader = await this.functions.loading('Registrando-se...');
       const data = this.form.value;
-      await this.oneSignal.getIds().then(res => {
-        data.onesignal = res.userId;
-      });
+      if(this.platform.is('cordova')){
+        await this.oneSignal.getIds().then(res => {
+          data.onesignal = res.userId;
+        });
+      }
       await this.api.post('register', data).then((res: any) => {
         this.storage.setUser(res);
         this.menuCtrl.enable(true);

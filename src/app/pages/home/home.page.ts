@@ -1,6 +1,8 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, ViewChild } from '@angular/core';
-import { IonContent, NavController } from '@ionic/angular';
+import { IonContent, NavController, Platform } from '@ionic/angular';
+
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Service } from 'src/app/interfaces/service';
 import { Category } from 'src/app/interfaces/category';
@@ -31,10 +33,24 @@ export class HomePage {
 
   constructor(
     private api: ApiService,
+    private platform: Platform,
+    private statusBar: StatusBar,
     private route: ActivatedRoute,
     public storage: StorageService,
     private navCtrl: NavController
   ) {}
+
+  ngOnInit(){
+    if(this.platform.is('cordova')){
+      if(this.isProfessional()){
+        this.statusBar.backgroundColorByHexString('#624AFC');
+        this.statusBar.styleLightContent();
+      }else{
+        this.statusBar.backgroundColorByHexString('#E8EFFD');
+        this.statusBar.styleDefault();
+      }
+    }
+  }
 
   async ionViewDidEnter(event=null){
     this.loading = true;

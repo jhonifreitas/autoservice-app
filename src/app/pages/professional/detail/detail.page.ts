@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import { ModalController, Platform, NavController } from '@ionic/angular';
 
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 
@@ -9,16 +10,16 @@ import { Global } from 'src/app/services/global';
 import { Service } from 'src/app/interfaces/service';
 import { ApiService } from 'src/app/services/api/api.service';
 import { AvaliationPage } from '../avaliation/avaliation.page';
+import { Profile, Review, Gallery } from 'src/app/interfaces/profile';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
-import { Profile, ProfileCategory, Review, Gallery } from 'src/app/interfaces/profile';
 
 @Component({
   selector: 'app-professional-detail',
   templateUrl: 'detail.page.html',
   styleUrls: ['detail.page.scss'],
 })
-export class ProfessionalDetailPage {
+export class ProfessionalDetailPage implements OnInit {
 
   private id: number;
   private service_id: number;
@@ -34,6 +35,7 @@ export class ProfessionalDetailPage {
     private global: Global,
     private api: ApiService,
     private platform: Platform,
+    private statusBar: StatusBar,
     private router: ActivatedRoute,
     private navCtrl: NavController,
     private storage: StorageService,
@@ -44,6 +46,13 @@ export class ProfessionalDetailPage {
   ) {
     this.id = parseInt(this.router.snapshot.paramMap.get('id'));
     this.service_id = parseInt(this.router.snapshot.paramMap.get('service_id'));
+  }
+
+  ngOnInit(){
+    if(this.platform.is('cordova')){
+      this.statusBar.backgroundColorByHexString('#624AFC');
+      this.statusBar.styleLightContent();
+    }
   }
 
   async ionViewDidEnter(event=null){

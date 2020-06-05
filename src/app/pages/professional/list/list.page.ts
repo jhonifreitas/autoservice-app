@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { NavController, Platform } from '@ionic/angular';
+
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 
 import { Global } from 'src/app/services/global';
 import { Profile } from 'src/app/interfaces/profile';
@@ -12,7 +14,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
   templateUrl: 'list.page.html',
   styleUrls: ['list.page.scss'],
 })
-export class ProfessionalPage {
+export class ProfessionalPage implements OnInit {
 
   private page = 1;
   private total: number;
@@ -26,6 +28,8 @@ export class ProfessionalPage {
   constructor(
     private global: Global,
     private api: ApiService,
+    private platform: Platform,
+    private statusBar: StatusBar,
     private navCtrl: NavController,
     private router: ActivatedRoute,
     private functions: FunctionsService
@@ -33,6 +37,13 @@ export class ProfessionalPage {
     this.search = this.router.snapshot.paramMap.get('search');
     this.select = this.router.snapshot.paramMap.get('select') == 'true';
     this.category_id = parseInt(this.router.snapshot.paramMap.get('category_id'));
+  }
+
+  ngOnInit(){
+    if(this.platform.is('cordova')){
+      this.statusBar.backgroundColorByHexString('#E8EFFD');
+      this.statusBar.styleDefault();
+    }
   }
 
   async ionViewDidEnter(){
