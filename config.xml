@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="br.com.gojob" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Go Job</name>
-    <description>Você pode criar solicitações de tarefas/serviços em um amplo banco de dados com mais de 300 prestadores de serviços cadastrados.</description>
+    <description>Você pode criar solicitações de serviços em um amplo banco de dados com mais de 300 prestadores de serviços cadastrados.</description>
     <author email="freitas.jonathan08@gmail.com" href="https://jhonifreitas.github.io/portfolio/">Jonathan Freitas</author>
     <content src="index.html" />
     <access origin="*" />

@@ -1,8 +1,8 @@
 {
-  "name": "autoservice",
+  "name": "gojob",
   "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "https://ionicframework.com/",
+  "author": "Jonathan Freitas",
+  "homepage": "https://jhonifreitas.github.io/portfolio/",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

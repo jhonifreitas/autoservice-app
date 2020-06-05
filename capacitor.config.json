@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "autoservice",
+  "appName": "gojob",
   "bundledWebRuntime": false,
   "npmClient": "npm",
   "webDir": "www",
