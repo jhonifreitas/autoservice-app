@@ -110,10 +110,10 @@ export class FunctionsService {
     return this.EXTENSIONS.indexOf(ext) !== -1
   }
 
-  nameStar(star: number, rating: number){
+  nameStar(star: number, rating: string){
     let name = 'star';
-    if(star > rating){
-      if(rating % 1 != 0){
+    if(star > parseFloat(rating)){
+      if(parseFloat(rating) % 1 != 0){
         name += '-half';
       }else{
         name += '-outline';

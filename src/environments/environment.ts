@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   // host: 'http://127.0.0.1:8000/api/v1/',
-  host: 'http://192.168.0.12:8000/api/v1/',
+  // host: 'http://192.168.0.12:8000/api/v1/',
+  host: 'http://45.132.242.190:8080/api/v1/',
   onesignal_key: '974228760707',
   onesignal_id: 'c337d5d7-79cb-43ee-bdd0-b99da7aca831',
   pagseguro_host: 'https://stc.sandbox.pagseguro.uol.com.br'

@@ -16,7 +16,7 @@ export class AvaliationPage implements OnInit {
   private object: Review;
   
   form: FormGroup;
-  autonomous: Profile;
+  professional: Profile;
   stars = [
     {'value': 1, 'icon': 'star-outline'},
     {'value': 2, 'icon': 'star-outline'},
@@ -33,7 +33,7 @@ export class AvaliationPage implements OnInit {
     private functions: FunctionsService
   ) {
     this.object = this.navParams.get('object');
-    this.autonomous = this.navParams.get('autonomous');
+    this.professional = this.navParams.get('professional');
     this.form = this.formBuilder.group({
       text: [''],
       note: ['', Validators.required]
@@ -50,7 +50,7 @@ export class AvaliationPage implements OnInit {
   async save(){
     const loader = await this.functions.loading('Salvando...');
     const data = this.form.value;
-    data.to_profile = this.autonomous.id;
+    data.to_profile = this.professional.id;
     if(this.object){
       await this.api.put('review/'+this.object.id, data).then(res => {
         this.functions.message('Obrigado por avaliar!');

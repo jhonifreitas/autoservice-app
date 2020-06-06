@@ -139,7 +139,7 @@ export class ProfessionalDetailPage implements OnInit {
     this.photoViewer.show(image);
   }
 
-  checkStar(star: number, rating: number){
+  checkStar(star: number, rating: string){
     return this.functions.nameStar(star, rating);
   }
 

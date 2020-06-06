@@ -298,7 +298,7 @@ export class ProfilePage implements OnInit {
     this.getCategories();
   }
 
-  checkStar(star: number, rating: number){
+  checkStar(star: number, rating: string){
     return this.functions.nameStar(star, rating);
   }
 

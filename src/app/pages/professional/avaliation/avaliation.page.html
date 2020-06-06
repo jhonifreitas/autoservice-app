@@ -1,8 +1,8 @@
 <ion-content class="ion-padding">
 
   <div class="ion-text-center">
-    <h4 class="ion-no-margin">Avaliar {{ autonomous.name }}?</h4>
-    <p>Toque uma estrela para avaliar {{ autonomous.name }}.</p>
+    <h4 class="ion-no-margin">Avaliar {{ professional.first_name }} {{ professional.last_name }}?</h4>
+    <p>Toque uma estrela para avaliar {{ professional.first_name }} {{ professional.last_name }}.</p>
 
     <ion-button fill="clear" color="warning" size="small" *ngFor="let star of stars" (click)="selectStar(star.value)">
       <ion-icon slot="icon-only" [name]="star.icon"></ion-icon>

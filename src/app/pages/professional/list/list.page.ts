@@ -81,7 +81,7 @@ export class ProfessionalPage implements OnInit {
     if(this.total == this.object_list.length){event.target.disabled = true;}
   }
 
-  checkStar(star: number, rating: number){
+  checkStar(star: number, rating: string){
     return this.functions.nameStar(star, rating);
   }
 
