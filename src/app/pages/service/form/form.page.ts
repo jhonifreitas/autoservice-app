@@ -5,6 +5,7 @@ import { DatetimeModal } from '../../modal/datetime/datetime.page';
 import { AddressFormModal } from '../../modal/address/form/form.page';
 import { ObservationFormModal } from '../../modal/observation/form/form.page';
 
+import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { WebView } from '@ionic-native/ionic-webview/ngx';
 import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
