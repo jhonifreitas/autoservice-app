@@ -18,6 +18,17 @@ ion-header{
     }
     ion-buttons{
         margin-right: .5rem;
+        ion-menu-button.hasNotification::after{
+            content: '';
+            position: absolute;
+            top: 20%;
+            right: 18%;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            background-color: var(--ion-color-tertiary);
+        }
     }
 }
 ion-content{

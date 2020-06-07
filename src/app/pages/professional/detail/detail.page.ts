@@ -9,10 +9,10 @@ import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { Global } from 'src/app/services/global';
 import { Service } from 'src/app/interfaces/service';
 import { ApiService } from 'src/app/services/api/api.service';
-import { AvaliationPage } from '../avaliation/avaliation.page';
 import { Profile, Review, Gallery } from 'src/app/interfaces/profile';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
+import { start } from 'repl';
 
 @Component({
   selector: 'app-professional-detail',
@@ -67,33 +67,9 @@ export class ProfessionalDetailPage implements OnInit {
     this.loading = false;
   }
 
-  canAddAvaliation(){
-    const user = this.storage.getUser();
-    if(this.isProfessional()){
-      return false;
-    }else if(this.reviews.filter(review => review.from_profile.id == user.profile.id).length){
-      return false;
-    }
-    return true;
-  }
-
-  async openAvaliation(review: Review = null){
-    if(this.isProfessional()){
-      return;
-    }
-    const modal = await this.modalCtrl.create({
-      component: AvaliationPage,
-      componentProps: {autonomous: this.object, object: review},
-      cssClass: 'modal-avaliation',
-    });
-    await modal.present();
-    await modal.onWillDismiss();
-    this.ionViewDidEnter();
-  }
-
   async getAvaliations(){
     this.loading = true;
-    await this.api.get('review').then(res => {
+    await this.api.get('review/'+this.object.id).then(res => {
       this.reviews = res;
     }).catch(_ => {});
     this.loading = false;
@@ -137,6 +113,14 @@ export class ProfessionalDetailPage implements OnInit {
 
   showImage(image: string){
     this.photoViewer.show(image);
+  }
+
+  getListStar(rating: string){
+    const stars = [];
+    for (let i = 0; i < parseInt(rating); i++) {
+      stars.push(i);
+    }
+    return stars;
   }
 
   checkStar(star: number, rating: string){

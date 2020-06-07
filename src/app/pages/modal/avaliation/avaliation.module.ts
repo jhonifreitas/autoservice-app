@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { ProfessionalDetailPage } from './detail.page';
+import { AvaliationModal } from './avaliation.page';
 
 @NgModule({
   imports: [
@@ -15,10 +15,10 @@ import { ProfessionalDetailPage } from './detail.page';
     RouterModule.forChild([
       {
         path: '',
-        component: ProfessionalDetailPage
+        component: AvaliationModal
       }
     ])
   ],
-  declarations: [ProfessionalDetailPage]
+  declarations: [AvaliationModal]
 })
-export class ProfessionalDetailPageModule {}
+export class AvaliationModalModule {}

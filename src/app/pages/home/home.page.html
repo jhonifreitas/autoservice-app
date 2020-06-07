@@ -12,7 +12,7 @@
       </ion-label>
     </ion-item>
     <ion-buttons slot="end">
-      <ion-menu-button></ion-menu-button>
+      <ion-menu-button [ngClass]="{'hasNotification': global.review_pending.length > 0}"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
   <ion-item id="search" lines="none" [color]="!isProfessional() ? 'secondary' : 'tertiary'" *ngIf="!isProfessional()">

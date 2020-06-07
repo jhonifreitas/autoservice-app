@@ -10,6 +10,7 @@ import { environment } from 'src/environments/environment';
 import { StorageService } from './services/storage/storage.service';
 import { PaymentInfoModal } from './pages/modal/payment/info/info.page';
 import { FunctionsService } from './services/functions/functions.service';
+import { AvaliationModal } from './pages/modal/avaliation/avaliation.page';
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,7 @@ export class AppComponent {
   selectedIndex = 0;
 
   constructor(
-    private global: Global,
+    public global: Global,
     private platform: Platform,
     private statusBar: StatusBar,
     private oneSignal: OneSignal,
@@ -87,6 +88,13 @@ export class AppComponent {
   async openPaymentInfo(){
     const modal = await this.modalCtrl.create({
       component: PaymentInfoModal
+    });
+    return await modal.present();
+  }
+
+  async openAvaliation(){
+    const modal = await this.modalCtrl.create({
+      component: AvaliationModal
     });
     return await modal.present();
   }

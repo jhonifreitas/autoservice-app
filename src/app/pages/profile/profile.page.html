@@ -142,17 +142,17 @@
       </ion-item>
       <ion-item *ngFor="let commentary of reviews" [ngClass]="{'featured': commentary.note == 5}">
         <ion-avatar slot="start">
-          <ion-img [src]="commentary.from_profile.photo ? commentary.from_profile.photo : 'assets/user.png'" alt=""></ion-img>
+          <img [src]="commentary.from_profile.photo ? commentary.from_profile.photo : 'assets/user.png'" alt="">
         </ion-avatar>
         <ion-label class="ion-text-wrap">
           <div class="name">
-            <ion-text color="tertiary" class="font-weight-bold">{{ commentary.from_profile.name }}</ion-text>
+            <ion-text color="tertiary" class="font-weight-bold">{{ commentary.from_profile.first_name }} {{ commentary.from_profile.last_name }}</ion-text>
           </div>
           <div class="content">
-            <p *ngIf="commentary.text" class="ion-no-margin">{{ commentary.text }}</p>
+            <p *ngIf="commentary.text" class="ion-no-margin font-weight-light">{{ commentary.text }}</p>
           </div>
           <div class="icon ion-text-center">
-            <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, commentary.note)" [color]="commentary.note == 5 ? 'tertiary' :'dark'"></ion-icon>
+            <ion-icon *ngFor="let item of getListStar(commentary.note)" [name]="checkStar(item, commentary.note)" [color]="commentary.note == 5 ? 'tertiary' :'dark'"></ion-icon>
           </div>
         </ion-label>
       </ion-item>

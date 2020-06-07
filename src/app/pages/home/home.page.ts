@@ -4,6 +4,7 @@ import { IonContent, NavController, Platform } from '@ionic/angular';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
+import { Global } from 'src/app/services/global';
 import { Service } from 'src/app/interfaces/service';
 import { Category } from 'src/app/interfaces/category';
 import { ApiService } from 'src/app/services/api/api.service';
@@ -32,6 +33,7 @@ export class HomePage {
   requested_services: Service[] = [];
 
   constructor(
+    public global: Global,
     private api: ApiService,
     private platform: Platform,
     private statusBar: StatusBar,
@@ -40,7 +42,9 @@ export class HomePage {
     private navCtrl: NavController
   ) {}
 
-  ngOnInit(){
+  async ionViewDidEnter(event=null){
+    this.loading = true;
+
     if(this.platform.is('cordova')){
       if(this.isProfessional()){
         this.statusBar.backgroundColorByHexString('#624AFC');
@@ -50,10 +54,7 @@ export class HomePage {
         this.statusBar.styleDefault();
       }
     }
-  }
 
-  async ionViewDidEnter(event=null){
-    this.loading = true;
     if(this.isProfessional()){
       await this.api.get('service/approved').then(data => {
         this.approved_services = data;
@@ -62,6 +63,9 @@ export class HomePage {
         this.waiting_services = data;
       }).catch(() => {});
     }else{
+      await this.api.get('review/pending').then(data => {
+        this.global.review_pending = data;
+      }).catch(() => {});
       await this.api.get('category').then(data => {
         this.categories = data;
       }).catch(() => {});

@@ -21,7 +21,7 @@
         <div class="text">
           <ion-text color="dark">
             <h4 class="font-weight-bold">Solicitação<br>de serviço<br><span>{{ object.category.name }}</span></h4>
-            <p>confira abaixo as informações<br>que você passou para o nosso<br>prestador de serviços</p>
+            <div id="status" *ngIf="!isProfessional() && !loading">{{ object.status.text }}</div>
           </ion-text>
         </div>
       </ion-card-content>
@@ -150,10 +150,6 @@
       </ion-card-content>
     </ion-card>
   </section>
-
-  <div id="status" class="ion-text-center ion-padding-top" *ngIf="!isProfessional() && !loading">
-    <ion-text color="tertiary"><h5 class="font-weight-bold">{{ object.status.text }}</h5></ion-text>
-  </div>
 
   <div id="actions" *ngIf="isProfessional() && object && object.status.value == 'requested'">
     <ion-button expand="block" color="tertiary" class="font-weight-bold" (click)="accept()">Aceitar</ion-button>

@@ -5,7 +5,7 @@
         <ion-menu-toggle auto-hide="false">
           <ion-item lines="none" routerDirection="forward" routerLink="/profile">
             <ion-avatar slot="start">
-              <ion-img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'"></ion-img>
+              <img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'">
             </ion-avatar>
             <ion-label class="ion-text-wrap">
               <h2 class="ion-no-margin font-weight-bold">Olá {{ storage.getUser().profile.first_name }}</h2>
@@ -17,7 +17,6 @@
       <ion-content>
         <div class="vertical-align">
           <ion-list class="ion-no-padding">
-            <!-- CLIENT -->
             <ion-menu-toggle auto-hide="false" *ngIf="isCommon()">
               <ion-item (click)="goToServiceForm()" detail="false">
                 <ion-label>solicitar serviço</ion-label>
@@ -29,7 +28,6 @@
               </ion-item>
             </ion-menu-toggle>
 
-            <!-- PROFESSIONAL -->
             <ion-menu-toggle auto-hide="false" *ngIf="isProfessional()">
               <ion-item routerDirection="root" [routerLink]="['/home', {scroll: 'approved-services'}]" detail="false">
                 <ion-label>serviços aceitos</ion-label>
@@ -44,6 +42,13 @@
             <ion-menu-toggle auto-hide="false">
               <ion-item routerDirection="root" [routerLink]="['/home', {scroll: 'history-services'}]" detail="false">
                 <ion-label>histórico de serviços</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+
+            <ion-menu-toggle auto-hide="false" *ngIf="isCommon() && global.review_pending.length">
+              <ion-item button (click)="openAvaliation()" detail="false">
+                <ion-label>avaliar profissional</ion-label>
+                <ion-note slot="end"><span id="point"></span></ion-note>
               </ion-item>
             </ion-menu-toggle>
           </ion-list>

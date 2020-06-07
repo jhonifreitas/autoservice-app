@@ -140,8 +140,18 @@ ion-content{
                     width: 25%;
                     align-self: start;
                 }
-                .content{width: 50%;}
-                .icon{width: 25%;}
+                .content{
+                    width: 50%;
+                    p{
+                        font-size: 11px;
+                        color: var(--ion-color-dark);
+                    }
+                }
+                .icon{
+                    width: 25%;
+                    transform: rotate(180deg);
+                    ion-icon{transform: rotate(180deg);}
+                }
                 ion-text{
                     font-size: 12px;
                 }

@@ -1,0 +1,59 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" color="secondary" (click)="close()">
+        <ion-icon slot="icon-only" name="close-circle"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<div class="inner-content ion-padding-horizontal ion-padding-bottom ion-text-center">
+
+  <div id="top">
+    <img src="assets/icon/star.png" alt="">
+    <ion-text color="tertiary" *ngIf="!professional"><h2 class="font-weight-bold">Avaliação de profissional</h2></ion-text>
+    <ion-text color="tertiary" *ngIf="professional"><h2 class="font-weight-bold">Avaliar profissional</h2></ion-text>
+  </div>
+
+  <ion-list lines="none" *ngIf="!professional">
+    <ion-item button *ngFor="let object of global.review_pending" (click)="professional = object">
+      <ion-avatar slot="start">
+        <ion-img [src]="object.photo ? object.photo : 'assets/user.png'" alt=""></ion-img>
+      </ion-avatar>
+      <ion-label class="ion-text-wrap">
+        <div class="name">
+          <ion-text color="tertiary" class="font-weight-bold">{{ object.first_name }} {{ object.last_name }}</ion-text>
+        </div>
+        <div class="stars ion-text-center">
+          <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, object.rating)" color="dark"></ion-icon>
+        </div>
+        <div class="icon ion-text-right">
+          <img src="assets/icon/star.png" alt="">
+        </div>
+      </ion-label>
+    </ion-item>
+  </ion-list>
+
+  <div id="professional" *ngIf="professional">
+    <div id="info">
+      <ion-avatar>
+        <ion-img [src]="professional.photo ? professional.photo : 'assets/user.png'" alt=""></ion-img>
+      </ion-avatar>
+      <ion-text color="tertiary"><h4 class="name font-weight-bold">{{ professional.first_name }} {{ professional.last_name }}</h4></ion-text>
+    </div>
+  
+    <ion-button fill="clear" color="dark" size="small" *ngFor="let star of stars" class="ion-no-padding" (click)="selectStar(star.value)">
+      <ion-icon slot="icon-only" [name]="star.icon"></ion-icon>
+    </ion-button>
+  
+    <form [formGroup]="form" (ngSubmit)="save()" class="ion-padding-horizontal ion-margin-top">
+      <ion-item>
+        <ion-label position="floating">Escreva sobre o profissional</ion-label>
+        <ion-textarea formControlName="text" class="font-weight-bold"></ion-textarea>
+      </ion-item>
+  
+      <ion-button type="submit" expand="block" color="tertiary" class="font-weight-bold ion-margin-top" [disabled]="form.invalid">Adicionar</ion-button>
+    </form>
+  </div>
+
+</div>

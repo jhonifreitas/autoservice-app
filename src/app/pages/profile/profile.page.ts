@@ -157,7 +157,7 @@ export class ProfilePage implements OnInit {
 
   async getAvaliations(){
     this.loading = true;
-    await this.api.get('review').then(res => {
+    await this.api.get('review/'+this.object.id).then(res => {
       this.reviews = res;
     }).catch(_ => {});
     this.loading = false;
@@ -296,6 +296,14 @@ export class ProfilePage implements OnInit {
     await modal.present();
     await modal.onWillDismiss();
     this.getCategories();
+  }
+
+  getListStar(rating: string){
+    const stars = [];
+    for (let i = 0; i < parseInt(rating); i++) {
+      stars.push(i);
+    }
+    return stars;
   }
 
   checkStar(star: number, rating: string){

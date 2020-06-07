@@ -26,7 +26,7 @@
   <ion-list *ngIf="!loading" lines="none">
     <ion-item button *ngFor="let object of object_list" (click)="selectProfessional(object)">
       <ion-avatar slot="start">
-        <ion-img [src]="object.photo ? object.photo : 'assets/user.png'" alt=""></ion-img>
+        <img [src]="object.photo ? object.photo : 'assets/user.png'" alt="">
       </ion-avatar>
       <ion-label class="ion-text-wrap">
         <div class="name">

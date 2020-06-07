@@ -30,4 +30,6 @@ export class Global {
 
     payment: Payment;
     pagseguro: {cards: CreditCard};
+
+    review_pending: Profile[] = [];
 }
