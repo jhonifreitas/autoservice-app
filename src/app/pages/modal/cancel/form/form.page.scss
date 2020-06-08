@@ -2,7 +2,10 @@
     padding-left: 2rem;
     padding-right: 2rem;
     #top{
-        img{max-width: 35%;}
+        ion-img{
+            margin: auto;
+            max-width: 35%;
+        }
         h2{
             margin: 1.5rem 0;
             font-size: 22px;

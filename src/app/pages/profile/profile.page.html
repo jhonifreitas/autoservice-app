@@ -18,7 +18,7 @@
 
   <ion-item id="header" lines="none">
     <ion-avatar slot="start" class="ion-activatable ripple-parent" (click)="takePhoto()">
-      <img [src]="photo ? photo : 'assets/user.png'" alt="">
+      <ion-img [src]="photo ? photo : 'assets/user.png'" alt=""></ion-img>
       <ion-ripple-effect></ion-ripple-effect>
     </ion-avatar>
     <ion-label>
@@ -142,7 +142,7 @@
       </ion-item>
       <ion-item *ngFor="let commentary of reviews" [ngClass]="{'featured': commentary.note == 5}">
         <ion-avatar slot="start">
-          <img [src]="commentary.from_profile.photo ? commentary.from_profile.photo : 'assets/user.png'" alt="">
+          <ion-img [src]="commentary.from_profile.photo ? commentary.from_profile.photo : 'assets/user.png'" alt=""></ion-img>
         </ion-avatar>
         <ion-label class="ion-text-wrap">
           <div class="name">
@@ -179,8 +179,8 @@
     <ion-grid *ngIf="!loading">
       <ion-row>
         <ion-col size="4" *ngFor="let photo of gallery">
-          <ion-card class="ion-no-margin">
-            <img src="{{ photo.image }}" alt="">
+          <ion-card button class="ion-no-margin" (click)="removePhoto(photo)">
+            <ion-img src="{{ photo.image }}" alt=""></ion-img>
           </ion-card>
         </ion-col>
         <ion-col class="add" size="4">

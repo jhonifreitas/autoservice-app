@@ -9,9 +9,10 @@ ion-header{
         ion-card-content{
             text-align: center;
             padding: 1.5rem 1rem;
-            img{
+            ion-img{
                 width: 45px;
                 height: 45px;
+                margin: auto;
                 padding: .5rem;
                 object-fit: contain;
                 border-radius: 10px;
@@ -59,7 +60,7 @@ ion-content{
             ion-note[slot="start"]{
                 padding-top: .6rem;
                 padding-bottom: .4rem;
-                img{max-width: 30px;}
+                ion-img{max-width: 30px;}
             }
             ion-label{
                 opacity: .5;
@@ -129,7 +130,7 @@ ion-content{
                     font-size: 9px;
                     line-height: 1;
                 }
-                img{
+                ion-img{
                     max-width: 25px;
                     margin-right: 10px;
                 }

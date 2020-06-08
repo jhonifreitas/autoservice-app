@@ -15,6 +15,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { SocialSharing } from '@ionic-native/social-sharing/ngx';
 import { LaunchNavigator } from '@ionic-native/launch-navigator/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 import { AppComponent } from './app.component';
 import { Global } from 'src/app/services/global';
@@ -55,6 +56,7 @@ registerLocaleData(localePt);
     CurrencyPipe,
     SocialSharing,
     LaunchNavigator,
+    ScreenOrientation,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     { provide: LOCALE_ID, useValue: 'pt-BR' },
   ],

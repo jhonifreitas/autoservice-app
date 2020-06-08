@@ -61,9 +61,10 @@ ion-content{
                 box-shadow: none;
                 ion-card-content{
                     padding: 1.2rem .6rem;
-                    img{
+                    ion-img{
                         width: 45px;
                         height: 45px;
+                        margin: auto;
                         padding: .5rem;
                         object-fit: contain;
                         border-radius: 10px;

@@ -20,7 +20,7 @@ ion-header{
                     display: flex;
                     align-items: center;
                     background: var(--ion-color-tertiary);
-                    img{
+                    ion-img{
                         width: 50px;
                         height: 50px;
                         object-fit: contain;
@@ -35,7 +35,7 @@ ion-header{
                         span{text-transform: lowercase;}
                     }
                     #status{
-                        font-size: 12px;
+                        font-size: 10px;
                         font-weight: 700;
                         padding: .2rem 1rem;
                         border-radius: 20px;
@@ -61,7 +61,7 @@ ion-content{
             ion-note[slot="start"]{
                 padding-top: .6rem;
                 padding-bottom: .4rem;
-                img{max-width: 30px;}
+                ion-img{max-width: 30px;}
                 ion-avatar{
                     width: 30px;
                     height: 30px;
@@ -113,7 +113,7 @@ ion-content{
                     font-size: 9px;
                     line-height: 1;
                 }
-                img{
+                ion-img{
                     max-width: 25px;
                     margin-right: 10px;
                 }

@@ -1,7 +1,10 @@
 .inner-content{
     #top{
         padding: 0 3.5rem;
-        img{max-width: 35%;}
+        ion-img{
+            margin: auto;
+            max-width: 35%;
+        }
         h2{
             font-size: 22px;
             font-family: 'Poppins', sans-serif;
@@ -11,6 +14,7 @@
     ion-button{
         height: auto;
         font-size: 13px;
+        margin-top: 1rem;
         text-transform: none;
         --padding-top: .9rem;
         --padding-end: 4.5rem;

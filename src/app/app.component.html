@@ -5,7 +5,7 @@
         <ion-menu-toggle auto-hide="false">
           <ion-item lines="none" routerDirection="forward" routerLink="/profile">
             <ion-avatar slot="start">
-              <img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'">
+              <ion-img [src]="storage.getUser().profile.photo ? storage.getUser().profile.photo : 'assets/user.png'"></ion-img>
             </ion-avatar>
             <ion-label class="ion-text-wrap">
               <h2 class="ion-no-margin font-weight-bold">Olá {{ storage.getUser().profile.first_name }}</h2>

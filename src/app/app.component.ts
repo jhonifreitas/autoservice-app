@@ -4,6 +4,7 @@ import { Platform, IonRouterOutlet, NavController, MenuController, ModalControll
 import { OneSignal } from '@ionic-native/onesignal/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 import { Global } from './services/global';
 import { environment } from 'src/environments/environment';
@@ -37,6 +38,7 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private modalCtrl: ModalController,
     private functions: FunctionsService,
+    private screenOrientation: ScreenOrientation
   ) {
     this.initializeApp();
   }
@@ -47,6 +49,8 @@ export class AppComponent {
         this.statusBar.backgroundColorByHexString('#E8EFFD');
         this.statusBar.styleDefault();
         this.splashScreen.hide();
+
+        this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
 
         // ONESIGNAL
         this.oneSignal.startInit(environment.onesignal_id, environment.onesignal_key);

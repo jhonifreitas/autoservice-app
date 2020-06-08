@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController, ModalController, ActionSheetController, Platform } from '@ionic/angular';
 
 import { DatetimeModal } from '../../modal/datetime/datetime.page';
@@ -23,7 +23,7 @@ declare var google;
   templateUrl: './form.page.html',
   styleUrls: ['./form.page.scss'],
 })
-export class ServiceFormPage implements OnInit {
+export class ServiceFormPage {
 
   slideOption = {
     slidesPerView: 'auto',
@@ -57,15 +57,12 @@ export class ServiceFormPage implements OnInit {
   ) {
   }
 
-  ngOnInit(){
+  async ionViewDidEnter(){
+    this.loading = true;
     if(this.platform.is('cordova')){
       this.statusBar.backgroundColorByHexString('#624AFC');
       this.statusBar.styleLightContent();
     }
-  }
-
-  async ionViewDidEnter(){
-    this.loading = true;
     this.global.address = this.storage.getUser().profile.address;
     if(this.global.professional){
       this.categories = this.global.professional.categories.map(category => category.category);
@@ -74,10 +71,10 @@ export class ServiceFormPage implements OnInit {
         this.categories = data;
       }).catch(() => {})
     }
-    if(this.global.address.lat && this.global.address.lng){
-      this.loadMap();
-    }
     this.loading = false;
+    setTimeout(() => {
+      if(this.global.address.lat && this.global.address.lng){this.loadMap()}
+    });
   }
 
   loadMap(){
@@ -159,20 +156,24 @@ export class ServiceFormPage implements OnInit {
   addAddress(){
     this.openModal(AddressFormModal);
   }
-
+  
   addDatetime(){
     this.openModal(DatetimeModal);
   }
-
+  
   addObservation(){
     this.openModal(ObservationFormModal);
   }
-
+  
   async openModal(page: any){
     const modal = await this.modalCtrl.create({
       component: page
     });
-    return await modal.present();
+    await modal.present();
+    await modal.onWillDismiss();
+    setTimeout(() => {
+      if(this.global.address.lat && this.global.address.lng){this.loadMap()}
+    });
   }
 
   async save(){

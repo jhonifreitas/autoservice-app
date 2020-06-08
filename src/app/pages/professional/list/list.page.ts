@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, Platform } from '@ionic/angular';
 
@@ -14,7 +14,7 @@ import { FunctionsService } from 'src/app/services/functions/functions.service';
   templateUrl: 'list.page.html',
   styleUrls: ['list.page.scss'],
 })
-export class ProfessionalPage implements OnInit {
+export class ProfessionalPage {
 
   private page = 1;
   private total: number;
@@ -39,15 +39,12 @@ export class ProfessionalPage implements OnInit {
     this.category_id = parseInt(this.router.snapshot.paramMap.get('category_id'));
   }
 
-  ngOnInit(){
+  async ionViewDidEnter(){
+    this.loading = true;
     if(this.platform.is('cordova')){
       this.statusBar.backgroundColorByHexString('#E8EFFD');
       this.statusBar.styleDefault();
     }
-  }
-
-  async ionViewDidEnter(){
-    this.loading = true;
     this.object_list = await this.getProfessional();
     this.loading = false;
   }

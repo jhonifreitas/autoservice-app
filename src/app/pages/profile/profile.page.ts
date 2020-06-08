@@ -165,7 +165,7 @@ export class ProfilePage implements OnInit {
 
   async getGallery(){
     this.loading = true;
-    await this.api.get('gallery').then(res => {
+    await this.api.get('gallery/'+this.object.id).then(res => {
       this.gallery = res;
     }).catch(_ => {});
     this.loading = false;
@@ -220,7 +220,8 @@ export class ProfilePage implements OnInit {
         const data = {
           image: image.file
         };
-        this.api.post('gallery', data).then(res => {
+        this.api.post('gallery/create', data).then(res => {
+          this.getGallery();
           this.functions.message('Foto registrada!');
         }).catch(_ => {});
       }).catch(_ => {});
@@ -240,6 +241,17 @@ export class ProfilePage implements OnInit {
     this.form.get('district').setValue(this.object.address.district);
     this.form.get('number').setValue(this.object.address.number);
     this.form.get('complement').setValue(this.object.address.complement);
+  }
+
+  removePhoto(gallery: Gallery){
+    this.functions.alertDelete('Atenção!', 'Deseja deletar esta foto?').then(async (_) => {
+      const loader = await this.functions.loading('Deletando...');
+      await this.api.delete('gallery/delete/'+gallery.id).then(res => {
+        this.functions.message('Imagem deletada!');
+      }).catch(() => {})
+      loader.dismiss();
+      this.getGallery();
+    }).catch(_ => {})
   }
 
   async save(){
@@ -266,7 +278,7 @@ export class ProfilePage implements OnInit {
         user.profile = res;
         this.storage.setUser(user);
         this.functions.message('Perfil salvo!');
-      }).catch(() => {})
+      }).catch(() => {});
       loader.dismiss();
     }else{
       let message = 'Verifique os dados antes de prosseguir!';

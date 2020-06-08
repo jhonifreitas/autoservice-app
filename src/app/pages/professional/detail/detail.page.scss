@@ -65,9 +65,7 @@ ion-header{
                 transition: all .2s;
                 background: var(--ion-color-tertiary-contrast);
             }
-            &.segment-button-checked ion-label::after{
-                width: 100%;
-            }
+            &.segment-button-checked ion-label::after{width: 100%;}
         }
     }
 }
@@ -86,9 +84,7 @@ ion-content{
                     font-size: 12px;
                 }
             }
-            &.featured{
-                border: 2px solid var(--ion-color-tertiary);
-            }
+            &.featured{border: 2px solid var(--ion-color-tertiary);}
             ion-label{
                 display: flex;
                 line-height: 1;
@@ -114,6 +110,10 @@ ion-content{
         }
     }
     #gallery{
+        ion-img{
+            height: 6.5rem;
+            object-fit: cover;
+        }
         .empty{
             box-shadow: none;
             background: var(--ion-color-light);

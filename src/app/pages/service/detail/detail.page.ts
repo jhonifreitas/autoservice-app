@@ -59,8 +59,10 @@ export class ServiceDetailPage implements OnInit {
     await this.api.get('service/'+id).then(res => {
       this.object = res;
     }).catch(() => {});
-    if(this.object.lat && this.object.lng){this.loadMap()};
     this.loading = false;
+    setTimeout(() => {
+      if(this.object.lat && this.object.lng){this.loadMap()};
+    });
   }
 
   loadMap(){

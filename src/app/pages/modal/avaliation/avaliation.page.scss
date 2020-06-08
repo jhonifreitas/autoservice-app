@@ -1,7 +1,10 @@
 .inner-content{
     #top{
         padding: 0 3.5rem;
-        img{max-width: 35%;}
+        ion-img{
+            margin: auto;
+            max-width: 35%;
+        }
         h2{
             font-size: 22px;
             font-family: 'Poppins', sans-serif;
@@ -33,7 +36,7 @@
                 }
                 .stars{width: 40%;}
                 .icon{width: 30%;}
-                img{max-width: 25px;}
+                ion-img{max-width: 25px;}
                 ion-text{font-size: 12px;}
             }
         }

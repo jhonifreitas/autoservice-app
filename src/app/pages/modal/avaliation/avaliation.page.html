@@ -10,7 +10,7 @@
 <div class="inner-content ion-padding-horizontal ion-padding-bottom ion-text-center">
 
   <div id="top">
-    <img src="assets/icon/star.png" alt="">
+    <ion-img src="assets/icon/star.png" alt=""></ion-img>
     <ion-text color="tertiary" *ngIf="!professional"><h2 class="font-weight-bold">Avaliação de profissional</h2></ion-text>
     <ion-text color="tertiary" *ngIf="professional"><h2 class="font-weight-bold">Avaliar profissional</h2></ion-text>
   </div>
@@ -28,7 +28,7 @@
           <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, object.rating)" color="dark"></ion-icon>
         </div>
         <div class="icon ion-text-right">
-          <img src="assets/icon/star.png" alt="">
+          <ion-img src="assets/icon/star.png" alt=""></ion-img>
         </div>
       </ion-label>
     </ion-item>

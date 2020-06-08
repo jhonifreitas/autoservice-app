@@ -1,6 +1,6 @@
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
-import { ModalController, Platform, NavController } from '@ionic/angular';
+import { Platform, NavController } from '@ionic/angular';
 
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { PhotoViewer } from '@ionic-native/photo-viewer/ngx';
@@ -12,7 +12,6 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { Profile, Review, Gallery } from 'src/app/interfaces/profile';
 import { StorageService } from 'src/app/services/storage/storage.service';
 import { FunctionsService } from 'src/app/services/functions/functions.service';
-import { start } from 'repl';
 
 @Component({
   selector: 'app-professional-detail',
@@ -40,7 +39,6 @@ export class ProfessionalDetailPage implements OnInit {
     private navCtrl: NavController,
     private storage: StorageService,
     private photoViewer: PhotoViewer,
-    private modalCtrl: ModalController,
     private functions: FunctionsService,
     private socialSharing: SocialSharing,
   ) {
@@ -62,7 +60,6 @@ export class ProfessionalDetailPage implements OnInit {
     }).catch(() => {});
     if(this.service_id){await this.getService()}
     await this.getAvaliations();
-    await this.getGallery();
     if(event){ event.target.complete();}
     this.loading = false;
   }
@@ -77,7 +74,7 @@ export class ProfessionalDetailPage implements OnInit {
 
   async getGallery(){
     this.loading = true;
-    await this.api.get('gallery').then(res => {
+    await this.api.get('gallery/'+this.object.id).then(res => {
       this.gallery = res;
     }).catch(_ => {});
     this.loading = false;

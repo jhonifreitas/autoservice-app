@@ -26,7 +26,7 @@
   <ion-list *ngIf="!loading" lines="none">
     <ion-item button *ngFor="let object of object_list" (click)="selectProfessional(object)">
       <ion-avatar slot="start">
-        <img [src]="object.photo ? object.photo : 'assets/user.png'" alt="">
+        <ion-img [src]="object.photo ? object.photo : 'assets/user.png'" alt=""></ion-img>
       </ion-avatar>
       <ion-label class="ion-text-wrap">
         <div class="name">
@@ -36,7 +36,7 @@
           <ion-icon *ngFor="let item of [1,2,3,4,5]" [name]="checkStar(item, object.rating)" color="dark"></ion-icon>
         </div>
         <div class="icon ion-text-right">
-          <img src="assets/icon/metro-profile.png" alt="">
+          <ion-img src="assets/icon/metro-profile.png" alt=""></ion-img>
         </div>
       </ion-label>
     </ion-item>

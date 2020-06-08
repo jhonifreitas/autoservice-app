@@ -11,7 +11,7 @@
     <ion-slide *ngFor="let object of categories">
       <ion-card button class="ion-no-margin" color="light" (click)="global.category = object">
         <ion-card-content>
-          <img src="{{ object.icon }}" alt="">
+          <ion-img src="{{ object.icon }}" alt=""></ion-img>
           <p class="font-weight-bold">{{ object.name }}</p>
         </ion-card-content>
       </ion-card>
@@ -27,8 +27,8 @@
   <div id="category" *ngIf="global.category">
     <ion-card button class="ion-no-margin" color="tertiary">
       <ion-card-content>
-        <img src="{{ global.category.icon }}" alt="">
-        <p class="font-weight-bold">{{ global.category.name }}</p>
+        <ion-img src="{{ global.category.icon }}" alt=""></ion-img>
+        <p class="font-weight-bold" style="margin-top: .5rem;">{{ global.category.name }}</p>
       </ion-card-content>
     </ion-card>
     <ion-text color="light"><h4 class="font-weight-bold">Adicione suas informações para o profissional</h4></ion-text>
@@ -42,7 +42,7 @@
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none" *ngIf="!global.professional">
           <ion-note slot="start" class="ion-no-margin">
-            <img src="assets/icon/add-user.png" alt="">
+            <ion-img src="assets/icon/add-user.png" alt=""></ion-img>
           </ion-note>
           <ion-label>
             <ion-text color="dark"><h5 class="title">Profissional</h5></ion-text>
@@ -51,7 +51,7 @@
         </ion-item>
         <ion-item detail lines="none" *ngIf="global.professional" [ngClass]="{'hasData': global.professional}">
           <ion-avatar slot="start">
-            <img [src]="global.professional.photo ? global.professional.photo : 'assets/user.png'" alt="">
+            <ion-img [src]="global.professional.photo ? global.professional.photo : 'assets/user.png'" alt=""></ion-img>
           </ion-avatar>
           <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">{{ global.professional.first_name }} {{ global.professional.last_name }}</h5></ion-text>
@@ -67,7 +67,7 @@
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none">
           <ion-note slot="start" class="ion-no-margin">
-            <img src="assets/icon/map-marker-gray.png" alt="">
+            <ion-img src="assets/icon/map-marker-gray.png" alt=""></ion-img>
           </ion-note>
           <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">Endereço</h5></ion-text>
@@ -104,7 +104,7 @@
       <ion-card-content class="ion-no-padding">
         <ion-item detail lines="none" [ngClass]="{'hasData': global.date && global.time}">
           <ion-note slot="start" class="ion-no-margin">
-            <img src="assets/icon/calendar-circle-gray.png" alt="">
+            <ion-img src="assets/icon/calendar-circle-gray.png" alt=""></ion-img>
           </ion-note>
           <ion-label *ngIf="!global.date && !global.time">
             <ion-text color="dark"><h5 class="title">escolha uma data e horário</h5></ion-text>
@@ -123,7 +123,7 @@
       <ion-card-content class="ion-no-padding">
         <ion-item button detail lines="none" (click)="addObservation()" [ngClass]="{'hasData': global.observation}">
           <ion-note slot="start" class="ion-no-margin">
-            <img src="assets/icon/gratipay-gray.png" alt="">
+            <ion-img src="assets/icon/gratipay-gray.png" alt=""></ion-img>
           </ion-note>
           <ion-label>
             <ion-text color="dark"><h5 class="title font-weight-bold">Observações</h5></ion-text>
@@ -134,7 +134,7 @@
           <ion-row *ngIf="global.images.length">
             <ion-col size="6" *ngFor="let image of global.images; let i = index">
               <ion-card button class="ion-no-margin" (click)="removePhoto(i)">
-                <img [src]="image.path" alt="">
+                <ion-img [src]="image.path" alt=""></ion-img>
               </ion-card>
             </ion-col>
           </ion-row>
@@ -142,7 +142,7 @@
             <ion-col size="6">
               <ion-card button class="ion-no-margin add-photo" (click)="takePhoto()">
                 <ion-card-content>
-                  <img src="assets/icon/add-photo.png" alt="">
+                  <ion-img src="assets/icon/add-photo.png" alt=""></ion-img>
                   <p class="font-weight-bold ion-no-margin">adicionar imagem</p>
                 </ion-card-content>
               </ion-card>
@@ -150,7 +150,7 @@
             <ion-col size="6">
               <ion-card button class="ion-no-margin add-photo" (click)="takePhoto()">
                 <ion-card-content>
-                  <img src="assets/icon/add-photo.png" alt="">
+                  <ion-img src="assets/icon/add-photo.png" alt=""></ion-img>
                   <p class="font-weight-bold ion-no-margin">adicionar imagem</p>
                 </ion-card-content>
               </ion-card>

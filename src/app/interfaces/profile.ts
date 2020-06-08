@@ -9,6 +9,7 @@ export interface Review {
 }
 
 export interface Gallery {
+    id?: number;
     image: string;
 }
 
