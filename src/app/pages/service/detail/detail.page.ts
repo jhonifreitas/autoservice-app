@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NavController, ModalController, Platform } from '@ionic/angular';
 
@@ -24,7 +24,7 @@ declare var google;
   templateUrl: './detail.page.html',
   styleUrls: ['./detail.page.scss'],
 })
-export class ServiceDetailPage implements OnInit {
+export class ServiceDetailPage {
 
   object: Service;
   loading: boolean = true;
@@ -41,7 +41,8 @@ export class ServiceDetailPage implements OnInit {
     private functions: FunctionsService
   ) { }
 
-  ngOnInit(){
+  async ionViewDidEnter(){
+    this.loading = true;
     if(this.platform.is('cordova')){
       if(this.isProfessional()){
         this.statusBar.backgroundColorByHexString('#624AFC');
@@ -51,10 +52,6 @@ export class ServiceDetailPage implements OnInit {
         this.statusBar.styleDefault();
       }
     }
-  }
-
-  async ionViewDidEnter(){
-    this.loading = true;
     const id = parseInt(this.router.snapshot.paramMap.get('id'));
     await this.api.get('service/'+id).then(res => {
       this.object = res;
