@@ -1,7 +1,5 @@
 @keyframes pulse {
-	0% {box-shadow: 0px 0px 0px var(--ion-color-tertiary);}
 	50% {box-shadow: 0px 0px 10px var(--ion-color-tertiary);}
-	100% {box-shadow: 0px 0px 0px var(--ion-color-tertiary);}
 }
 ion-split-pane{
     &.professional{
